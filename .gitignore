@@ -3,3 +3,7 @@
 ################################################################################
 
 /DocScanOpenCV/DocScanOpenCV/DocScanOpenCV.Android/bin/Debug
+/DocScanOpenCV/DocScanOpenCV/DocScanOpenCV/bin/Debug/netstandard2.0
+/DocScanOpenCV/DocScanOpenCV/DocScanOpenCV.iOS/obj/iPhone/Debug
+/.vs
+/DocScanOpenCV/.vs/DocScanOpenCV

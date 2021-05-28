@@ -1,0 +1,10 @@
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\MonoAndroid,Version=v9.0.AssemblyAttributes.cs
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\build.props
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\adb.props
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\DocScanOpenCV.Android.csprojAssemblyReference.cache
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\_VerifyXamarinAndroidSupportVersions.stamp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\stamp\_BuildLibraryImportsCache.stamp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\res.flag
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\R.txt
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\R.cs.flag
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\90\DocScanOpenCV.Android.csproj.CoreCompileInputs.cache

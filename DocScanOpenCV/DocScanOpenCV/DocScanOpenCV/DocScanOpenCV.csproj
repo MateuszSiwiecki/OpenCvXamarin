@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -12,12 +12,18 @@
 
   <ItemGroup>
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OpenCvSharp-master\OpenCvSharp-master\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj" />
-    <ProjectReference Include="..\..\..\OpenCvSharp-master\OpenCvSharp-master\src\OpenCvSharp\OpenCvSharp.csproj" />
+    <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj" />
+    <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp\OpenCvSharp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Test\ProcessImagePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

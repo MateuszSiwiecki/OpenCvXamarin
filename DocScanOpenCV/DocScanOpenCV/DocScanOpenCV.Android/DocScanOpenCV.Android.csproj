@@ -17,7 +17,7 @@
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
@@ -57,8 +57,10 @@
     <PackageReference Include="Xam.Plugin.Media">
       <Version>5.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Forms">
+      <Version>5.0.0.2012</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -93,12 +95,12 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OpenCvSharp-master\OpenCvSharp-master\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj">
+    <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj">
       <Project>{f94f9e8a-e239-45ea-9c61-c7855c8b6f25}</Project>
       <Name>OpenCvSharp.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\OpenCvSharp-master\OpenCvSharp-master\src\OpenCvSharp\OpenCvSharp.csproj">
-      <Project>{658c140f-2e73-4e22-80a7-f05df0a83318}</Project>
+    <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp\OpenCvSharp.csproj">
+      <Project>{6eccf91f-145a-44ea-b92d-465a778d360a}</Project>
       <Name>OpenCvSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\DocScanOpenCV\DocScanOpenCV.csproj">

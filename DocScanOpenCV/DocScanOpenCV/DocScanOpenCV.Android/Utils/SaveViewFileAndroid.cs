@@ -54,7 +54,7 @@ namespace DocScanOpenCV.Droid.Utils
 
                 if (file.Exists())
                 {
-                    uri1 path = supp.V4.Content.FileProvider.GetUriForFile(andApp.Application.Context, AppInfo.PackageName + ".fileprovider", file);
+                    uri1 path = AndroidX.Core.Content.FileProvider.GetUriForFile(andApp.Application.Context, AppInfo.PackageName + ".fileprovider", file);
                     string extension = andwebkit.MimeTypeMap.GetFileExtensionFromUrl(andNet.Uri.FromFile(file).ToString());
                     string mimeType = andwebkit.MimeTypeMap.Singleton.GetMimeTypeFromExtension(extension);
 
