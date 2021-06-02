@@ -138,6 +138,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CameraRenderer\AutoFitTextureView.cs" />
+    <Compile Include="CameraRenderer\CameraCaptureStateListener.cs" />
+    <Compile Include="CameraRenderer\CameraFragment.cs" />
+    <Compile Include="CameraRenderer\CameraPreviewRenderer.cs" />
+    <Compile Include="CameraRenderer\CameraStateListener.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -164,7 +169,11 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\Layout\CameraFragment.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj">
       <Project>{f94f9e8a-e239-45ea-9c61-c7855c8b6f25}</Project>
