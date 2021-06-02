@@ -15,6 +15,8 @@ using Point = OpenCvSharp.Point;
 using Size = OpenCvSharp.Size;
 using OpenCvSharp;
 using DocScanOpenCV.Helper;
+using OpenCvSharp.Native;
+using OpenCvSharp.Android;
 
 namespace DocScanOpenCV
 {
@@ -32,10 +34,13 @@ namespace DocScanOpenCV
                 new Point2f(0, 0),
                 new Point2f(0, 0),
             };
+        private AndroidCapture ewq;
         public MainPage()
         {
             InitializeComponent();
+
         }
+
         private async void Button_Clicked(object sender, EventArgs e)
         {
             box.IsVisible = true;
@@ -63,8 +68,9 @@ namespace DocScanOpenCV
             if (file != null)
             {
                 Mat OriginalImage = new Mat(file.Path, ImreadModes.AnyColor);
-                var result = ImageProcessing.ProcessImage(OriginalImage);
-                Save(result);
+                execute(OriginalImage);
+                //var result = ImageProcessing.ProcessImage(OriginalImage);
+                //Save(result);
             }
             else
             {
@@ -251,7 +257,7 @@ namespace DocScanOpenCV
 
                     //new output image size
                     //(tl, tr, br, bl)
-                    Point2f[] dstPoints = new Point2f[] 
+                    Point2f[] dstPoints = new Point2f[]
                     {
                         new Point2f(0, 0),
                         new Point2f(0, maxHeight - 1),
@@ -283,7 +289,63 @@ namespace DocScanOpenCV
 
             return status;
         }
+        unsafe public static void convertYUV420_NV21toRGB565(byte* yuvIn, Int16* rgbOut, int width, int height, bool monochrome)
+        {
+            int size = width * height;
+            int offset = size;
+            int u, v, y1, y2, y3, y4;
 
+            for (int i = 0, k = 0; i < size; i += 2, k += 2)
+            {
+                y1 = yuvIn[i];
+                y2 = yuvIn[i + 1];
+                y3 = yuvIn[width + i];
+                y4 = yuvIn[width + i + 1];
+
+                u = yuvIn[offset + k];
+                v = yuvIn[offset + k + 1];
+                u = u - 128;
+                v = v - 128;
+
+                if (monochrome)
+                {
+                    convertYUVtoRGB565Monochrome(y1, u, v, rgbOut, i);
+                    convertYUVtoRGB565Monochrome(y2, u, v, rgbOut, (i + 1));
+                    convertYUVtoRGB565Monochrome(y3, u, v, rgbOut, (width + i));
+                    convertYUVtoRGB565Monochrome(y4, u, v, rgbOut, (width + i + 1));
+                }
+                else
+                {
+                    convertYUVtoRGB565(y1, u, v, rgbOut, i);
+                    convertYUVtoRGB565(y2, u, v, rgbOut, (i + 1));
+                    convertYUVtoRGB565(y3, u, v, rgbOut, (width + i));
+                    convertYUVtoRGB565(y4, u, v, rgbOut, (width + i + 1));
+                }
+
+                if (i != 0 && (i + 2) % width == 0)
+                    i += width;
+            }
+        }
+
+        unsafe private static void convertYUVtoRGB565Monochrome(int y, int u, int v, Int16* rgbOut, int index)
+        {
+            rgbOut[index] = (short)(((y & 0xf8) << 8) |
+                          ((y & 0xfc) << 3) |
+                          ((y >> 3) & 0x1f));
+        }
+
+        unsafe private static void convertYUVtoRGB565(int y, int u, int v, Int16* rgbOut, int index)
+        {
+            int r = y + (int)1.402f * v;
+            int g = y - (int)(0.344f * u + 0.714f * v);
+            int b = y + (int)1.772f * u;
+            r = r > 255 ? 255 : r < 0 ? 0 : r;
+            g = g > 255 ? 255 : g < 0 ? 0 : g;
+            b = b > 255 ? 255 : b < 0 ? 0 : b;
+            rgbOut[index] = (short)(((b & 0xf8) << 8) |
+                          ((g & 0xfc) << 3) |
+                          ((r >> 3) & 0x1f));
+        }
     }
 }
 

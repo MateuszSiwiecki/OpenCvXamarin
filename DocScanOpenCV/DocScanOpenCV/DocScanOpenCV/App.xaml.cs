@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocScanOpenCV.CameraRenderer;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,5 +25,6 @@ namespace DocScanOpenCV
         protected override void OnResume()
         {
         }
+        public static ICaptureUI CurrentCaptureUI { get; set; }
     }
 }

@@ -17,15 +17,33 @@ using Java.Lang;
 using Java.Util.Concurrent;
 using Xamarin.Forms.Platform.Android;
 using DocScanOpenCV.CameraRenderer;
+using Android.Media;
 
 namespace CustomRenderer.Droid
 {
-    class CameraFragment : Fragment, TextureView.ISurfaceTextureListener
+    public class CameraFragment : Fragment, TextureView.ISurfaceTextureListener
     {
-        CameraDevice device;
-        CaptureRequest.Builder sessionBuilder;
-        CameraCaptureSession session;
-        CameraTemplate cameraTemplate;
+        ImageReader mImageReader;
+        ImageAvailableListener mOnImageAvailableListener;
+        public CameraCaptureListener mCaptureCallback;
+        public int mState = STATE_PREVIEW;
+
+        // Camera state: Showing camera preview.
+        public const int STATE_PREVIEW = 0;
+        // Camera state: Waiting for the focus to be locked.
+        public const int STATE_WAITING_LOCK = 1;
+        // Camera state: Waiting for the exposure to be precapture state.
+        public const int STATE_WAITING_PRECAPTURE = 2;
+        //Camera state: Waiting for the exposure state to be something other than precapture.
+        public const int STATE_WAITING_NON_PRECAPTURE = 3;
+        // Camera state: Picture was taken.
+        public const int STATE_PICTURE_TAKEN = 4;
+
+        public CameraDevice device;
+        public CaptureRequest.Builder sessionBuilder;
+        public CaptureRequest mPreviewRequest;
+        public CameraCaptureSession session;
+        public CameraTemplate cameraTemplate;
         CameraManager manager;
 
         bool cameraPermissionsGranted;
@@ -36,13 +54,14 @@ namespace CustomRenderer.Droid
         LensFacing cameraType;
 
         Android.Util.Size previewSize;
-        
-        HandlerThread backgroundThread;
-        Handler backgroundHandler = null;
+
+        public HandlerThread backgroundThread;
+        public Handler backgroundHandler = null;
 
         Java.Util.Concurrent.Semaphore captureSessionOpenCloseLock = new Java.Util.Concurrent.Semaphore(1);
 
-        AutoFitTextureView texture;
+        public AutoFitTextureView texture1;
+        public AutoFitTextureView texture2;
 
         TaskCompletionSource<CameraDevice> initTaskSource;
         TaskCompletionSource<bool> permissionsRequested;
@@ -78,7 +97,14 @@ namespace CustomRenderer.Droid
 
         public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) => inflater.Inflate(DocScanOpenCV.Droid.Resource.Layout.CameraFragment, null);
 
-        public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState) => texture = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture);
+        public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
+        {
+            texture1 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture1);
+            texture2 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture2);
+            mCaptureCallback = new CameraCaptureListener(this);
+            mOnImageAvailableListener = new ImageAvailableListener(this, new 
+                Java.IO.File(System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "img.png")));
+        }
 
         public override void OnPause()
         {
@@ -92,19 +118,21 @@ namespace CustomRenderer.Droid
             base.OnResume();
 
             StartBackgroundThread();
-            if (texture is null)
+            if (texture1 is null || texture2 is null)
             {
                 return;
             }
-            if (texture.IsAvailable)
+            if (texture1.IsAvailable)
             {
-                View?.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
+                View?.SetBackgroundColor(Color.Transparent);
                 cameraTemplate = CameraTemplate.Preview;
+                
                 await RetrieveCameraDevice(force: true);
             }
             else
             {
-                texture.SurfaceTextureListener = this;
+                texture1.SurfaceTextureListener = this;
+                texture2.SurfaceTextureListener = this;
             }
         }
 
@@ -155,21 +183,29 @@ namespace CustomRenderer.Droid
                 try
                 {
                     CameraCharacteristics characteristics = Manager.GetCameraCharacteristics(cameraId);
+                    
                     StreamConfigurationMap map = (StreamConfigurationMap)characteristics.Get(CameraCharacteristics.ScalerStreamConfigurationMap);
                     
 
                     previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
-                        texture.Width, texture.Height, GetMaxSize(map.GetOutputSizes((int)ImageFormatType.Jpeg)));
+                        texture1.Width, texture1.Height, GetMaxSize(map.GetOutputSizes((int)ImageFormatType.Jpeg)));
                     sensorOrientation = (int)characteristics.Get(CameraCharacteristics.SensorOrientation);
                     cameraType = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
 
+
+                    mImageReader = ImageReader.NewInstance(previewSize.Width, previewSize.Height, ImageFormatType.Jpeg, 2);
+                    mImageReader.SetOnImageAvailableListener(mOnImageAvailableListener, backgroundHandler);
+
+
                     if (Resources.Configuration.Orientation == Android.Content.Res.Orientation.Landscape)
                     {
-                        texture.SetAspectRatio(previewSize.Width, previewSize.Height);
+                        texture1.SetAspectRatio(previewSize.Width, previewSize.Height);
+                        texture2.SetAspectRatio(previewSize.Width, previewSize.Height);
                     }
                     else
                     {
-                        texture.SetAspectRatio(previewSize.Height, previewSize.Width);
+                        texture1.SetAspectRatio(previewSize.Height, previewSize.Width);
+                        texture2.SetAspectRatio(previewSize.Height, previewSize.Width);
                     }
 
                     initTaskSource = new TaskCompletionSource<CameraDevice>();
@@ -348,14 +384,17 @@ namespace CustomRenderer.Droid
                 sessionBuilder = device.CreateCaptureRequest(cameraTemplate);
                 
                 List<Surface> surfaces = new List<Surface>();
-                if (texture.IsAvailable && previewSize != null)
+                if (texture1.IsAvailable && previewSize != null)
                 {
-                    var texture = this.texture.SurfaceTexture;
-                    
-                    texture.SetDefaultBufferSize(previewSize.Width, previewSize.Height);
-                    Surface previewSurface = new Surface(texture);
-                    surfaces.Add(previewSurface);
-                    sessionBuilder.AddTarget(previewSurface);
+                    var texture1 = this.texture1.SurfaceTexture;
+
+
+                    texture1.SetDefaultBufferSize(previewSize.Width, previewSize.Height);
+                    Surface previewSurface1 = new Surface(texture1);
+                    surfaces.Add(previewSurface1);
+                    surfaces.Add(mImageReader.Surface);
+                    sessionBuilder.AddTarget(previewSurface1);
+                    sessionBuilder.AddTarget(mImageReader.Surface);
                 }
 
                 TaskCompletionSource<CameraCaptureSession> tcs = new TaskCompletionSource<CameraCaptureSession>();
@@ -437,6 +476,11 @@ namespace CustomRenderer.Droid
                     device.Close();
                     device = null;
                 }
+                if (mImageReader != null)
+                {
+                    mImageReader.Close();
+                    mImageReader = null;
+                }
             }
             catch (Java.Lang.Exception error)
             {
@@ -446,7 +490,7 @@ namespace CustomRenderer.Droid
 
         void ConfigureTransform(int viewWidth, int viewHeight)
         {
-            if (texture == null || previewSize == null || previewSize.Width == 0 || previewSize.Height == 0)
+            if (texture1 == null || previewSize == null || previewSize.Width == 0 || previewSize.Height == 0)
             {
                 return;
             }
@@ -459,7 +503,8 @@ namespace CustomRenderer.Droid
             bufferRect.Offset(centerX - bufferRect.CenterX(), centerY - bufferRect.CenterY());
             matrix.SetRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.Fill);
             matrix.PostRotate(GetCaptureOrientation(), centerX, centerY);
-            texture.SetTransform(matrix);
+            texture1.SetTransform(matrix);
+            texture2.SetTransform(matrix);
         }
 
         int GetCaptureOrientation()
@@ -478,7 +523,70 @@ namespace CustomRenderer.Droid
             };
 
         SurfaceOrientation GetDisplayRotation() => Android.App.Application.Context.GetSystemService(Context.WindowService).JavaCast<IWindowManager>().DefaultDisplay.Rotation;
+        public void RunPrecaptureSequence()
+        {
+            try
+            {
+                // This is how to tell the camera to trigger.
+                stillCaptureBuilder.Set(CaptureRequest.ControlAePrecaptureTrigger, (int)ControlAEPrecaptureTrigger.Start);
+                // Tell #mCaptureCallback to wait for the precapture sequence to be set.
+                mState = STATE_WAITING_PRECAPTURE;
+                session.Capture(stillCaptureBuilder.Build(), mCaptureCallback, backgroundHandler);
+            }
+            catch (CameraAccessException e)
+            {
+                e.PrintStackTrace();
+            }
+        }
+        private CaptureRequest.Builder stillCaptureBuilder;
+        public void CaptureStillPicture()
+        {
+            try
+            {
+                var activity = Activity;
+                if (null == activity || null == device)
+                {
+                    return;
+                }
+                // This is the CaptureRequest.Builder that we use to take a picture.
+                if (stillCaptureBuilder == null)
+                    stillCaptureBuilder = device.CreateCaptureRequest(CameraTemplate.StillCapture);
 
+                stillCaptureBuilder.AddTarget(mImageReader.Surface);
+                // Use the same AE and AF modes as the preview.
+                stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
+
+                // Orientation
+                int rotation = (int)activity.WindowManager.DefaultDisplay.Rotation;
+                stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 0);
+
+                session.StopRepeating();
+                session.Capture(stillCaptureBuilder.Build(), new CameraCaptureStillPictureSessionCallback(this), null);
+            }
+            catch (CameraAccessException e)
+            {
+                e.PrintStackTrace();
+            }
+        }
+
+        public void UnlockFocus()
+        {
+            try
+            {
+                // Reset the auto-focus trigger
+                sessionBuilder.Set(CaptureRequest.ControlAfTrigger, (int)ControlAFTrigger.Cancel);
+                session.Capture(sessionBuilder.Build(), mCaptureCallback,
+                        backgroundHandler);
+                // After this, the camera will go back to the normal state of preview.
+                mState = STATE_PREVIEW;
+                session.SetRepeatingRequest(sessionBuilder.Build(), mCaptureCallback,
+                        backgroundHandler);
+            }
+            catch (CameraAccessException e)
+            {
+                e.PrintStackTrace();
+            }
+        }
         #region Permissions
 
         async Task RequestCameraPermissions()

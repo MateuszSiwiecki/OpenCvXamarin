@@ -628,3 +628,8 @@ D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debu
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\DocScanOpenCV.Android.csprojAssemblyReference.cache
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc6446793fef7ad4d27c\CameraXPreviewRenderer.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\OpenCvSharp.Android.dll.mdb
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc6446793fef7ad4d27c\SingleChanelCameraRenderer.java
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\CameraCaptureListener.java
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\CameraCaptureStillPictureSessionCallback.java
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\ImageAvailableListener.java
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\ImageAvailableListener_ImageSaver.java

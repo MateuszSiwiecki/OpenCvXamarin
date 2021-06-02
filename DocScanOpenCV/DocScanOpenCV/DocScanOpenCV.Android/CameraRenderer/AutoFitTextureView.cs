@@ -27,7 +27,7 @@ namespace CustomRenderer.Droid
         protected AutoFitTextureView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
         {
         }
-
+        
         public void SetAspectRatio(int width, int height)
         {
             if (width == 0 || height == 0)

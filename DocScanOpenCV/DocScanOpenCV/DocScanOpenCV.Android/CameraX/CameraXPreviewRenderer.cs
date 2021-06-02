@@ -38,8 +38,8 @@ namespace DocScanOpenCV.Droid
         {
             visualElementRenderer = new Xamarin.Forms.Platform.Android.FastRenderers.VisualElementRenderer(this);
 
-            this.viewFinder = this.FindViewById<PreviewView>(Resource.Id.viewFinder);
-             var camera_capture_button = this.FindViewById<Button>(Resource.Id.camera_capture_button);
+            //this.viewFinder = this.FindViewById<PreviewView>(Resource.Id.viewFinder);
+             //var camera_capture_button = this.FindViewById<Button>(Resource.Id.camera_capture_button);
 
             //StartCamera(context);
         }
