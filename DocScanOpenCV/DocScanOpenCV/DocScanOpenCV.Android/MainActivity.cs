@@ -2,20 +2,7 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Android;
 using Android.Runtime;
-using Android.Util;
-using Android.Widget;
-using AndroidX.AppCompat.App;
-using AndroidX.Camera.Lifecycle;
-using AndroidX.Core.App;
-using AndroidX.Core.Content;
-using Java.IO;
-using Java.Lang;
-using Java.Util;
-using Java.Util.Concurrent;
-using System.Linq;
-using Android.Views;
 
 namespace DocScanOpenCV.Droid
 {

@@ -75,8 +75,16 @@ namespace CustomRenderer.Droid
 
         #region Overrides
 
-        public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) => inflater.Inflate(DocScanOpenCV.Droid.Resource.Layout.CameraFragment, null);
-        public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState) => texture = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture);
+        public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            var output = inflater.Inflate(DocScanOpenCV.Droid.Resource.Layout.CameraFragment, null);
+            return output;
+        }
+
+        public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
+        {
+            texture = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture);
+        }
 
         public override void OnPause()
         {
@@ -129,10 +137,10 @@ namespace CustomRenderer.Droid
             }
 
             await RequestCameraPermissions();
-            if (!cameraPermissionsGranted)
-            {
-                return;
-            }
+            //if (!cameraPermissionsGranted)
+            //{
+            //    return;
+            //}
 
             if (!captureSessionOpenCloseLock.TryAcquire(2500, TimeUnit.Milliseconds))
             {

@@ -8,13 +8,14 @@
              x:Class="DocScanOpenCV.MainPage">
 
     <Grid>
+        <local:CameraPreview Camera="Rear"
+                             x:Name="CameraPreview"
+							 HorizontalOptions="FillAndExpand"
+							 VerticalOptions="FillAndExpand" />
         <StackLayout >
             <Button Text="Add Image" BackgroundColor="Orange" TextColor="White" Clicked="Button_Clicked"/>
             <Image x:Name="myimg"/>
         </StackLayout>
-        <local:CameraPreview Camera="Rear"
-							 HorizontalOptions="FillAndExpand"
-							 VerticalOptions="FillAndExpand" />
         <BoxView x:Name="box" IsVisible="false" BackgroundColor="Black" Opacity="0.6"/>
         <StackLayout x:Name="stackloading" IsVisible="false">
             <ActivityIndicator VerticalOptions="CenterAndExpand" x:Name="loading"  Color="Orange" IsRunning="false"/>
