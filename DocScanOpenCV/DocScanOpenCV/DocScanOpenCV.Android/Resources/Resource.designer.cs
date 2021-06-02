@@ -12817,7 +12817,11 @@ namespace DocScanOpenCV.Droid
 		
 		public partial class Id
 		{
-			
+			// aapt resource value: 0x7F080151
+			public const int viewFinder = 2131231057;
+			// aapt resource value: 0x7F080066
+			public const int camera_capture_button = 2131230822;
+
 			// aapt resource value: 0x7F09000E
 			public const int accelerate = 2131296270;
 			

@@ -2,16 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:local="clr-namespace:CustomRenderer"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="DocScanOpenCV.MainPage">
 
-    <Grid>
-        <local:CameraPreview Camera="Rear"
-                             x:Name="CameraPreview"
-							 HorizontalOptions="FillAndExpand"
-							 VerticalOptions="FillAndExpand" />
+    <Grid>=
         <StackLayout >
             <Button Text="Add Image" BackgroundColor="Orange" TextColor="White" Clicked="Button_Clicked"/>
             <Image x:Name="myimg"/>

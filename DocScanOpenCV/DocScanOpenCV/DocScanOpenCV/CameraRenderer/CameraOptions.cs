@@ -1,4 +1,4 @@
-﻿namespace CustomRenderer
+﻿namespace DocScanOpenCV.CameraRenderer
 {
 	public enum CameraOptions
 	{

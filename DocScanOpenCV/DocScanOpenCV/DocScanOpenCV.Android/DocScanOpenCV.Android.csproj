@@ -143,6 +143,7 @@
     <Compile Include="CameraRenderer\CameraFragment.cs" />
     <Compile Include="CameraRenderer\CameraPreviewRenderer.cs" />
     <Compile Include="CameraRenderer\CameraStateListener.cs" />
+    <Compile Include="CameraX\CameraXPreviewRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -211,5 +212,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ToggleCameraButton.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionDocScanOpenCVAndroidHideInfoBar="True" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

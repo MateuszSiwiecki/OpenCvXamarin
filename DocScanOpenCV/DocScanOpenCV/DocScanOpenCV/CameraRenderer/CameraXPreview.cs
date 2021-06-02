@@ -2,7 +2,7 @@
 
 namespace DocScanOpenCV.CameraRenderer
 {
-    public class CameraPreview : View
+    public class CameraXPreview
     {
         public static readonly BindableProperty CameraProperty = BindableProperty.Create(
             propertyName: "Camera",
@@ -10,10 +10,5 @@ namespace DocScanOpenCV.CameraRenderer
             declaringType: typeof(CameraPreview),
             defaultValue: CameraOptions.Rear);
 
-        public CameraOptions Camera
-        {
-            get { return (CameraOptions)GetValue(CameraProperty); }
-            set { SetValue(CameraProperty, value); }
-        }
     }
 }

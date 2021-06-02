@@ -5,11 +5,12 @@ using Android.Content;
 using Android.Views;
 using Android.Widget;
 using CustomRenderer.Droid;
+using DocScanOpenCV.CameraRenderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.FastRenderers;
 
-[assembly: ExportRenderer(typeof(CustomRenderer.CameraPreview), typeof(CameraPreviewRenderer))]
+[assembly: ExportRenderer(typeof(DocScanOpenCV.CameraRenderer.CameraPreview), typeof(CameraPreviewRenderer))]
 namespace CustomRenderer.Droid
 {
     public class CameraPreviewRenderer : FrameLayout, IVisualElementRenderer, IViewRenderer

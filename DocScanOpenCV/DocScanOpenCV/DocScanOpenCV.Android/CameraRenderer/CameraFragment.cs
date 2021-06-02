@@ -16,6 +16,7 @@ using AndroidX.Fragment.App;
 using Java.Lang;
 using Java.Util.Concurrent;
 using Xamarin.Forms.Platform.Android;
+using DocScanOpenCV.CameraRenderer;
 
 namespace CustomRenderer.Droid
 {
@@ -75,16 +76,9 @@ namespace CustomRenderer.Droid
 
         #region Overrides
 
-        public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            var output = inflater.Inflate(DocScanOpenCV.Droid.Resource.Layout.CameraFragment, null);
-            return output;
-        }
+        public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) => inflater.Inflate(DocScanOpenCV.Droid.Resource.Layout.CameraFragment, null);
 
-        public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
-        {
-            texture = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture);
-        }
+        public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState) => texture = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture);
 
         public override void OnPause()
         {
@@ -162,6 +156,7 @@ namespace CustomRenderer.Droid
                 {
                     CameraCharacteristics characteristics = Manager.GetCameraCharacteristics(cameraId);
                     StreamConfigurationMap map = (StreamConfigurationMap)characteristics.Get(CameraCharacteristics.ScalerStreamConfigurationMap);
+                    
 
                     previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
                         texture.Width, texture.Height, GetMaxSize(map.GetOutputSizes((int)ImageFormatType.Jpeg)));
@@ -351,11 +346,12 @@ namespace CustomRenderer.Droid
             {
                 CloseSession();
                 sessionBuilder = device.CreateCaptureRequest(cameraTemplate);
-
+                
                 List<Surface> surfaces = new List<Surface>();
                 if (texture.IsAvailable && previewSize != null)
                 {
                     var texture = this.texture.SurfaceTexture;
+                    
                     texture.SetDefaultBufferSize(previewSize.Width, previewSize.Height);
                     Surface previewSurface = new Surface(texture);
                     surfaces.Add(previewSurface);
@@ -536,6 +532,7 @@ namespace CustomRenderer.Droid
 
         async void TextureView.ISurfaceTextureListener.OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
         {
+            
             View?.SetBackgroundColor(Element.BackgroundColor.ToAndroid());
             cameraTemplate = CameraTemplate.Preview;
             await RetrieveCameraDevice();           

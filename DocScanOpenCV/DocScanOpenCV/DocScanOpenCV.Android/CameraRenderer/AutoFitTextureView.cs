@@ -80,5 +80,7 @@ namespace CustomRenderer.Droid
                 Invalidate();
             }
         }
+
+        
     }
 }
