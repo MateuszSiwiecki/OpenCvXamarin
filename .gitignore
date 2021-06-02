@@ -2,8 +2,10 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/DocScanOpenCV/DocScanOpenCV/DocScanOpenCV.Android/bin/Debug
+/DocScanOpenCV/DocScanOpenCV/DocScanOpenCV.Android/bin
+/DocScanOpenCV/DocScanOpenCV/DocScanOpenCV.Android/obj
 /DocScanOpenCV/DocScanOpenCV/DocScanOpenCV/bin
-/DocScanOpenCV/DocScanOpenCV/DocScanOpenCV.iOS/obj/iPhone/Debug
+/DocScanOpenCV/DocScanOpenCV/DocScanOpenCV/obj
+/DocScanOpenCV/DocScanOpenCV/DocScanOpenCV.iOS
 /.vs
 /DocScanOpenCV/.vs/DocScanOpenCV
