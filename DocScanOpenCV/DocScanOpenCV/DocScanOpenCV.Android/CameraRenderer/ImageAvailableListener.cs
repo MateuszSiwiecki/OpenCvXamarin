@@ -15,6 +15,7 @@ using Java.Lang;
 using Java.Nio;
 using CustomRenderer.Droid;
 using Android.Graphics;
+using OpenCvSharp;
 
 namespace CustomRenderer.Droid
 {
@@ -41,15 +42,28 @@ namespace CustomRenderer.Droid
         {
             var image = reader.AcquireLatestImage();
             if (image == null) return;
-            var buffer = image.GetPlanes()[0].Buffer;
-            byte[] bytes = new byte[buffer.Remaining()];
+            var planes = image.GetPlanes();
+            
+            var buffer = planes[0].Buffer;
+            buffer.Rewind();
+            byte[] bytes = new byte[buffer.Capacity()];
             buffer.Get(bytes);
-            var bitmap = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
 
+
+            //var output = ProcessImage(bytes);
+            var bitmap = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
+            //output.Dispose();
+            if (bitmap == null)
+            {
+                image.Close();
+                return;
+            }
+            
             var canvas = owner.texture2.LockCanvas();
             var matrix = new Matrix();
             var width = canvas.Width;
             var heigth = canvas.Height;
+           // matrix.SetRectToRect(new RectF(0, 0, width, heigth), new RectF(0, 0, width, heigth), Matrix.ScaleToFit.Fill);
             matrix.PostRotate(90, width / 2, heigth / 2);
             canvas.DrawBitmap(bitmap, matrix, new Paint());
             
@@ -60,48 +74,14 @@ namespace CustomRenderer.Droid
             owner.texture2.SetLayerPaint(mpaintTexture);
             owner.texture2.SetOpaque(false);
             image.Close();
+
         }
-        // Saves a JPEG {@link Image} into the specified {@link File}.
-        private class ImageSaver : Java.Lang.Object, IRunnable
+
+        private Mat ProcessImage(byte[] bytes)
         {
-            // The JPEG image
-            private Image mImage;
-
-            // The file we save the image into.
-            private File mFile;
-
-            public ImageSaver(Image image, File file)
-            {
-                if (image == null)
-                    throw new System.ArgumentNullException("image");
-                if (file == null)
-                    throw new System.ArgumentNullException("file");
-
-                mImage = image;
-                mFile = file;
-            }
-
-            public void Run()
-            {
-                ByteBuffer buffer = mImage.GetPlanes()[0].Buffer;
-                byte[] bytes = new byte[buffer.Remaining()];
-                buffer.Get(bytes);
-                using (var output = new FileOutputStream(mFile))
-                {
-                    try
-                    {
-                        output.Write(bytes);
-                    }
-                    catch (IOException e)
-                    {
-                        e.PrintStackTrace();
-                    }
-                    finally
-                    {
-                        mImage.Close();
-                    }
-                }
-            }
+            Mat matImage = Mat.FromImageData(bytes);
+            matImage = matImage.CvtColor(ColorConversionCodes.BGR2GRAY);
+            return matImage;
         }
     }
 }

@@ -187,10 +187,10 @@ namespace CustomRenderer.Droid
                     CameraCharacteristics characteristics = Manager.GetCameraCharacteristics(cameraId);
                     
                     StreamConfigurationMap map = (StreamConfigurationMap)characteristics.Get(CameraCharacteristics.ScalerStreamConfigurationMap);
-                    
 
-                    previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
-                        texture1.Width, texture1.Height, GetMaxSize(map.GetOutputSizes((int)ImageFormatType.Jpeg)));
+                    previewSize = new Android.Util.Size(1920, 1080);
+                    //previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
+                    //    texture1.Width, texture1.Height, GetMaxSize(map.GetOutputSizes((int)ImageFormatType.Jpeg)));
                     sensorOrientation = (int)characteristics.Get(CameraCharacteristics.SensorOrientation);
                     cameraType = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
 
