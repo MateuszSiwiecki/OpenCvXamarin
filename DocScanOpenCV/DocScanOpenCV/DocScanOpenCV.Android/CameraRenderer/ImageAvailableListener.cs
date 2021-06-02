@@ -40,14 +40,26 @@ namespace CustomRenderer.Droid
         public void OnImageAvailable(ImageReader reader)
         {
             var image = reader.AcquireLatestImage();
+            if (image == null) return;
             var buffer = image.GetPlanes()[0].Buffer;
             byte[] bytes = new byte[buffer.Remaining()];
             buffer.Get(bytes);
             var bitmap = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
 
             var canvas = owner.texture2.LockCanvas();
-            canvas.DrawBitmap(bitmap, new Matrix(), new Paint());
+            var matrix = new Matrix();
+            var width = canvas.Width;
+            var heigth = canvas.Height;
+            matrix.PostRotate(90, width / 2, heigth / 2);
+            canvas.DrawBitmap(bitmap, matrix, new Paint());
+            
             owner.texture2.UnlockCanvasAndPost(canvas);
+            owner.texture2.SetOpaque(true);
+            Paint mpaintTexture = new Paint();
+            owner.texture2.SetLayerType(LayerType.Hardware, mpaintTexture);
+            owner.texture2.SetLayerPaint(mpaintTexture);
+            owner.texture2.SetOpaque(false);
+            image.Close();
         }
         // Saves a JPEG {@link Image} into the specified {@link File}.
         private class ImageSaver : Java.Lang.Object, IRunnable

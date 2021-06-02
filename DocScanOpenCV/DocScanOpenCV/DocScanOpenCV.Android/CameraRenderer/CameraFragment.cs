@@ -101,6 +101,8 @@ namespace CustomRenderer.Droid
         {
             texture1 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture1);
             texture2 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture2);
+           // texture1.SetBackgroundColor(Color.Transparent);
+           // texture2.SetBackgroundColor(Color.Transparent);
             mCaptureCallback = new CameraCaptureListener(this);
             mOnImageAvailableListener = new ImageAvailableListener(this, new 
                 Java.IO.File(System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "img.png")));
@@ -390,6 +392,7 @@ namespace CustomRenderer.Droid
 
 
                     texture1.SetDefaultBufferSize(previewSize.Width, previewSize.Height);
+                    texture2.SurfaceTexture.SetDefaultBufferSize(previewSize.Width, previewSize.Height);
                     Surface previewSurface1 = new Surface(texture1);
                     surfaces.Add(previewSurface1);
                     surfaces.Add(mImageReader.Surface);
@@ -558,10 +561,11 @@ namespace CustomRenderer.Droid
 
                 // Orientation
                 int rotation = (int)activity.WindowManager.DefaultDisplay.Rotation;
-                stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 0);
+               // stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 90);
 
-                session.StopRepeating();
+                //session.StopRepeating();
                 session.Capture(stillCaptureBuilder.Build(), new CameraCaptureStillPictureSessionCallback(this), null);
+                
             }
             catch (CameraAccessException e)
             {
