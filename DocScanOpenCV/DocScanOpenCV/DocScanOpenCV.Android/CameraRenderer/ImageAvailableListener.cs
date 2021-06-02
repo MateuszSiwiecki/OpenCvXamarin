@@ -63,7 +63,8 @@ namespace CustomRenderer.Droid
             var matrix = new Matrix();
             var width = canvas.Width;
             var heigth = canvas.Height;
-           // matrix.SetRectToRect(new RectF(0, 0, width, heigth), new RectF(0, 0, width, heigth), Matrix.ScaleToFit.Fill);
+            // matrix.SetRectToRect(new RectF(0, 0, width, heigth), new RectF(0, 0, width, heigth), Matrix.ScaleToFit.Fill);
+            matrix.SetRectToRect(new RectF(0, 0, width, heigth), new RectF(0, 0, width, heigth), Matrix.ScaleToFit.Fill);
             matrix.PostRotate(90, width / 2, heigth / 2);
             canvas.DrawBitmap(bitmap, matrix, new Paint());
             
