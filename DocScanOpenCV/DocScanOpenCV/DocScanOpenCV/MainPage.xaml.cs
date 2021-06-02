@@ -23,9 +23,57 @@ namespace DocScanOpenCV
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        static List<Point2f> point2Fs = new List<Point2f>();
+
+        // //(bl, tl, tr, br) 
+        static Point2f[] srcPoints = new Point2f[] {
+                new Point2f(0, 0),
+                new Point2f(0, 0),
+                new Point2f(0, 0),
+                new Point2f(0, 0),
+            };
         public MainPage()
         {
             InitializeComponent();
+        }
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            box.IsVisible = true;
+            stackloading.IsVisible = true;
+            loading.IsVisible = true;
+            loading.IsRunning = true;
+            var status = await CheckAndRequestPermissionAsync(new Permissions.StorageRead());
+            if (status != PermissionStatus.Granted)
+            {
+                // Notify user permission was denied
+                return;
+            }
+            var status1 = await CheckAndRequestPermissionAsync(new Permissions.StorageWrite());
+            if (status1 != PermissionStatus.Granted)
+            {
+                // Notify user permission was denied
+                return;
+            }
+            await CrossMedia.Current.Initialize();
+            var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+            {
+                CompressionQuality = 75,
+                PhotoSize = PhotoSize.Large
+            });
+            if (file != null)
+            {
+                Mat OriginalImage = new Mat(file.Path, ImreadModes.AnyColor);
+                var result = ImageProcessing.ProcessImage(OriginalImage);
+                Save(result);
+            }
+            else
+            {
+                box.IsVisible = false;
+                loading.IsVisible = false;
+                loading.IsRunning = false;
+                stackloading.IsVisible = false;
+
+            }
         }
         public void execute(Mat OriginalImage)
         {
@@ -37,6 +85,7 @@ namespace DocScanOpenCV
 
             //Step 1 Grayscale
             modifiedImage = modifiedImage.CvtColor(ColorConversionCodes.BGR2GRAY);
+            modifiedImage = modifiedImage.Threshold(127, 255, ThresholdTypes.Binary);
 
 
             //Step 2 Blur the image
@@ -66,6 +115,7 @@ namespace DocScanOpenCV
 
             //debug purpose, uncomment to see all contours captured by openCV
             //debug_showallcontours(OriginalImage, hierarchyIndexes, contours);
+
 
             foreach (var cont in contours)
             {
@@ -97,6 +147,10 @@ namespace DocScanOpenCV
                    hierarchy: hierarchyIndexes,
                    maxLevel: int.MaxValue);
 
+            //var contouredImage = OriginalImage.Clone();
+            //Cv2.DrawContours(contouredImage, contours, -1, Scalar.Red, 5);
+            //Save(EdgingImage);
+            //return;
 
             //Steps 4.1 find the max size of contour area (entire image) 
             //to be used to check if the largest contour area is the doc edges (ratio)
@@ -105,61 +159,58 @@ namespace DocScanOpenCV
             // Steps 5: apply the four point transform to obtain a top-down
             // view of the original image
             Mat transformImage = null;
-            if (Cv2.ContourArea(contours[largestareacontourindex]) < imageSize * 0.5)
+            foreach (var item in docEdgesPoints)
             {
-                //if largest contour smaller than 50% of the picture, assume document edges not found
-                //proceed with simple filter 
-
-                foreach (var item in docEdgesPoints)
-                {
-                    point2Fs.Add(new Point2f(item.X, item.Y));
-                }
-                transformImage = transform(OriginalImage, point2Fs);
-                if (transformImage != null)
-                {
-
-                    //Step 6: grayscale it to give it that 'black and white' paper effect
-                    transformImage = apply_doc_filters(transformImage);
-                }
+                point2Fs.Add(new Point2f(item.X, item.Y));
             }
-            else
-            {
-                //doc closed edges detected, proceed tranformation
-
-                //convert to point2f
-                foreach (var item in docEdgesPoints)
-                {
-                    point2Fs.Add(new Point2f(item.X, item.Y));
-                }
-                transformImage = transform(OriginalImage, point2Fs);
-                if (transformImage != null)
-                {
-
-                    //Step 6: grayscale it to give it that 'black and white' paper effect
-                    transformImage = apply_doc_filters(transformImage);
-                }
-
-            }
-
+            transformImage = transform(OriginalImage, point2Fs);
             if (transformImage != null)
             {
 
-                transformImage.SaveImage($"output_{Guid.NewGuid()}.jpg");
-
-                var ms = transformImage.ToMemoryStream();
-                myimg.Source = ImageSource.FromStream(() => new MemoryStream(ms.ToArray()));
-                DependencyService.Get<ISaveViewFile>().SaveAndViewAsync("Output.jpg", ms);
-                box.IsVisible = false;
-                stackloading.IsVisible = false;
-                loading.IsVisible = false;
-                loading.IsRunning = false;
-
+                //Step 6: grayscale it to give it that 'black and white' paper effect
+                transformImage = apply_doc_filters(transformImage);
             }
+            //if (Cv2.ContourArea(contours[largestareacontourindex]) < imageSize * 0.5)
+            //{
+            //    //if largest contour smaller than 50% of the picture, assume document edges not found
+            //    //proceed with simple filter 
+
+            //    transformImage = apply_doc_filters(OriginalImage);
+            //}
+            //else
+            //{
+            //    //doc closed edges detected, proceed tranformation
+
+            //    //convert to point2f
+            //    foreach (var item in docEdgesPoints)
+            //    {
+            //        point2Fs.Add(new Point2f(item.X, item.Y));
+            //    }
+            //    transformImage = transform(OriginalImage, point2Fs);
+            //    if (transformImage != null)
+            //    {
+
+            //        //Step 6: grayscale it to give it that 'black and white' paper effect
+            //        transformImage = apply_doc_filters(transformImage);
+            //    }
+
+            //}
+
+            if (transformImage != null) Save(transformImage);
 
 
 
         }
-        public Mat apply_doc_filters(Mat image)
+        private void Save(Mat image)
+        {
+            var ms = image.ToMemoryStream();
+            myimg.Source = ImageSource.FromStream(() => new MemoryStream(ms.ToArray()));
+            box.IsVisible = false;
+            stackloading.IsVisible = false;
+            loading.IsVisible = false;
+            loading.IsRunning = false;
+        }
+        private static Mat apply_doc_filters(Mat image)
         {
             //if closed rectangle of the document cant be detected then we will not transform the image but just apply simple filter to make it look like scanned doc
 
@@ -175,7 +226,7 @@ namespace DocScanOpenCV
 
             return image;
         }
-        public Mat transform(Mat OriginalImage, List<Point2f> pts)
+        private static Mat transform(Mat OriginalImage, List<Point2f> pts)
         {
             Mat dst = null;
             try
@@ -200,12 +251,13 @@ namespace DocScanOpenCV
 
                     //new output image size
                     //(tl, tr, br, bl)
-                    Point2f[] dstPoints = new Point2f[] {
-                    new Point2f(0, 0),
-                    new Point2f(0, maxHeight - 1),
-                    new Point2f(maxWidth - 1, maxHeight - 1),
-                    new Point2f(maxWidth - 1, 0),
-                };
+                    Point2f[] dstPoints = new Point2f[] 
+                    {
+                        new Point2f(0, 0),
+                        new Point2f(0, maxHeight - 1),
+                        new Point2f(maxWidth - 1, maxHeight - 1),
+                        new Point2f(maxWidth - 1, 0),
+                    };
 
 
                     var matrix = Cv2.GetPerspectiveTransform(srcPoints, dstPoints);
@@ -220,32 +272,18 @@ namespace DocScanOpenCV
             return dst;
         }
 
-        private static void debug_showallcontours(Mat ori_img, HierarchyIndex[] hierarchyIndexes, Point[][] contours)
+        public async Task<PermissionStatus> CheckAndRequestPermissionAsync<T>(T permission)
+          where T : BasePermission
         {
-            //clone image
-            Mat contourImage = new Mat(ori_img.Rows, ori_img.Cols, ori_img.Type());
-            ori_img.CopyTo(contourImage);
-            var contourIndex = 0;
-            //debug to see all contour captured by openCV (without the closed border on the doc it will not work), so might need to implement fail safe to check if contour area smaller than 50% of the picture will not transform
-            //uncomment to draw for all contours    
-            foreach (var cont in contours)
+            var status = await permission.CheckStatusAsync();
+            if (status != PermissionStatus.Granted)
             {
-                Cv2.DrawContours(
-                  contourImage,
-                  contours,
-                  contourIndex,
-                  color: Scalar.Yellow,
-                  thickness: 3,
-                  lineType: LineTypes.Link8,
-                  hierarchy: hierarchyIndexes,
-                  maxLevel: int.MaxValue);
-
-                contourIndex = hierarchyIndexes[contourIndex].Next;
+                status = await permission.RequestAsync();
             }
 
-            var d1 = Xamarin.Forms.DependencyService.Get<ISaveViewFile>().SaveAndViewAsync("contourImage.jpg", contourImage.ToMemoryStream());
-
+            return status;
         }
+
     }
 }
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="549548876131348304" name="MediaControlView_audio_track_none_text">"Geen"</string>
+    <string msgid="4764598467753473351" name="MediaControlView_audio_track_number_text">"Track <ns1:g id="AUDIO_NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="3532548952520840186" name="MediaControlView_audio_track_text">"Audiotrack"</string>
+    <string msgid="480754169449450083" name="MediaControlView_playback_speed_normal">"Normaal"</string>
+    <string msgid="8150324864582460559" name="MediaControlView_playback_speed_text">"Afspeelsnelheid"</string>
+    <string msgid="1845015629089301203" name="MediaControlView_subtitle_off_text">"Uit"</string>
+    <string msgid="4652664932814816449" name="MediaControlView_subtitle_track_number_and_lang_text">"Track <ns1:g id="TRACK_NUMBER">%1$d</ns1:g> - <ns1:g id="LANG">%2$s</ns1:g>"</string>
+    <string msgid="7764843500931103738" name="MediaControlView_subtitle_track_number_text">"Track <ns1:g id="TRACK_NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="4037918370566028719" name="MediaControlView_time_placeholder">"00:00:00"</string>
+    <string msgid="5728972524527278943" name="mcv2_back_button_desc">"Terug"</string>
+    <string msgid="6888583680833967030" name="mcv2_cc_is_off">"Ondertiteling is uitgeschakeld. Klik om deze weer te geven."</string>
+    <string msgid="8890320846743698774" name="mcv2_cc_is_on">"Ondertiteling is ingeschakeld. Klik om deze te verbergen."</string>
+    <string msgid="1892680062375516133" name="mcv2_error_dialog_button">"OK"</string>
+    <string msgid="7189466356853482980" name="mcv2_ffwd_button_desc">"Dertig seconden vooruitgaan"</string>
+    <string msgid="6900438429115580036" name="mcv2_full_screen_button_desc">"Volledig scherm"</string>
+    <string msgid="1475333855817994058" name="mcv2_music_artist_unknown_text">"Artiest onbekend"</string>
+    <string msgid="6768779662371844918" name="mcv2_music_title_unknown_text">"Titel van nummer onbekend"</string>
+    <string msgid="4799850472802157220" name="mcv2_next_button_desc">"Volgende media"</string>
+    <string msgid="5414417081368449210" name="mcv2_non_music_title_unknown_text">"Titel van video onbekend"</string>
+    <string msgid="4619938179240477643" name="mcv2_overflow_left_button_desc">"Terug naar vorige lijst met knoppen"</string>
+    <string msgid="3959698281663418432" name="mcv2_overflow_right_button_desc">"Meer knoppen bekijken"</string>
+    <string msgid="997297527148989963" name="mcv2_pause_button_desc">"Onderbreken"</string>
+    <string msgid="1994649551115596877" name="mcv2_play_button_desc">"Afspelen"</string>
+    <string msgid="1201919666572302119" name="mcv2_playback_error_text">"Kan het gevraagde item niet afspelen"</string>
+    <string msgid="5367141424871007842" name="mcv2_previous_button_desc">"Vorige media"</string>
+    <string msgid="3498082316888662782" name="mcv2_replay_button_desc">"Opnieuw afspelen"</string>
+    <string msgid="5725552141091554735" name="mcv2_rewind_button_desc">"Tien seconden terugspoelen"</string>
+    <string msgid="2626125787370091731" name="mcv2_seek_bar_desc">"Afspeelvoortgang"</string>
+    <string msgid="8453746936008970620" name="mcv2_settings_button_desc">"Instellingen"</string>
+</resources>

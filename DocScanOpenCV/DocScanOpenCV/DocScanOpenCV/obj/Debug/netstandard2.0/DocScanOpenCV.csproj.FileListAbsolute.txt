@@ -17,3 +17,4 @@ D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV\obj\Debug\netsta
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV\obj\Debug\netstandard2.0\DocScanOpenCV.dll
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV\obj\Debug\netstandard2.0\ref\DocScanOpenCV.dll
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV\obj\Debug\netstandard2.0\DocScanOpenCV.pdb
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV\obj\Debug\netstandard2.0\Test\ProcessImagePage.xaml.g.cs

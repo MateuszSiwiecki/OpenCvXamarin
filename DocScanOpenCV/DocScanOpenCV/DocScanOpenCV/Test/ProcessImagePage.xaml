@@ -4,7 +4,7 @@
              x:Class="DocScanOpenCV.Test.ProcessImagePage">
     <Grid>
         <StackLayout >
-            <Button Text="Add Image" BackgroundColor="Orange" TextColor="White" Clicked="Button_Clicked"/>
+            <Button Text="Add Image" BackgroundColor="Orange" TextColor="White"/>
             <Image x:Name="myimg"/>
         </StackLayout>
         <BoxView x:Name="box" IsVisible="false" BackgroundColor="Black" Opacity="0.6"/>

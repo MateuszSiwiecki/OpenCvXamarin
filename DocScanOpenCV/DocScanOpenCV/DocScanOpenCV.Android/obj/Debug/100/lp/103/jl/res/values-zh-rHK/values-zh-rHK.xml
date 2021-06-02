@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="549548876131348304" name="MediaControlView_audio_track_none_text">"無"</string>
+    <string msgid="4764598467753473351" name="MediaControlView_audio_track_number_text">"曲目 <ns1:g id="AUDIO_NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="3532548952520840186" name="MediaControlView_audio_track_text">"音軌"</string>
+    <string msgid="480754169449450083" name="MediaControlView_playback_speed_normal">"正常"</string>
+    <string msgid="8150324864582460559" name="MediaControlView_playback_speed_text">"播放速度"</string>
+    <string msgid="1845015629089301203" name="MediaControlView_subtitle_off_text">"關閉"</string>
+    <string msgid="4652664932814816449" name="MediaControlView_subtitle_track_number_and_lang_text">"曲目 <ns1:g id="TRACK_NUMBER">%1$d</ns1:g> - <ns1:g id="LANG">%2$s</ns1:g>"</string>
+    <string msgid="7764843500931103738" name="MediaControlView_subtitle_track_number_text">"曲目 <ns1:g id="TRACK_NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="4037918370566028719" name="MediaControlView_time_placeholder">"00:00:00"</string>
+    <string msgid="5728972524527278943" name="mcv2_back_button_desc">"返回"</string>
+    <string msgid="6888583680833967030" name="mcv2_cc_is_off">"字幕已關閉，按一下即可顯示。"</string>
+    <string msgid="8890320846743698774" name="mcv2_cc_is_on">"字幕已開啟，按一下即可隱藏。"</string>
+    <string msgid="1892680062375516133" name="mcv2_error_dialog_button">"確定"</string>
+    <string msgid="7189466356853482980" name="mcv2_ffwd_button_desc">"前轉 30 秒"</string>
+    <string msgid="6900438429115580036" name="mcv2_full_screen_button_desc">"全螢幕"</string>
+    <string msgid="1475333855817994058" name="mcv2_music_artist_unknown_text">"演出者不明"</string>
+    <string msgid="6768779662371844918" name="mcv2_music_title_unknown_text">"歌名不明"</string>
+    <string msgid="4799850472802157220" name="mcv2_next_button_desc">"下一個媒體"</string>
+    <string msgid="5414417081368449210" name="mcv2_non_music_title_unknown_text">"影片標題不明"</string>
+    <string msgid="4619938179240477643" name="mcv2_overflow_left_button_desc">"返回上一個按鈕清單"</string>
+    <string msgid="3959698281663418432" name="mcv2_overflow_right_button_desc">"查看更多按鈕"</string>
+    <string msgid="997297527148989963" name="mcv2_pause_button_desc">"暫停"</string>
+    <string msgid="1994649551115596877" name="mcv2_play_button_desc">"播放"</string>
+    <string msgid="1201919666572302119" name="mcv2_playback_error_text">"無法播放您要求的影片"</string>
+    <string msgid="5367141424871007842" name="mcv2_previous_button_desc">"上一個媒體"</string>
+    <string msgid="3498082316888662782" name="mcv2_replay_button_desc">"重播"</string>
+    <string msgid="5725552141091554735" name="mcv2_rewind_button_desc">"倒帶 10 秒"</string>
+    <string msgid="2626125787370091731" name="mcv2_seek_bar_desc">"播放進度"</string>
+    <string msgid="8453746936008970620" name="mcv2_settings_button_desc">"設定"</string>
+</resources>

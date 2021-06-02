@@ -3,7 +3,6 @@ using Xamarin.Forms;
 using Environment1 = Android.OS.Environment;
 using Environment = System.Environment;
 using uri1 = Android.Net.Uri;
-using supp = Android.Support;
 using andApp = Android.App;
 using andwebkit = Android.Webkit;
 using andNet = Android.Net;
@@ -51,7 +50,7 @@ namespace DocScanOpenCV.Droid.Utils
                 outs.Flush();
                 outs.Close();
 
-
+                
                 if (file.Exists())
                 {
                     uri1 path = AndroidX.Core.Content.FileProvider.GetUriForFile(andApp.Application.Context, AppInfo.PackageName + ".fileprovider", file);

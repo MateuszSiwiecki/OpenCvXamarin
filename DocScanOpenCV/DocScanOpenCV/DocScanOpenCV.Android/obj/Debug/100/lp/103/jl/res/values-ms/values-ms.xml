@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="549548876131348304" name="MediaControlView_audio_track_none_text">"Tiada"</string>
+    <string msgid="4764598467753473351" name="MediaControlView_audio_track_number_text">"Lagu <ns1:g id="AUDIO_NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="3532548952520840186" name="MediaControlView_audio_track_text">"Runut audio"</string>
+    <string msgid="480754169449450083" name="MediaControlView_playback_speed_normal">"Biasa"</string>
+    <string msgid="8150324864582460559" name="MediaControlView_playback_speed_text">"Kelajuan main balik"</string>
+    <string msgid="1845015629089301203" name="MediaControlView_subtitle_off_text">"Mati"</string>
+    <string msgid="4652664932814816449" name="MediaControlView_subtitle_track_number_and_lang_text">"Runut <ns1:g id="TRACK_NUMBER">%1$d</ns1:g> - <ns1:g id="LANG">%2$s</ns1:g>"</string>
+    <string msgid="7764843500931103738" name="MediaControlView_subtitle_track_number_text">"Lagu <ns1:g id="TRACK_NUMBER">%1$d</ns1:g>"</string>
+    <string msgid="4037918370566028719" name="MediaControlView_time_placeholder">"00:00:00"</string>
+    <string msgid="5728972524527278943" name="mcv2_back_button_desc">"Kembali"</string>
+    <string msgid="6888583680833967030" name="mcv2_cc_is_off">"Sari kata dimatikan. Klik untuk menunjukkan sari kata."</string>
+    <string msgid="8890320846743698774" name="mcv2_cc_is_on">"Sari kata dihidupkan. Klik untuk menyembunyikan sari kata."</string>
+    <string msgid="1892680062375516133" name="mcv2_error_dialog_button">"OK"</string>
+    <string msgid="7189466356853482980" name="mcv2_ffwd_button_desc">"Maju ke hadapan sebanyak 30 saat"</string>
+    <string msgid="6900438429115580036" name="mcv2_full_screen_button_desc">"Skrin penuh"</string>
+    <string msgid="1475333855817994058" name="mcv2_music_artist_unknown_text">"Artis tidak diketahui"</string>
+    <string msgid="6768779662371844918" name="mcv2_music_title_unknown_text">"Tajuk lagu tidak diketahui"</string>
+    <string msgid="4799850472802157220" name="mcv2_next_button_desc">"Media seterusnya"</string>
+    <string msgid="5414417081368449210" name="mcv2_non_music_title_unknown_text">"Tajuk video tidak diketahui"</string>
+    <string msgid="4619938179240477643" name="mcv2_overflow_left_button_desc">"Kembali ke senarai butang terdahulu"</string>
+    <string msgid="3959698281663418432" name="mcv2_overflow_right_button_desc">"Lihat lagi butang"</string>
+    <string msgid="997297527148989963" name="mcv2_pause_button_desc">"Jeda"</string>
+    <string msgid="1994649551115596877" name="mcv2_play_button_desc">"Main"</string>
+    <string msgid="1201919666572302119" name="mcv2_playback_error_text">"Tidak dapat memainkan item yang anda minta"</string>
+    <string msgid="5367141424871007842" name="mcv2_previous_button_desc">"Media sebelumnya"</string>
+    <string msgid="3498082316888662782" name="mcv2_replay_button_desc">"Main semula"</string>
+    <string msgid="5725552141091554735" name="mcv2_rewind_button_desc">"Mandir 10 saat"</string>
+    <string msgid="2626125787370091731" name="mcv2_seek_bar_desc">"Kemajuan main balik"</string>
+    <string msgid="8453746936008970620" name="mcv2_settings_button_desc">"Tetapan"</string>
+</resources>
