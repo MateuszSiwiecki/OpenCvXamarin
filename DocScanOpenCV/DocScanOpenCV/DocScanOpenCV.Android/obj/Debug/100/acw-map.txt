@@ -1,3 +1,6 @@
+DocScanOpenCV.Droid.CameraXPreviewRenderer, DocScanOpenCV.Android;crc6446793fef7ad4d27c.CameraXPreviewRenderer
+DocScanOpenCV.Droid.CameraXPreviewRenderer;crc6446793fef7ad4d27c.CameraXPreviewRenderer
+docscanopencv.droid.CameraXPreviewRenderer;crc6446793fef7ad4d27c.CameraXPreviewRenderer
 DocScanOpenCV.Droid.MainActivity, DocScanOpenCV.Android;crc6446793fef7ad4d27c.MainActivity
 DocScanOpenCV.Droid.MainActivity;crc6446793fef7ad4d27c.MainActivity
 docscanopencv.droid.MainActivity;crc6446793fef7ad4d27c.MainActivity

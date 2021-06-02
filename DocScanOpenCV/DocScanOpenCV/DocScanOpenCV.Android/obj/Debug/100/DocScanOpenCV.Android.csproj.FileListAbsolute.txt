@@ -9,7 +9,6 @@ D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debu
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\OpenCvSharp.Android.dll
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\OpenCvSharp.dll
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\OpenCvSharp.Android.pdb
-D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\OpenCvSharp.Android.dll.mdb
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\OpenCvSharp.pdb
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\DocScanOpenCV.pdb
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\MonoAndroid,Version=v10.0.AssemblyAttributes.cs
@@ -627,3 +626,5 @@ D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debu
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\stamp\_GeneratePackageManagerJava.stamp
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\stamp\_ResolveLibraryProjectImports.stamp
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\DocScanOpenCV.Android.csprojAssemblyReference.cache
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc6446793fef7ad4d27c\CameraXPreviewRenderer.java
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\OpenCvSharp.Android.dll.mdb
