@@ -253,6 +253,7 @@ namespace CustomRenderer.Droid
             IsBusy = true;
             try
             {
+                
                 if (repeatingIsRunning) session.StopRepeating(); 
 
                 sessionBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
@@ -547,13 +548,13 @@ namespace CustomRenderer.Droid
                 //sessionBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
                 //stillCaptureBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
                 //stillCaptureBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
+                //stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
 
                 // Orientation
                 int rotation = (int)activity.WindowManager.DefaultDisplay.Rotation;
-                stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 180);
-                
+                //stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 180);
 
+                var qwe = stillCaptureBuilder.Build();
                 //session.StopRepeating();
                 session.Capture(stillCaptureBuilder.Build(), new CameraCaptureStillPictureSessionCallback(this), null);
                 
