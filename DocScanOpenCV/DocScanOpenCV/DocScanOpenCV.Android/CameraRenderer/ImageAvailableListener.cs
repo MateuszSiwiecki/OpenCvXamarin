@@ -21,6 +21,8 @@ namespace CustomRenderer.Droid
 {
     public class ImageAvailableListener : Java.Lang.Object, ImageReader.IOnImageAvailableListener
     {
+        OpenCvSharp.Android.NativeBinding binding;
+        OpenCvSharp.Android.AndroidCapture capture;
         public ImageAvailableListener(CameraFragment fragment, File file)
         {
             if (fragment == null)
@@ -30,6 +32,17 @@ namespace CustomRenderer.Droid
 
             owner = fragment;
             this.file = file;
+            binding = new OpenCvSharp.Android.NativeBinding(owner.Context, owner.Activity, owner.texture3);
+            var capture = binding.NewCapture(0);
+            capture.FrameReady += Capture_FrameReady;
+            capture.Start();
+            //owner.texture2.SurfaceTexture = capture.Texture;
+        }
+
+        private void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
+        {
+            binding.ImShow("qwe", e.Mat);
+            e.Mat.Dispose();
         }
 
         private readonly File file;
@@ -40,11 +53,10 @@ namespace CustomRenderer.Droid
 
         public void OnImageAvailable(ImageReader reader)
         {
-
             var image = reader.AcquireLatestImage();
-            //image.Close();
-            //return;
             if (image == null) return;
+            image.Close();
+            return;
             var planes = image.GetPlanes();
             
             var buffer = planes[0].Buffer;
@@ -68,8 +80,11 @@ namespace CustomRenderer.Droid
             //matrix.SetRectToRect(new RectF(heigth / 2, width / 2, heigth, width), new RectF(0, 0, heigth, width), Matrix.ScaleToFit.Fill);
             //matrix.PostRotate(90, width / 2, heigth / 2);
             //matrix.PostTranslate(-(width / 2) , - (heigth / 2) );
+           // reader.t
 
             canvas.DrawBitmap(bitmap, matrix, new Paint());
+
+
             
             owner.texture2.UnlockCanvasAndPost(canvas);
             owner.texture2.SetOpaque(true);

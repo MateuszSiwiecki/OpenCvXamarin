@@ -41,6 +41,7 @@ namespace CustomRenderer.Droid
 
         public CameraDevice device;
         public CaptureRequest.Builder sessionBuilder;
+        public CaptureRequest.Builder stillCaptureBuilder;
         public CaptureRequest mPreviewRequest;
         public CameraCaptureSession session;
         public CameraTemplate cameraTemplate;
@@ -62,6 +63,7 @@ namespace CustomRenderer.Droid
 
         public CustomRenderer.Droid.AutoFitTextureView texture1;
         public CustomRenderer.Droid.AutoFitTextureView texture2;
+        public Android.Widget.ImageView texture3;
 
         TaskCompletionSource<CameraDevice> initTaskSource;
         TaskCompletionSource<bool> permissionsRequested;
@@ -101,6 +103,7 @@ namespace CustomRenderer.Droid
         {
             texture1 = view.FindViewById<CustomRenderer.Droid.AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture1);
             texture2 = view.FindViewById<CustomRenderer.Droid.AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture2); 
+            texture3 = view.FindViewById<Android.Widget.ImageView>(DocScanOpenCV.Droid.Resource.Id.cameratexture3); 
             mCaptureCallback = new CameraCaptureListener(this);
             mOnImageAvailableListener = new ImageAvailableListener(this, new 
                 Java.IO.File(System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "img.png")));
@@ -188,11 +191,9 @@ namespace CustomRenderer.Droid
                     sensorOrientation = (int)characteristics.Get(CameraCharacteristics.SensorOrientation);
                     cameraType = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
 
-
-                    mImageReader = ImageReader.NewInstance(previewSize.Height * 4, previewSize.Width * 4,  ImageFormatType.Jpeg, 2);
+                    mImageReader = ImageReader.NewInstance(previewSize.Height * 4, previewSize.Width * 4,  ImageFormatType.Jpeg, 2);                    
                     mImageReader.SetOnImageAvailableListener(mOnImageAvailableListener, backgroundHandler);
-
-
+                    
                     if (Resources.Configuration.Orientation == Android.Content.Res.Orientation.Landscape)
                     {
                         texture1.SetAspectRatio(previewSize.Width, previewSize.Height);
@@ -229,20 +230,14 @@ namespace CustomRenderer.Droid
                     captureSessionOpenCloseLock.Release();
                     device = await initTaskSource.Task;
                     initTaskSource = null;
-                    if (device != null)
-                    {
-                        await PrepareSession();
-                    }
+                    if (device != null) await PrepareSession(); 
                 }
                 catch (Java.Lang.Exception ex)
                 {
                     Console.WriteLine("Failed to open camera.", ex);
                     Available = false;
                 }
-                finally
-                {
-                    IsBusy = false;
-                }
+                finally { IsBusy = false; }
             }
         }
 
@@ -258,17 +253,12 @@ namespace CustomRenderer.Droid
 
                 sessionBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
                 sessionBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                sessionBuilder.Set(CaptureRequest.JpegOrientation, 180);
                 session.SetRepeatingRequest(sessionBuilder.Build(), listener: null, backgroundHandler);
                 repeatingIsRunning = true;
             }
-            catch (Java.Lang.Exception error)
-            {
-                Console.WriteLine("Update preview exception.", error);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            catch (Java.Lang.Exception error) { Console.WriteLine("Update preview exception.", error); }
+            finally { IsBusy = false; }
         }
 
         #endregion
@@ -398,10 +388,7 @@ namespace CustomRenderer.Droid
                 }, null);
 
                 session = await tcs.Task;
-                if (session != null)
-                {
-                    UpdateRepeatingRequest();
-                }
+                if (session != null) UpdateRepeatingRequest();
             }
             catch (Java.Lang.Exception ex)
             {
@@ -418,10 +405,8 @@ namespace CustomRenderer.Droid
         void CloseSession()
         {
             repeatingIsRunning = false;
-            if (session == null)
-            {
-                return;
-            }
+
+            if (session == null) return; 
 
             try
             {
@@ -431,14 +416,8 @@ namespace CustomRenderer.Droid
                 session.Dispose();
                 session = null;
             }
-            catch (CameraAccessException ex)
-            {
-                Console.WriteLine("Camera access error.", ex);
-            }
-            catch (Java.Lang.Exception ex)
-            {
-                Console.WriteLine("Error closing device.", ex);
-            }
+            catch (CameraAccessException ex) { Console.WriteLine("Camera access error.", ex); }
+            catch (Java.Lang.Exception ex) {  Console.WriteLine("Error closing device.", ex); }
         }
 
         void CloseDevice(CameraDevice inputDevice)
@@ -527,7 +506,6 @@ namespace CustomRenderer.Droid
                 e.PrintStackTrace();
             }
         }
-        private CaptureRequest.Builder stillCaptureBuilder;
         public void CaptureStillPicture()
         {
             try
@@ -546,16 +524,15 @@ namespace CustomRenderer.Droid
 
                 //sessionBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
                 //sessionBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                //stillCaptureBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
-                //stillCaptureBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                //stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
+                stillCaptureBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
+                stillCaptureBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
 
                 // Orientation
                 int rotation = (int)activity.WindowManager.DefaultDisplay.Rotation;
-                //stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 180);
+                stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 180);
 
-                var qwe = stillCaptureBuilder.Build();
-                //session.StopRepeating();
+                session.StopRepeating();
                 session.Capture(stillCaptureBuilder.Build(), new CameraCaptureStillPictureSessionCallback(this), null);
                 
             }

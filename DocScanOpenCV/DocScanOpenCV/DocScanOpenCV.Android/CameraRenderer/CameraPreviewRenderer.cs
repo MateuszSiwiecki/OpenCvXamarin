@@ -47,6 +47,7 @@ namespace CustomRenderer.Droid
         public CameraPreviewRenderer(Context context) : base(context)
         {
             visualElementRenderer = new VisualElementRenderer(this);
+            
         }
 
         void OnElementChanged(ElementChangedEventArgs<CameraPreview> e)

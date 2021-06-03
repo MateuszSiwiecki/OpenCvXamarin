@@ -36,6 +36,7 @@ foreground;obj\Debug\100\res\mipmap-anydpi-v26\icon_round.xml
 FrameLayout;D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\lp\58\jl\res\layout\bottomtablayout.xml
 FrameLayout;obj\Debug\100\res\layout\camerafragment.xml
 FrameLayout;obj\Debug\100\res\layout\cameralayout.xml
+ImageView;obj\Debug\100\res\layout\camerafragment.xml
 item;D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\lp\58\jl\res\values\styles.xml
 item;obj\Debug\100\res\values\styles.xml
 LinearLayout;D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\lp\58\jl\res\layout\bottomtablayout.xml
