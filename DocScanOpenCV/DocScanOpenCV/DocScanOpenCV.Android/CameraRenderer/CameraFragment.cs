@@ -60,8 +60,8 @@ namespace CustomRenderer.Droid
 
         Java.Util.Concurrent.Semaphore captureSessionOpenCloseLock = new Java.Util.Concurrent.Semaphore(1);
 
-        public AutoFitTextureView texture1;
-        public AutoFitTextureView texture2;
+        public CustomRenderer.Droid.AutoFitTextureView texture1;
+        public CustomRenderer.Droid.AutoFitTextureView texture2;
 
         TaskCompletionSource<CameraDevice> initTaskSource;
         TaskCompletionSource<bool> permissionsRequested;
@@ -99,8 +99,8 @@ namespace CustomRenderer.Droid
 
         public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
         {
-            texture1 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture1);
-            texture2 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture2);
+            texture1 = view.FindViewById<CustomRenderer.Droid.AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture1);
+            texture2 = view.FindViewById<CustomRenderer.Droid.AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture2); 
             mCaptureCallback = new CameraCaptureListener(this);
             mOnImageAvailableListener = new ImageAvailableListener(this, new 
                 Java.IO.File(System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "img.png")));
@@ -182,9 +182,9 @@ namespace CustomRenderer.Droid
                     
                     StreamConfigurationMap map = (StreamConfigurationMap)characteristics.Get(CameraCharacteristics.ScalerStreamConfigurationMap);
 
-                    //previewSize = new Android.Util.Size(1920, 1080);
-                    previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
-                        texture1.Width, texture1.Height, GetMaxSize(map.GetOutputSizes((int)ImageFormatType.Jpeg)));
+                    previewSize = new Android.Util.Size(1920, 1080);
+                    //previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
+                        //texture1.Width, texture1.Height, GetMaxSize(map.GetOutputSizes((int)ImageFormatType.Jpeg)));
                     sensorOrientation = (int)characteristics.Get(CameraCharacteristics.SensorOrientation);
                     cameraType = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
 
