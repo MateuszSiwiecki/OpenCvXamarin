@@ -41,10 +41,9 @@ namespace CustomRenderer.Droid
         public void OnImageAvailable(ImageReader reader)
         {
 
-
             var image = reader.AcquireLatestImage();
-            image.Close();
-            return;
+            //image.Close();
+            //return;
             if (image == null) return;
             var planes = image.GetPlanes();
             
@@ -62,13 +61,13 @@ namespace CustomRenderer.Droid
                 image.Close();
                 return;
             }
-            
+
             var canvas = owner.texture2.LockCanvas();
             var matrix = new Matrix();
             var width = canvas.Width;
             var heigth = canvas.Height;
-            matrix.SetRectToRect(new RectF(0, 0, width, heigth), new RectF(0, 0, width, heigth), Matrix.ScaleToFit.Start);
-           // matrix.PostRotate(90, width / 2, heigth / 2);
+            //matrix.SetRectToRect(new RectF(0, 0, heigth, width), new RectF(0, 0, heigth, width ), Matrix.ScaleToFit.Fill);
+            //matrix.PostRotate(90, width / 2, heigth / 2);
             canvas.DrawBitmap(bitmap, matrix, new Paint());
             
             owner.texture2.UnlockCanvasAndPost(canvas);

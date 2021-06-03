@@ -189,7 +189,7 @@ namespace CustomRenderer.Droid
                     cameraType = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
 
 
-                    mImageReader = ImageReader.NewInstance(previewSize.Width, previewSize.Height, ImageFormatType.Jpeg, 2);
+                    mImageReader = ImageReader.NewInstance(previewSize.Height , previewSize.Width,  ImageFormatType.Jpeg, 2);
                     mImageReader.SetOnImageAvailableListener(mOnImageAvailableListener, backgroundHandler);
 
 
@@ -377,7 +377,7 @@ namespace CustomRenderer.Droid
 
 
                     texture1.SetDefaultBufferSize(previewSize.Width, previewSize.Height);
-                    texture2.SurfaceTexture.SetDefaultBufferSize(previewSize.Width, previewSize.Height);
+                    texture2.SurfaceTexture.SetDefaultBufferSize((int)(previewSize.Height) , (int)(previewSize.Width) );
                     Surface previewSurface1 = new Surface(texture1);
                     surfaces.Add(previewSurface1);
                     surfaces.Add(mImageReader.Surface);
