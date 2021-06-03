@@ -180,7 +180,7 @@ namespace CustomRenderer.Droid
                 {
                     CameraCharacteristics characteristics = Manager.GetCameraCharacteristics(cameraId);
                     
-                    StreamConfigurationMap map = (StreamConfigurationMap)characteristics.Get(CameraCharacteristics.ScalerStreamConfigurationMap);
+                    //StreamConfigurationMap map = (StreamConfigurationMap)characteristics.Get(CameraCharacteristics.ScalerStreamConfigurationMap);
 
                     previewSize = new Android.Util.Size(1920, 1080);
                     //previewSize = ChooseOptimalSize(map.GetOutputSizes(Class.FromType(typeof(SurfaceTexture))),
@@ -189,7 +189,7 @@ namespace CustomRenderer.Droid
                     cameraType = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
 
 
-                    mImageReader = ImageReader.NewInstance(previewSize.Width / 16, previewSize.Height / 16, ImageFormatType.Yuv420888, 2);
+                    mImageReader = ImageReader.NewInstance(previewSize.Width, previewSize.Height, ImageFormatType.Jpeg, 2);
                     mImageReader.SetOnImageAvailableListener(mOnImageAvailableListener, backgroundHandler);
 
 
@@ -542,6 +542,11 @@ namespace CustomRenderer.Droid
 
                 stillCaptureBuilder.AddTarget(mImageReader.Surface);
                 // Use the same AE and AF modes as the preview.
+
+                //sessionBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
+                //sessionBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                stillCaptureBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
+                stillCaptureBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
                 stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
 
                 // Orientation

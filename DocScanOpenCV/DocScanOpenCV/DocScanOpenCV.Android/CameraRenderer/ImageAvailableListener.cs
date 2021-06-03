@@ -40,7 +40,11 @@ namespace CustomRenderer.Droid
 
         public void OnImageAvailable(ImageReader reader)
         {
+
+
             var image = reader.AcquireLatestImage();
+            image.Close();
+            return;
             if (image == null) return;
             var planes = image.GetPlanes();
             
@@ -49,7 +53,7 @@ namespace CustomRenderer.Droid
             byte[] bytes = new byte[buffer.Capacity()];
             buffer.Get(bytes);
 
-
+            //var qwe = new Android.Renderscripts.ScriptIntrinsicYuvToRGB();
             //var output = ProcessImage(bytes);
             var bitmap = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
             //output.Dispose();
@@ -63,8 +67,8 @@ namespace CustomRenderer.Droid
             var matrix = new Matrix();
             var width = canvas.Width;
             var heigth = canvas.Height;
-            matrix.SetRectToRect(new RectF(0, 0, width * 0.7f, heigth), new RectF(0, 0, width * 0.7f, heigth), Matrix.ScaleToFit.Start);
-            matrix.PostRotate(90, width / 2, heigth / 2);
+            matrix.SetRectToRect(new RectF(0, 0, width, heigth), new RectF(0, 0, width, heigth), Matrix.ScaleToFit.Start);
+           // matrix.PostRotate(90, width / 2, heigth / 2);
             canvas.DrawBitmap(bitmap, matrix, new Paint());
             
             owner.texture2.UnlockCanvasAndPost(canvas);
