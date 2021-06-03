@@ -80,12 +80,6 @@ namespace CustomRenderer.Droid
         {
             ElementPropertyChanged?.Invoke(this, e);
 
-            switch (e.PropertyName)
-            {
-                case "Width":
-                    await cameraFragment.RetrieveCameraDevice();
-                    break;
-            }
         }
 
         protected override void Dispose(bool disposing)
