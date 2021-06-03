@@ -189,7 +189,7 @@ namespace CustomRenderer.Droid
                     cameraType = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
 
 
-                    mImageReader = ImageReader.NewInstance(previewSize.Width, previewSize.Height, ImageFormatType.Jpeg, 2);
+                    mImageReader = ImageReader.NewInstance(previewSize.Width / 16, previewSize.Height / 16, ImageFormatType.Yuv420888, 2);
                     mImageReader.SetOnImageAvailableListener(mOnImageAvailableListener, backgroundHandler);
 
 
