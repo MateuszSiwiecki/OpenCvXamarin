@@ -151,8 +151,9 @@ namespace DocScanOpenCV.Utils
             // perform the rotation
             var rotationMatrix2d = Cv2.GetRotationMatrix2D(center.Value, angle, scale);
 
-            var warpAffineResult = new Mat();
+            var warpAffineResult = new Mat(new Size(h, w), image.Type());
             Cv2.WarpAffine(image, warpAffineResult, rotationMatrix2d, new Size((int)(w * scale), (int)(h * scale)));
+            rotationMatrix2d.Dispose();
             // return the rotated image
             return warpAffineResult;
         }

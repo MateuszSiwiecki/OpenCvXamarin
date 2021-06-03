@@ -52,8 +52,8 @@ namespace CustomRenderer.Droid
             byte[] bytes = new byte[buffer.Capacity()];
             buffer.Get(bytes);
 
-            //var qwe = new Android.Renderscripts.ScriptIntrinsicYuvToRGB();
             //var output = ProcessImage(bytes);
+            //var bytesProcessed = output.ToBytes();
             var bitmap = BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length);
             //output.Dispose();
             if (bitmap == null)
@@ -61,13 +61,14 @@ namespace CustomRenderer.Droid
                 image.Close();
                 return;
             }
-
             var canvas = owner.texture2.LockCanvas();
             var matrix = new Matrix();
             var width = canvas.Width;
             var heigth = canvas.Height;
-            //matrix.SetRectToRect(new RectF(0, 0, heigth, width), new RectF(0, 0, heigth, width ), Matrix.ScaleToFit.Fill);
+            //matrix.SetRectToRect(new RectF(heigth / 2, width / 2, heigth, width), new RectF(0, 0, heigth, width), Matrix.ScaleToFit.Fill);
             //matrix.PostRotate(90, width / 2, heigth / 2);
+            //matrix.PostTranslate(-(width / 2) , - (heigth / 2) );
+
             canvas.DrawBitmap(bitmap, matrix, new Paint());
             
             owner.texture2.UnlockCanvasAndPost(canvas);
@@ -84,6 +85,7 @@ namespace CustomRenderer.Droid
         {
             Mat matImage = Mat.FromImageData(bytes);
             matImage = matImage.CvtColor(ColorConversionCodes.BGR2GRAY);
+            //matImage = DocScanOpenCV.Utils.ImageProcessing.Rotate(matImage, -90);
             return matImage;
         }
     }

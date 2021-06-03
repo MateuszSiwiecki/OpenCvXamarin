@@ -189,7 +189,7 @@ namespace CustomRenderer.Droid
                     cameraType = (LensFacing)(int)characteristics.Get(CameraCharacteristics.LensFacing);
 
 
-                    mImageReader = ImageReader.NewInstance(previewSize.Height , previewSize.Width,  ImageFormatType.Jpeg, 2);
+                    mImageReader = ImageReader.NewInstance(previewSize.Height * 4, previewSize.Width * 4,  ImageFormatType.Jpeg, 2);
                     mImageReader.SetOnImageAvailableListener(mOnImageAvailableListener, backgroundHandler);
 
 
@@ -545,13 +545,14 @@ namespace CustomRenderer.Droid
 
                 //sessionBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
                 //sessionBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
-                stillCaptureBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
-                stillCaptureBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
+                //stillCaptureBuilder.Set(CaptureRequest.ControlMode, (int)ControlMode.Auto);
+                //stillCaptureBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.On);
                 stillCaptureBuilder.Set(CaptureRequest.ControlAfMode, (int)ControlAFMode.ContinuousPicture);
 
                 // Orientation
                 int rotation = (int)activity.WindowManager.DefaultDisplay.Rotation;
-               // stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 90);
+                stillCaptureBuilder.Set(CaptureRequest.JpegOrientation, 180);
+                
 
                 //session.StopRepeating();
                 session.Capture(stillCaptureBuilder.Build(), new CameraCaptureStillPictureSessionCallback(this), null);
