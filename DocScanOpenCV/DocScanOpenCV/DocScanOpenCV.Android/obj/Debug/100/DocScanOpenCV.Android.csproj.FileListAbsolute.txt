@@ -469,10 +469,8 @@ D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debu
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc643f46942d9dd1fff9\WebViewRenderer.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc643f46942d9dd1fff9\WebViewRenderer_JavascriptResult.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\AutoFitTextureView.java
-D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\CameraCaptureStateListener.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\CameraFragment.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\CameraPreviewRenderer.java
-D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\CameraStateListener.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc6446793fef7ad4d27c\MainActivity.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc646957603ea1820544\MediaPickerActivity.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64720bb2db43a66fe9\ButtonRenderer.java
@@ -628,6 +626,3 @@ D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debu
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\DocScanOpenCV.Android.csprojAssemblyReference.cache
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc6446793fef7ad4d27c\CameraXPreviewRenderer.java
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\bin\Debug\OpenCvSharp.Android.dll.mdb
-D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\CameraCaptureListener.java
-D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\CameraCaptureStillPictureSessionCallback.java
-D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\android\src\crc64451ac60ab461826b\ImageAvailableListener.java
