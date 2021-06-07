@@ -139,13 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CameraRenderer\AutoFitTextureView.cs" />
-    <Compile Include="CameraRenderer\CameraCaptureStateListener.cs" />
     <Compile Include="CameraRenderer\CameraFragment.cs" />
     <Compile Include="CameraRenderer\CameraPreviewRenderer.cs" />
-    <Compile Include="CameraRenderer\CameraStateListener.cs" />
-    <Compile Include="CameraRenderer\CameraCaptureListener.cs" />
-    <Compile Include="CameraRenderer\CameraCaptureStillPictureSessionCallback.cs" />
-    <Compile Include="CameraRenderer\ImageAvailableListener.cs" />
     <Compile Include="CameraX\CameraXPreviewRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -219,7 +214,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionDocScanOpenCVAndroidHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionDocScanOpenCVAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadUnhandledDeviceExceptionDocScanOpenCVAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionDocScanOpenCVAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

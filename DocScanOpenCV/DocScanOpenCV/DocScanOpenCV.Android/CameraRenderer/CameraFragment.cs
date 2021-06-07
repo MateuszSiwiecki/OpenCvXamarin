@@ -25,7 +25,7 @@ namespace CustomRenderer.Droid
     public class CameraFragment : Fragment, TextureView.ISurfaceTextureListener
     {
         OpenCvSharp.Android.NativeBinding binding;
-        OpenCvSharp.Android.AndroidCapture capture;
+        OpenCvSharp.Native.Capture capture;
         public Android.Widget.ImageView texture;
         public CameraPreview Element { get; set; }
 
@@ -50,7 +50,7 @@ namespace CustomRenderer.Droid
         {
             texture = view.FindViewById<Android.Widget.ImageView>(DocScanOpenCV.Droid.Resource.Id.cameratexture3);
             binding = new OpenCvSharp.Android.NativeBinding(Context, Activity, texture);
-            capture = binding.NewCapture(0) as OpenCvSharp.Android.AndroidCapture;
+            capture = binding.NewCapture(0);
             capture.FrameReady += Capture_FrameReady;
             capture.Start();
         }
@@ -58,19 +58,8 @@ namespace CustomRenderer.Droid
         private Task continousTask;
         private async void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
-            return;
-            //if (processing) return;
-            //processing = true;
             var image = e.Mat;
             binding.ImShow("qwe", image);
-            Action<Task> del = (tsk) =>
-            {
-                image = ImageProcessing.PreviewProcess(image);
-                binding.ImShow("qwe", image);
-            };
-            continousTask ??= Task.Run(() => del);
-
-            continousTask.ContinueWith(del);
         }
 
         public override void OnPause()
