@@ -18,6 +18,7 @@ using Java.Util.Concurrent;
 using Xamarin.Forms.Platform.Android;
 using DocScanOpenCV.CameraRenderer;
 using Android.Media;
+using DocScanOpenCV.Utils;
 
 namespace CustomRenderer.Droid
 {
@@ -52,10 +53,23 @@ namespace CustomRenderer.Droid
             capture.FrameReady += Capture_FrameReady;
             capture.Start();
         }
-
-        private void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
+        private volatile bool processing = false;
+        private Task continousTask;
+        private async void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
-            throw new NotImplementedException();
+            //if (processing) return;
+            //processing = true;
+            var image = e.Mat;
+            binding.ImShow("qwe", image);
+            return;
+            Action<Task> del = (tsk) =>
+            {
+                image = ImageProcessing.PreviewProcess(image);
+                binding.ImShow("qwe", image);
+            };
+            continousTask ??= Task.Run(() => del);
+
+            continousTask.ContinueWith(del);
         }
 
         public override void OnPause()

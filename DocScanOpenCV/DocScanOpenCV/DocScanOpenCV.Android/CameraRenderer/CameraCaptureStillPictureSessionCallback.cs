@@ -30,7 +30,6 @@ namespace CustomRenderer.Droid
         {
             // If something goes wrong with the save (or the handler isn't even 
             // registered, this code will toast a success message regardless...)
-            owner.UnlockFocus();
         }
     }
 }

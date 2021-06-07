@@ -2618,13 +2618,13 @@
     },
     "OpenCvSharp/1.0.0": {
       "type": "project",
-      "path": "../../../../OpenCvSharp/src/OpenCvSharp/OpenCvSharp.csproj",
-      "msbuildProject": "../../../../OpenCvSharp/src/OpenCvSharp/OpenCvSharp.csproj"
+      "path": "../../../../opencvsource/src/OpenCvSharp/OpenCvSharp.csproj",
+      "msbuildProject": "../../../../opencvsource/src/OpenCvSharp/OpenCvSharp.csproj"
     },
     "OpenCvSharp.Android/1.0.0": {
       "type": "project",
-      "path": "../../../../OpenCvSharp/src/OpenCvSharp.Android/OpenCvSharp.Android.csproj",
-      "msbuildProject": "../../../../OpenCvSharp/src/OpenCvSharp.Android/OpenCvSharp.Android.csproj"
+      "path": "../../../../opencvsource/src/OpenCvSharp.Android/OpenCvSharp.Android.csproj",
+      "msbuildProject": "../../../../opencvsource/src/OpenCvSharp.Android/OpenCvSharp.Android.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2692,11 +2692,11 @@
       "frameworks": {
         "monoandroid10.0": {
           "projectReferences": {
-            "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
-              "projectPath": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj"
+            "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
+              "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj"
             },
-            "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
-              "projectPath": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj"
+            "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
+              "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj"
             },
             "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV.csproj": {
               "projectPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV.csproj"

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DocScanOpenCV.Utils
 {
@@ -63,6 +64,32 @@ namespace DocScanOpenCV.Utils
             image = image.Dilate(null);
             return image;
         }
+
+        public static Mat PreviewProcess(Mat image)
+        {
+            var processingImage = image.Clone();
+            processingImage = ProccessToGrayContuour(processingImage);
+            var contour = FindContours_BiggestContourInt(processingImage);
+            processingImage.Dispose();
+            return DrawContour(image, contour);
+        }
+
+        public static async Task<Mat> ProccessToGrayContuourAsync(Mat image)
+        {
+            return await Task.Run(() =>
+            {
+                lock (proccessToGrayContuourAsyncLockObject)
+                {
+                    image = image.CvtColor(ColorConversionCodes.BGR2GRAY);
+                    image = image.Threshold(127, 255, ThresholdTypes.Binary);
+                    image = image.MedianBlur(3);
+                    image = image.Canny(75, 200);
+                    image = image.Dilate(null);
+                    return image;
+                }
+            });
+        }
+        private static readonly object proccessToGrayContuourAsyncLockObject = new object();
         public static List<Point[]> FindContours_SortedContours(Mat image)
         {
             Cv2.FindContours(image, out var foundedContour, out var hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
@@ -109,12 +136,12 @@ namespace DocScanOpenCV.Utils
         public static double ContourArea(Point[] x) => Cv2.ContourArea(x, true);
         public static Mat DrawContour(Mat image, IEnumerable<IEnumerable<Point>> contours)
         {
-            Cv2.DrawContours(image, contours, -1, Scalar.Red, 5);
+            image.DrawContours( contours, -1, Scalar.Red, 5);
             return image;
         }
         public static Mat DrawContour(Mat image, IEnumerable<Point> countour)
         {
-            Cv2.DrawContours(image, new List<IEnumerable<Point>> { countour }, -1, Scalar.Red, 5);
+            image.DrawContours(new List<IEnumerable<Point>> { countour }, -1, Scalar.Red, 5);
             return image;
         }
         public static Mat LoadImage(string filePath) => Cv2.ImRead(filePath);

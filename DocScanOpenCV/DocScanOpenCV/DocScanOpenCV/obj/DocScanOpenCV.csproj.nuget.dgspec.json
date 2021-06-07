@@ -4,16 +4,16 @@
     "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV.csproj": {}
   },
   "projects": {
-    "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
+    "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj",
+        "projectUniqueName": "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj",
         "projectName": "OpenCvSharp.Android",
-        "projectPath": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj",
+        "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj",
         "frameworks": {
           "monoandroid90": {
             "projectReferences": {
-              "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
-                "projectPath": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj"
+              "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
+                "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj"
               }
             }
           }
@@ -23,14 +23,14 @@
         "monoandroid90": {}
       }
     },
-    "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
+    "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj",
+        "projectUniqueName": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj",
         "projectName": "OpenCvSharp",
-        "projectPath": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj",
+        "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj",
         "packagesPath": "C:\\Users\\mateu\\.nuget\\packages\\",
-        "outputPath": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\obj\\",
+        "outputPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Microsoft\\Xamarin\\NuGet\\"
@@ -113,11 +113,11 @@
         "frameworks": {
           "netstandard2.1": {
             "projectReferences": {
-              "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
-                "projectPath": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj"
+              "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
+                "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj"
               },
-              "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
-                "projectPath": "D:\\repo\\OpenCvSharp\\src\\OpenCvSharp\\OpenCvSharp.csproj"
+              "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
+                "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj"
               }
             }
           }

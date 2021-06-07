@@ -179,12 +179,12 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj">
+    <ProjectReference Include="..\..\..\..\opencvsource\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj">
       <Project>{f94f9e8a-e239-45ea-9c61-c7855c8b6f25}</Project>
       <Name>OpenCvSharp.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp\OpenCvSharp.csproj">
-      <Project>{6eccf91f-145a-44ea-b92d-465a778d360a}</Project>
+    <ProjectReference Include="..\..\..\..\opencvsource\src\OpenCvSharp\OpenCvSharp.csproj">
+      <Project>{590b5555-0747-4a7b-9269-287adcfa1f5a}</Project>
       <Name>OpenCvSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\DocScanOpenCV\DocScanOpenCV.csproj">
@@ -219,7 +219,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadUnhandledDeviceExceptionDocScanOpenCVAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionDocScanOpenCVAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionDocScanOpenCVAndroidHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionDocScanOpenCVAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

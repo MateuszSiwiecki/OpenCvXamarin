@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj" />
-    <ProjectReference Include="..\..\..\..\OpenCvSharp\src\OpenCvSharp\OpenCvSharp.csproj" />
+    <ProjectReference Include="..\..\..\..\opencvsource\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj" />
+    <ProjectReference Include="..\..\..\..\opencvsource\src\OpenCvSharp\OpenCvSharp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

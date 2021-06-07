@@ -54,7 +54,6 @@ set;D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\
 string;D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\lp\58\jl\res\values\strings.xml
 style;D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\lp\58\jl\res\values\styles.xml
 style;obj\Debug\100\res\values\styles.xml
-TextureView;obj\Debug\100\res\layout\camerafragment.xml
 TextureView;obj\Debug\100\res\layout\cameralayout.xml
 translate;D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\lp\58\jl\res\anim\enterfromleft.xml
 translate;D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\DocScanOpenCV.Android\obj\Debug\100\lp\58\jl\res\anim\enterfromright.xml
