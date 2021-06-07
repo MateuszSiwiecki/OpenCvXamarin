@@ -38,13 +38,15 @@ namespace OpenCvSharp.Android
         Bitmap imShowBitmap;
         byte[] imShowBuffer;
         object imShowLocker = new object();
-        public override void ImShow(string name, Mat m)
+        public override void ImShow(string name, Mat m) => ImShow(name, m, ImShowTarget, imShowLocker);
+        public void ImShow(string name, Mat m, ImageView tagetView) => ImShow(name, m, tagetView, new object());
+        private void ImShow(string name, Mat m, ImageView tagetView, object lockObject)
         {
-            if (ImShowTarget != null)
+            if (tagetView != null)
             {
-                CvProfiler.Start("imshow");
-                lock (imShowLocker)
+                lock (lockObject)
                 {
+                    CvProfiler.Start($"imshow {name}");
                     if (imShowBitmap == null)
                     {
                         imShowBitmap = Bitmap.CreateBitmap(m.Width, m.Height, Bitmap.Config.Argb8888);
@@ -74,11 +76,11 @@ namespace OpenCvSharp.Android
 
                         MainActivity.RunOnUiThread(() =>
                         {
-                            ImShowTarget.SetImageBitmap(imShowBitmap);
+                            tagetView.SetImageBitmap(imShowBitmap);
                         });
                     }
+                    CvProfiler.End($"imshow {name}");
                 }
-                CvProfiler.End("imshow");
             }
         }
 
@@ -104,7 +106,7 @@ namespace OpenCvSharp.Android
             {
                 while (true)
                 {
-                    if(keyPending != 255)
+                    if (keyPending != 255)
                     {
                         Sleep(1);
                         break;
