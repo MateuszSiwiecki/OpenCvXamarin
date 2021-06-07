@@ -23,11 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\opencvsource\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj" />
-    <ProjectReference Include="..\..\..\..\opencvsource\src\OpenCvSharp\OpenCvSharp.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Update="Test\ProcessImagePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

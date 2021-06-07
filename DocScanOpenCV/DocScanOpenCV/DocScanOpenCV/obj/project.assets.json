@@ -51,31 +51,6 @@
           "buildTransitive/Xamarin.Forms.props": {},
           "buildTransitive/Xamarin.Forms.targets": {}
         }
-      },
-      "OpenCvSharp/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Xamarin.Forms": "5.0.0.2012"
-        },
-        "compile": {
-          "bin/placeholder/OpenCvSharp.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/OpenCvSharp.dll": {}
-        }
-      },
-      "OpenCvSharp.Android/1.0.0": {
-        "type": "project",
-        "dependencies": {
-          "OpenCvSharp": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/OpenCvSharp.Android.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/OpenCvSharp.Android.dll": {}
-        }
       }
     }
   },
@@ -430,22 +405,10 @@
         "xamarin.forms.5.0.0.2012.nupkg.sha512",
         "xamarin.forms.nuspec"
       ]
-    },
-    "OpenCvSharp/1.0.0": {
-      "type": "project",
-      "path": "../../../../opencvsource/src/OpenCvSharp/OpenCvSharp.csproj",
-      "msbuildProject": "../../../../opencvsource/src/OpenCvSharp/OpenCvSharp.csproj"
-    },
-    "OpenCvSharp.Android/1.0.0": {
-      "type": "project",
-      "path": "../../../../opencvsource/src/OpenCvSharp.Android/OpenCvSharp.Android.csproj",
-      "msbuildProject": "../../../../opencvsource/src/OpenCvSharp.Android/OpenCvSharp.Android.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.1": [
-      "OpenCvSharp >= 1.0.0",
-      "OpenCvSharp.Android >= 1.0.0",
       "Xam.Plugin.Media >= 5.0.1",
       "Xamarin.Essentials >= 1.5.3.2",
       "Xamarin.Forms >= 5.0.0.2012"
@@ -481,14 +444,7 @@
       },
       "frameworks": {
         "netstandard2.1": {
-          "projectReferences": {
-            "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
-              "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj"
-            },
-            "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
-              "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

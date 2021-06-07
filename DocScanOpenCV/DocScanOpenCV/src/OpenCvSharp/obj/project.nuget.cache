@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zesBg1K6AeF7o2vbGf40AcOuQ7gI8Z4V1tJCa7lUEw3BMfUl4BQ4SOT0s1t08uWk23yf4FzI9tG5ynQGI1fnyg==",
+  "dgSpecHash": "+EIpPAlsSb8VcdfMu+n286WEkls9XievkjXQ1HNTza/ANMx6NPygnbMLzZyjoD/C9SZ8ywEs8+FJDRwfH3ZtRg==",
   "success": true,
-  "projectFilePath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj",
+  "projectFilePath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp\\OpenCvSharp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mateu\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\mateu\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",

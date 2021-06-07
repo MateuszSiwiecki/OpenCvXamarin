@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj": {}
+    "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp\\OpenCvSharp.csproj": {}
   },
   "projects": {
-    "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
+    "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj",
+        "projectUniqueName": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp\\OpenCvSharp.csproj",
         "projectName": "OpenCvSharp",
-        "projectPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\OpenCvSharp.csproj",
+        "projectPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp\\OpenCvSharp.csproj",
         "packagesPath": "C:\\Users\\mateu\\.nuget\\packages\\",
-        "outputPath": "D:\\repo\\opencvsource\\src\\OpenCvSharp\\obj\\",
+        "outputPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Microsoft\\Xamarin\\NuGet\\"

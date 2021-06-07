@@ -174,14 +174,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\opencvsource\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj">
-      <Project>{f94f9e8a-e239-45ea-9c61-c7855c8b6f25}</Project>
-      <Name>OpenCvSharp.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\opencvsource\src\OpenCvSharp\OpenCvSharp.csproj">
-      <Project>{ff838fec-9490-458a-9fcb-3e95190fb11e}</Project>
-      <Name>OpenCvSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DocScanOpenCV\DocScanOpenCV.csproj">
       <Project>{C9B05F18-F484-4457-847C-917A24B591D3}</Project>
       <Name>DocScanOpenCV</Name>
