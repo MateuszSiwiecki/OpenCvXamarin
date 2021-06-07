@@ -1200,6 +1200,8 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
+          "OpenCvSharp": "1.0.0",
+          "OpenCvSharp.Android": "1.0.0",
           "Xam.Plugin.Media": "5.0.1",
           "Xamarin.Essentials": "1.5.3.2",
           "Xamarin.Forms": "5.0.0.2012"
@@ -1209,6 +1211,31 @@
         },
         "runtime": {
           "bin/placeholder/DocScanOpenCV.dll": {}
+        }
+      },
+      "OpenCvSharp/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Xamarin.Forms": "5.0.0.2012"
+        },
+        "compile": {
+          "bin/placeholder/OpenCvSharp.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OpenCvSharp.dll": {}
+        }
+      },
+      "OpenCvSharp.Android/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "OpenCvSharp": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/OpenCvSharp.Android.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OpenCvSharp.Android.dll": {}
         }
       }
     }
@@ -2588,11 +2615,23 @@
       "type": "project",
       "path": "../DocScanOpenCV/DocScanOpenCV.csproj",
       "msbuildProject": "../DocScanOpenCV/DocScanOpenCV.csproj"
+    },
+    "OpenCvSharp/1.0.0": {
+      "type": "project",
+      "path": "../src/OpenCvSharp/OpenCvSharp.csproj",
+      "msbuildProject": "../src/OpenCvSharp/OpenCvSharp.csproj"
+    },
+    "OpenCvSharp.Android/1.0.0": {
+      "type": "project",
+      "path": "../src/OpenCvSharp.Android/OpenCvSharp.Android.csproj",
+      "msbuildProject": "../src/OpenCvSharp.Android/OpenCvSharp.Android.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "MonoAndroid,Version=v10.0": [
       "DocScanOpenCV >= 1.0.0",
+      "OpenCvSharp >= 1.0.0",
+      "OpenCvSharp.Android >= 1.0.0",
       "Xam.Plugin.Media >= 5.0.1",
       "Xamarin.AndroidX.Activity >= 1.2.2",
       "Xamarin.AndroidX.Annotation >= 1.2.0",
@@ -2655,6 +2694,12 @@
           "projectReferences": {
             "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV.csproj": {
               "projectPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV.csproj"
+            },
+            "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
+              "projectPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj"
+            },
+            "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp\\OpenCvSharp.csproj": {
+              "projectPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp\\OpenCvSharp.csproj"
             }
           }
         }
