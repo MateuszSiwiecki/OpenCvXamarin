@@ -43,7 +43,8 @@ namespace CustomRenderer.Droid
 
         #region Overrides
 
-        public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) => inflater.Inflate(DocScanOpenCV.Droid.Resource.Layout.CameraFragment, null);
+        public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) => 
+            inflater.Inflate(DocScanOpenCV.Droid.Resource.Layout.CameraFragment, null);
 
         public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
         {
@@ -57,11 +58,11 @@ namespace CustomRenderer.Droid
         private Task continousTask;
         private async void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
+            return;
             //if (processing) return;
             //processing = true;
             var image = e.Mat;
             binding.ImShow("qwe", image);
-            return;
             Action<Task> del = (tsk) =>
             {
                 image = ImageProcessing.PreviewProcess(image);
