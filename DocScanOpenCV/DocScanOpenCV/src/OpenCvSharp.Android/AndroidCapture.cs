@@ -89,9 +89,14 @@ namespace OpenCvSharp.Android
                 {
                     CvLogger.Log(this, $"Camera Support Size: W{size.Width},H{size.Height}");
 
+                    //if (size.Width == 960 && size.Height == 720)
+                    //{
+                    //    parameter.SetPreviewSize(960, 720);
+                    //    CvLogger.Log(this, $"SET Camera Size: W{size.Width},H{size.Height}");
+                    //}
                     if (size.Width == 960 && size.Height == 720)
                     {
-                        parameter.SetPreviewSize(size.Width, size.Height);
+                        parameter.SetPreviewSize(1920, 1080);
                         CvLogger.Log(this, $"SET Camera Size: W{size.Width},H{size.Height}");
                     }
                 }

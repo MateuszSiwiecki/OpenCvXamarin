@@ -120,6 +120,7 @@ namespace CustomRenderer.Droid
         public override void OnPause()
         {
             capture.Stop();
+            capture.Dispose();
             base.OnPause();            
         }
 
@@ -127,6 +128,7 @@ namespace CustomRenderer.Droid
         {
             base.OnResume();
 
+            capture = binding.NewCapture(0);
             capture.Start();
         }
 
