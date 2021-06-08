@@ -58,7 +58,7 @@ namespace DocScanOpenCV.Utils
         public static Mat ProccessToGrayContuour(Mat image)
         {
             image = image.CvtColor(ColorConversionCodes.BGR2GRAY);
-            image = image.Threshold(127, 255, ThresholdTypes.Binary);
+            //image = image.Threshold(127, 255, ThresholdTypes.Binary);
             image = image.MedianBlur(3);
             image = image.Canny(75, 200);
             image = image.Dilate(null);

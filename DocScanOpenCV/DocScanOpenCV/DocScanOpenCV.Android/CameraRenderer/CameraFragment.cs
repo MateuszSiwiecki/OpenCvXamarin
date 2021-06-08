@@ -20,6 +20,7 @@ using DocScanOpenCV.CameraRenderer;
 using Android.Media;
 using DocScanOpenCV.Utils;
 using OpenCvSharp.Cuda;
+using OpenCvSharp;
 
 namespace CustomRenderer.Droid
 {
@@ -53,6 +54,8 @@ namespace CustomRenderer.Droid
         {
             textureView1 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture1);
             textureView2 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture2);
+            textureView1.SetOpaque(false);
+            textureView2.SetOpaque(false);
 
             imageView = view.FindViewById<Android.Widget.ImageView>(DocScanOpenCV.Droid.Resource.Id.cameratexture3);
             binding = new OpenCvSharp.Android.NativeBinding(Context, Activity, imageView);
@@ -60,15 +63,46 @@ namespace CustomRenderer.Droid
             capture.FrameReady += Capture_FrameReady;
             capture.Start();
         }
-        private volatile bool processing = false;
-        private Task continousTask;
-        private async void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
+        private volatile bool processingFirst = false;
+        private volatile bool processingSecond = false;
+        private volatile OpenCvSharp.Point[] foundedContours;
+        private volatile List<OpenCvSharp.Point[]> allContours;
+        private void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
-            var image = e.Mat;
-            binding.ImShow("qwe", image, textureView1);
-            binding.ImShow("qwe", image, textureView2);
-        }
+            var image1 = e.Mat.Clone();
+            var image2 = e.Mat.Clone();
 
+            if (!processingFirst)
+            {
+                processingFirst = true;
+                Task.Run(() =>
+                {
+                    image1 = ImageProcessing.ProccessToGrayContuour(image1);
+                    foundedContours = ImageProcessing.FindContours_BiggestContourInt(image1.Clone());
+                    allContours = ImageProcessing.FindContours_SortedContours(image1.Clone());
+                    image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
+                    binding.ImShow("processing view", image1, textureView1, binding.locker1);
+                    processingFirst = false;
+                });
+            }
+            if (!processingSecond)
+            {
+                processingSecond = true;
+                Task.Run(() =>
+                {
+                    //if (allContours != null)
+                    //{
+                    //    image2 = ImageProcessing.DrawContour(image2, new List<OpenCvSharp.Point[]>(allContours));
+                    //}
+                    if (foundedContours != null)
+                    {
+                        image2 = ImageProcessing.DrawContour(image2, foundedContours);
+                    }
+                    binding.ImShow("normal view", image2, textureView2, binding.locker2);
+                    processingSecond = false;
+                });
+            }
+        }
         public override void OnPause()
         {
             capture.Stop();
