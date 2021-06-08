@@ -43,6 +43,8 @@ namespace DocScanOpenCV
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+
+            return;
             box.IsVisible = true;
             stackloading.IsVisible = true;
             loading.IsVisible = true;

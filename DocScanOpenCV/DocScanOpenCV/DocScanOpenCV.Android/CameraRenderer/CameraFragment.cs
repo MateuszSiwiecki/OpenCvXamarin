@@ -81,11 +81,18 @@ namespace CustomRenderer.Droid
                 processingFirst = true;
                 Task.Run(() =>
                 {
-                    image1 = ImageProcessing.ProccessToGrayContuour(image1);
-                    foundedContours = ImageProcessing.FindContours_BiggestContourInt(image1.Clone());
-                    allContours = ImageProcessing.FindContours_SortedContours(image1.Clone());
-                    image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
-                    binding.ImShow("processing view", image1, textureView1, binding.locker1);
+                    try
+                    {
+                        image1 = ImageProcessing.ProccessToGrayContuour(image1);
+                        foundedContours = ImageProcessing.FindContours_BiggestContourInt(image1.Clone());
+                        // allContours = ImageProcessing.FindContours_SortedContours(image1.Clone());
+                        image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
+                        binding.ImShow("processing view", image1, textureView1, binding.locker1);
+                    }
+                    catch(System.Exception e)
+                    {
+
+                    }
                     processingFirst = false;
                 });
             }

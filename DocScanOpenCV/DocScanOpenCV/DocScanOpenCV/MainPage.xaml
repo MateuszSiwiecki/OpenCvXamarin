@@ -9,9 +9,9 @@
     <Grid>
         <StackLayout >
             <Button Text="Add Image" BackgroundColor="Orange" TextColor="White" Clicked="Button_Clicked"/>
+            <camerarenderer:CameraPreview HeightRequest="700"/>
             <Image x:Name="myimg" IsVisible="false" BackgroundColor="Transparent"/>
         </StackLayout>
-        <camerarenderer:CameraPreview/>
         <BoxView x:Name="box" IsVisible="false" BackgroundColor="Black" Opacity="0.6"/>
         <StackLayout x:Name="stackloading" IsVisible="false">
             <ActivityIndicator VerticalOptions="CenterAndExpand" x:Name="loading"  Color="Orange" IsRunning="false"/>
