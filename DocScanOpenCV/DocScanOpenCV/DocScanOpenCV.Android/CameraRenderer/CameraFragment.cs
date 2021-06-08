@@ -28,9 +28,16 @@ namespace CustomRenderer.Droid
     {
         OpenCvSharp.Android.NativeBinding binding;
         OpenCvSharp.Native.Capture capture;
+
         public Android.Widget.ImageView imageView;
         public AutoFitTextureView textureView1;
         public AutoFitTextureView textureView2;
+
+        public volatile Mat scannedImage;
+        private volatile bool processingFirst = false;
+        private volatile bool processingSecond = false;
+        private volatile OpenCvSharp.Point[] foundedContours;
+        private volatile List<OpenCvSharp.Point[]> allContours;
         public CameraPreview Element { get; set; }
 
         #region Constructors
@@ -63,11 +70,6 @@ namespace CustomRenderer.Droid
             capture.FrameReady += Capture_FrameReady;
             capture.Start();
         }
-        private volatile bool processingFirst = false;
-        private volatile bool processingSecond = false;
-        private volatile OpenCvSharp.Point[] foundedContours;
-        private volatile List<OpenCvSharp.Point[]> allContours;
-        public volatile Mat scannedImage;
         private void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
             var image1 = e.Mat.Clone();
@@ -131,6 +133,10 @@ namespace CustomRenderer.Droid
         {
             capture.Stop();
             capture.Dispose();
+            if (scannedImage != null && !scannedImage.IsDisposed) scannedImage.Dispose();
+            textureView1?.Dispose();
+            textureView2?.Dispose();
+            imageView?.Dispose();
             base.Dispose(disposing);
         }
 
