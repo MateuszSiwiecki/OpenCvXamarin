@@ -27,7 +27,9 @@ namespace CustomRenderer.Droid
     {
         OpenCvSharp.Android.NativeBinding binding;
         OpenCvSharp.Native.Capture capture;
-        public Android.Widget.ImageView texture;
+        public Android.Widget.ImageView imageView;
+        public AutoFitTextureView textureView1;
+        public AutoFitTextureView textureView2;
         public CameraPreview Element { get; set; }
 
         #region Constructors
@@ -49,8 +51,11 @@ namespace CustomRenderer.Droid
 
         public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
         {
-            texture = view.FindViewById<Android.Widget.ImageView>(DocScanOpenCV.Droid.Resource.Id.cameratexture3);
-            binding = new OpenCvSharp.Android.NativeBinding(Context, Activity, texture);
+            textureView1 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture1);
+            textureView2 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture2);
+
+            imageView = view.FindViewById<Android.Widget.ImageView>(DocScanOpenCV.Droid.Resource.Id.cameratexture3);
+            binding = new OpenCvSharp.Android.NativeBinding(Context, Activity, imageView);
             capture = binding.NewCapture(0);
             capture.FrameReady += Capture_FrameReady;
             capture.Start();
@@ -60,7 +65,8 @@ namespace CustomRenderer.Droid
         private async void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
             var image = e.Mat;
-            binding.ImShow("qwe", image);
+            binding.ImShow("qwe", image, textureView1);
+            binding.ImShow("qwe", image, textureView2);
         }
 
         public override void OnPause()

@@ -10,3 +10,7 @@
 /DocScanOpenCV/DocScanOpenCV/DocScanOpenCV.iOS
 /.vs
 /DocScanOpenCV/.vs/DocScanOpenCV
+/DocScanOpenCV/DocScanOpenCV/src/OpenCvSharp/bin
+/DocScanOpenCV/DocScanOpenCV/src/OpenCvSharp/obj
+/DocScanOpenCV/DocScanOpenCV/src/OpenCvSharp.Android/bin
+/DocScanOpenCV/DocScanOpenCV/src/OpenCvSharp.Android/obj

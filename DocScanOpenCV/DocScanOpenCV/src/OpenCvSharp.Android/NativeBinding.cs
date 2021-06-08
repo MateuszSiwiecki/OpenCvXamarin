@@ -83,6 +83,52 @@ namespace OpenCvSharp.Android
                 }
             }
         }
+        public void ImShow(string name, Mat m, TextureView tagetView) => ImShow(name, m, tagetView, new object());
+        private void ImShow(string name, Mat m, TextureView tagetView, object lockObject)
+        {
+            if (tagetView != null)
+            {
+                lock (lockObject)
+                {
+                    CvProfiler.Start($"imshow {name}");
+                    if (imShowBitmap == null)
+                    {
+                        imShowBitmap = Bitmap.CreateBitmap(m.Width, m.Height, Bitmap.Config.Argb8888);
+                    }
+                    else if (imShowBitmap.Width != m.Width && imShowBitmap.Height != m.Height)
+                    {
+                        //imShowBitmap.Recycle();
+                        //imShowBitmap.Dispose();
+                        imShowBitmap = Bitmap.CreateBitmap(m.Width, m.Height, Bitmap.Config.Argb8888);
+                    }
+
+                    using (Mat mat = new Mat())
+                    {
+                        Cv2.CvtColor(m, mat, ColorConversionCodes.BGR2RGBA);
+
+                        var bufLen = mat.Channel * mat.Total();
+                        if (imShowBuffer == null || imShowBuffer.Length != bufLen)
+                        {
+                            imShowBuffer = new byte[bufLen];
+                        }
+                        mat.GetArray(0, 0, imShowBuffer);
+
+                        using (var raw = ByteBuffer.Wrap(imShowBuffer))
+                        {
+                            imShowBitmap.CopyPixelsFromBuffer(raw);
+                        }
+
+                        MainActivity.RunOnUiThread(() =>
+                        {
+                            var canvas = tagetView.LockCanvas();
+                            canvas.DrawBitmap(imShowBitmap, new Matrix(), new Paint());
+                            tagetView.UnlockCanvasAndPost(canvas);
+                        });
+                    }
+                    CvProfiler.End($"imshow {name}");
+                }
+            }
+        }
 
         char keyPending = (char)255;
         public void SendKey(char key)
