@@ -43,7 +43,15 @@ namespace DocScanOpenCV
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            var result = await documentScanner.ScanDocument();
+            Save(result);
+            await Task.Run(async () =>
+              {
+                  await Task.Delay(2000);
 
+                  MainThread.BeginInvokeOnMainThread(() => myimg.IsVisible = false);
+              }).ConfigureAwait(false);
+            result.Dispose();
             return;
             box.IsVisible = true;
             stackloading.IsVisible = true;
@@ -212,11 +220,12 @@ namespace DocScanOpenCV
         private void Save(Mat image)
         {
             var ms = image.ToMemoryStream();
-            myimg.Source = ImageSource.FromStream(() => new MemoryStream(ms.ToArray()));
+            myimg.Source = ImageSource.FromStream(() => ms);
             box.IsVisible = false;
             stackloading.IsVisible = false;
             loading.IsVisible = false;
             loading.IsRunning = false;
+            myimg.IsVisible = true;
         }
         private static Mat apply_doc_filters(Mat image)
         {

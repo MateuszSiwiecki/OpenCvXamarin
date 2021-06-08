@@ -65,6 +65,7 @@ namespace CustomRenderer.Droid
             textureView2.SetOpaque(false);
 
             imageView = view.FindViewById<Android.Widget.ImageView>(DocScanOpenCV.Droid.Resource.Id.cameratexture3);
+
             binding = new OpenCvSharp.Android.NativeBinding(Context, Activity, imageView);
             capture = binding.NewCapture(0);
             capture.FrameReady += Capture_FrameReady;

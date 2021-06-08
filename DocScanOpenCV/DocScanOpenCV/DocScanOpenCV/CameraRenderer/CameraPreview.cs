@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace DocScanOpenCV.CameraRenderer
@@ -18,8 +19,9 @@ namespace DocScanOpenCV.CameraRenderer
         }
 
         public event Action ScanDocumentCalled;
-        public OpenCvSharp.Mat ScanDocument()
+        public async Task<OpenCvSharp.Mat> ScanDocument()
         {
+            await Task.Delay(1000);
             ScanDocumentCalled?.Invoke();
             return ScannedDocument;
         }

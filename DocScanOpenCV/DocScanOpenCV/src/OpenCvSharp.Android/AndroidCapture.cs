@@ -56,12 +56,26 @@ namespace OpenCvSharp.Android
 
         #region CaptureProc
 
+        private int initializeAttempt;
+        private void InitializeCamera()
+        {
+            if (initializeAttempt == 10) throw new Exception("Camera cant be initialized");
+            initializeAttempt++;
+            try
+            {
+                Camera = Hardware.Camera.Open(cameraIndex);
+            }
+            catch (Exception e)
+            {
+                InitializeCamera();
+            }
+        }
+
         protected override void OnStart()
         {
             try
             {
-                if (Camera == null)
-                    Camera = Hardware.Camera.Open(cameraIndex);
+                if (Camera == null) InitializeCamera();
 
                 if (Texture == null)
                     Texture = new Graphics.SurfaceTexture(0);
