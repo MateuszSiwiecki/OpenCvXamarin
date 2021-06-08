@@ -57,6 +57,7 @@ namespace CustomRenderer.Droid
             if (e.OldElement != null)
             {
                 e.OldElement.PropertyChanged -= OnElementPropertyChanged;
+                e.OldElement.ScanDocumentCalled -= OnScanDocumentCalled;
                 cameraFragment.Dispose();
             }
             if (e.NewElement != null)
@@ -64,6 +65,7 @@ namespace CustomRenderer.Droid
                 this.EnsureId();
 
                 e.NewElement.PropertyChanged += OnElementPropertyChanged;
+                e.NewElement.ScanDocumentCalled += OnScanDocumentCalled;
 
                 
                 ElevationHelper.SetElevation(this, e.NewElement);
@@ -76,6 +78,10 @@ namespace CustomRenderer.Droid
             ElementChanged?.Invoke(this, new VisualElementChangedEventArgs(e.OldElement, e.NewElement));
         }
 
+        public void OnScanDocumentCalled()
+        {
+            element.ScannedDocument = cameraFragment.scannedImage.Clone();
+        }
         async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             ElementPropertyChanged?.Invoke(this, e);

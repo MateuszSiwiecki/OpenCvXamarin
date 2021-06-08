@@ -67,10 +67,14 @@ namespace CustomRenderer.Droid
         private volatile bool processingSecond = false;
         private volatile OpenCvSharp.Point[] foundedContours;
         private volatile List<OpenCvSharp.Point[]> allContours;
+        public volatile Mat scannedImage;
         private void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
             var image1 = e.Mat.Clone();
             var image2 = e.Mat.Clone();
+            if(scannedImage != null && !scannedImage.IsDisposed)
+                scannedImage.Dispose();
+            scannedImage = e.Mat.Clone();
 
             if (!processingFirst)
             {
