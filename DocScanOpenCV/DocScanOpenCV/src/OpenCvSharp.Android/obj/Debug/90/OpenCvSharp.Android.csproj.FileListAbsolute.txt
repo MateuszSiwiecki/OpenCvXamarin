@@ -96,7 +96,6 @@ D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\bin\De
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\MonoAndroid,Version=v9.0.AssemblyAttributes.cs
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\build.props
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\adb.props
-D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\OpenCvSharp.Android.csprojAssemblyReference.cache
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\stamp\_BuildLibraryImportsCache.stamp
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\res.flag
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\R.cs.flag
@@ -114,3 +113,5 @@ D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\De
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\stamp\_CleanIntermediateIfNeeded.stamp
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\stamp\_ConvertResourcesCases.stamp
 D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\stamp\_ResolveLibraryProjectImports.stamp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\bin\Debug\OpenCvSharp.pdb
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Android\obj\Debug\90\OpenCvSharp.Android.csproj.AssemblyReference.cache

@@ -453,7 +453,8 @@
   },
   "packageFolders": {
     "C:\\Users\\mateu\\.nuget\\packages\\": {},
-    "D:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "D:\\programowanie\\visual studio shared kit\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -465,10 +466,12 @@
       "outputPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Microsoft\\Xamarin\\NuGet\\"
+        "D:\\programowanie\\visual studio shared kit\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\mateu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -481,6 +484,7 @@
       },
       "frameworks": {
         "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
           "projectReferences": {
             "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj": {
               "projectPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\src\\OpenCvSharp.Android\\OpenCvSharp.Android.csproj"
@@ -499,6 +503,7 @@
     },
     "frameworks": {
       "netstandard2.1": {
+        "targetAlias": "netstandard2.1",
         "dependencies": {
           "Xam.Plugin.Media": {
             "target": "Package",
@@ -528,7 +533,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.409\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -4,5 +4,6 @@
     <SelectedDevice>Samsung SM-A105FN</SelectedDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
     <ProjectView>ShowAllFiles</ProjectView>
+    <ActiveDebugProfile>Samsung SM-A105FN</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

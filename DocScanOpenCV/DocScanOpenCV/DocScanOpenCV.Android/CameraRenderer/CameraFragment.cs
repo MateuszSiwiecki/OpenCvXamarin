@@ -19,6 +19,7 @@ using Xamarin.Forms.Platform.Android;
 using DocScanOpenCV.CameraRenderer;
 using Android.Media;
 using DocScanOpenCV.Utils;
+using OpenCvSharp.Cuda;
 
 namespace CustomRenderer.Droid
 {
