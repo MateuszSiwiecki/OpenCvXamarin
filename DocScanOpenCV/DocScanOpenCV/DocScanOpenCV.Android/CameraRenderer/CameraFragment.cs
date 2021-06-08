@@ -54,7 +54,7 @@ namespace CustomRenderer.Droid
 
         #region Overrides
 
-        public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) => 
+        public override Android.Views.View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) =>
             inflater.Inflate(DocScanOpenCV.Droid.Resource.Layout.CameraFragment, null);
 
         public override void OnViewCreated(Android.Views.View view, Bundle savedInstanceState)
@@ -75,7 +75,7 @@ namespace CustomRenderer.Droid
         {
             var image1 = e.Mat.Clone();
             var image2 = e.Mat.Clone();
-            if(scannedImage != null && !scannedImage.IsDisposed)
+            if (scannedImage != null && !scannedImage.IsDisposed)
                 scannedImage.Dispose();
             scannedImage = e.Mat.Clone();
 
@@ -92,7 +92,7 @@ namespace CustomRenderer.Droid
                         image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
                         binding.ImShow("processing view", image1, textureView1, binding.locker1);
                     }
-                    catch(System.Exception e)
+                    catch (System.Exception e)
                     {
 
                     }
@@ -104,15 +104,22 @@ namespace CustomRenderer.Droid
                 processingSecond = true;
                 Task.Run(() =>
                 {
-                    //if (allContours != null)
-                    //{
-                    //    image2 = ImageProcessing.DrawContour(image2, new List<OpenCvSharp.Point[]>(allContours));
-                    //}
-                    if (foundedContours != null)
+                    try
                     {
-                        image2 = ImageProcessing.DrawContour(image2, foundedContours);
+                        //if (allContours != null)
+                        //{
+                        //    image2 = ImageProcessing.DrawContour(image2, new List<OpenCvSharp.Point[]>(allContours));
+                        //}
+                        if (foundedContours != null)
+                        {
+                            image2 = ImageProcessing.DrawContour(image2, foundedContours);
+                        }
+                        binding.ImShow("normal view", image2, textureView2, binding.locker2);
                     }
-                    binding.ImShow("normal view", image2, textureView2, binding.locker2);
+                    catch (System.Exception e)
+                    {
+
+                    }
                     processingSecond = false;
                 });
             }
@@ -120,15 +127,15 @@ namespace CustomRenderer.Droid
         public override void OnPause()
         {
             capture.Stop();
-            capture.Dispose();
-            base.OnPause();            
+            //capture.Dispose();
+            base.OnPause();
         }
 
         public override async void OnResume()
         {
             base.OnResume();
 
-            capture = binding.NewCapture(0);
+            //capture = binding.NewCapture(0);
             capture.Start();
         }
 
@@ -148,7 +155,7 @@ namespace CustomRenderer.Droid
         #region TextureView.ISurfaceTextureListener
 
         async void TextureView.ISurfaceTextureListener.OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
-        {        
+        {
         }
 
         bool TextureView.ISurfaceTextureListener.OnSurfaceTextureDestroyed(SurfaceTexture surface)

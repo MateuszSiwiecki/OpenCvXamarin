@@ -57,25 +57,13 @@ namespace OpenCvSharp.Android
         #region CaptureProc
 
         private int initializeAttempt;
-        private void InitializeCamera()
-        {
-            if (initializeAttempt == 10) throw new Exception("Camera cant be initialized");
-            initializeAttempt++;
-            try
-            {
-                Camera = Hardware.Camera.Open(cameraIndex);
-            }
-            catch (Exception e)
-            {
-                InitializeCamera();
-            }
-        }
 
         protected override void OnStart()
         {
             try
             {
-                if (Camera == null) InitializeCamera();
+                if (Camera == null)
+                    Camera = Hardware.Camera.Open(cameraIndex);
 
                 if (Texture == null)
                     Texture = new Graphics.SurfaceTexture(0);
@@ -89,14 +77,9 @@ namespace OpenCvSharp.Android
                 {
                     CvLogger.Log(this, $"Camera Support Size: W{size.Width},H{size.Height}");
 
-                    //if (size.Width == 960 && size.Height == 720)
-                    //{
-                    //    parameter.SetPreviewSize(960, 720);
-                    //    CvLogger.Log(this, $"SET Camera Size: W{size.Width},H{size.Height}");
-                    //}
                     if (size.Width == 960 && size.Height == 720)
                     {
-                        parameter.SetPreviewSize(1920, 1080);
+                        parameter.SetPreviewSize(960, 720);
                         CvLogger.Log(this, $"SET Camera Size: W{size.Width},H{size.Height}");
                     }
                 }
