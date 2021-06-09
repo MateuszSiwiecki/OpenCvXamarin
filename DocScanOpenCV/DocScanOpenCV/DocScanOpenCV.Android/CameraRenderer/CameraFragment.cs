@@ -88,16 +88,16 @@ namespace CustomRenderer.Droid
                     {
                         image1 = ImageProcessing.ProccessToGrayContuour(image1);
                         var biggestContour = ImageProcessing.FindContours_BiggestContourInt(image1.Clone());
-
-                        if(biggestContour != null)
-                        {
-                            var rect = image1.BoundingRect();
-                            var imageSize = rect.Height * rect.Width;
-                            var contouredArea = biggestContour.ContourArea();
-                            foundedContours = (contouredArea > 0.3 * imageSize)
-                            ? foundedContours
-                            : null;
-                        }
+                        foundedContours = biggestContour;
+                        //if (biggestContour != null)
+                        //{
+                        //    var rect = image1.BoundingRect();
+                        //    var imageSize = rect.Height * rect.Width;
+                        //    var contouredArea = biggestContour.ContourArea();
+                        //    foundedContours = (contouredArea > 0.3 * imageSize)
+                        //    ? foundedContours
+                        //    : null;
+                        //}
 
                         image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
                         binding.ImShow("processing view", image1, textureView1, binding.locker1);
@@ -118,7 +118,8 @@ namespace CustomRenderer.Droid
                     {
                         if (foundedContours != null)
                         {
-                            image2 = ImageProcessing.DrawBound(image2, foundedContours);
+                            //image2.DrawContour(foundedContours);
+                            image2.DrawContour(foundedContours);
                         }
                         binding.ImShow("normal view", image2, textureView2, binding.locker2);
                     }

@@ -129,7 +129,9 @@ namespace DocScanOpenCV.Utils
             var peri = Cv2.ArcLength(contourOfDocument, true);
 
             var approx = Cv2.ApproxPolyDP(contourOfDocument.AsEnumerable(), 0.015 * peri, true);
-            return approx;
+            var hull = Cv2.ConvexHull(approx, true);
+            var boundRect = Cv2.MinAreaRect(hull);
+            return boundRect.Points().To64Point();
         }
         public static double ContourArea(this Point[] x) => Cv2.ContourArea(x, true);
         public static Mat DrawBound(this Mat image, Point[] points)
@@ -139,15 +141,7 @@ namespace DocScanOpenCV.Utils
             return image.DrawContour(pointsRect);
         }
 
-        private static Mat DrawContour(this Mat image, Point2f[] pointsRect)
-        {
-            var newTable = new Point[pointsRect.Length];
-            for (int i = 0; i < pointsRect.Length; i++)
-            {
-                newTable[i] = pointsRect[i];
-            }
-            return DrawContour(image, newTable);
-        }
+        private static Mat DrawContour(this Mat image, Point2f[] pointsRect) => DrawContour(image, pointsRect.To64Point());
 
         public static Mat DrawContour(this Mat image, IEnumerable<IEnumerable<Point>> contours)
         {
@@ -210,6 +204,14 @@ namespace DocScanOpenCV.Utils
 
             return result;
         }
-
+        public static Point[] To64Point(this Point2f[] pointsRect)
+        {
+            var newTable = new Point[pointsRect.Length];
+            for (int i = 0; i < pointsRect.Length; i++)
+            {
+                newTable[i] = pointsRect[i];
+            }
+            return newTable;
+        }
     }
 }
