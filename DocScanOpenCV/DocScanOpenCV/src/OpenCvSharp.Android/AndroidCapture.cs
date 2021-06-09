@@ -73,14 +73,25 @@ namespace OpenCvSharp.Android
 
                 Hardware.Camera.Parameters parameter = Camera.GetParameters();
                 List<Hardware.Camera.Size> supportSize = parameter.SupportedPreviewSizes.OrderByDescending(x => x.Width).ToList();
+
+                
+                
                 foreach (Hardware.Camera.Size size in supportSize)
                 {
                     CvLogger.Log(this, $"Camera Support Size: W{size.Width},H{size.Height}");
 
-                    if (size.Width == 960 && size.Height == 720)
+
+                    if (size.Width == 1280 && size.Height == 720)
+                    {
+                        parameter.SetPreviewSize(1280, 720);
+                        CvLogger.Log(this, $"SET Camera Size: W{size.Width},H{size.Height}");
+                        break;
+                    }
+                    else if(size.Width == 960 && size.Height == 720)
                     {
                         parameter.SetPreviewSize(960, 720);
                         CvLogger.Log(this, $"SET Camera Size: W{size.Width},H{size.Height}");
+                        break;
                     }
                 }
 

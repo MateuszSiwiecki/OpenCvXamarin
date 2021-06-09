@@ -7,10 +7,10 @@
              x:Class="DocScanOpenCV.MainPage">
 
     <Grid>
+        <camerarenderer:CameraPreview x:Name="documentScanner" />
         <StackLayout >
             <Button Text="Add Image" BackgroundColor="Orange" TextColor="White" Clicked="Button_Clicked"/>
             <Grid>
-                <camerarenderer:CameraPreview HeightRequest="1920" x:Name="documentScanner"/>
                 <Image x:Name="myimg" IsVisible="false" BackgroundColor="Transparent"/>
             </Grid>
         </StackLayout>

@@ -29,7 +29,7 @@ namespace DocScanOpenCV.Utils
             return processed.ToMemoryStream();
         }
 
-        public static Mat ProcessImage(Mat image)
+        public static Mat ProcessImage(this Mat image)
         {
             var grayImage = ProccessToGrayContuour(image.Clone());
             var contoursOfDocument = FindContours_BiggestContourFloat(grayImage);
@@ -38,8 +38,8 @@ namespace DocScanOpenCV.Utils
             return transformedImage;
             //return ProcessToPaperView(transformedImage, 255, 255);
         }
-        public static Mat ProcessToPaperView(Mat image) => ProcessToPaperView(image, 0, 0);
-        public static Mat ProcessToPaperView(Mat image, int thresh, int maxval)
+        public static Mat ProcessToPaperView(this Mat image) => ProcessToPaperView(image, 0, 0);
+        public static Mat ProcessToPaperView(this Mat image, int thresh, int maxval)
         {
             var color = new Mat();
             var bilateralFilter = new Mat();
@@ -55,17 +55,16 @@ namespace DocScanOpenCV.Utils
 
             return output;
         }
-        public static Mat ProccessToGrayContuour(Mat image)
+        public static Mat ProccessToGrayContuour(this Mat image)
         {
             image = image.CvtColor(ColorConversionCodes.BGR2GRAY);
-            //image = image.Threshold(127, 255, ThresholdTypes.Binary);
             image = image.MedianBlur(3);
             image = image.Canny(75, 200);
             image = image.Dilate(null);
             return image;
         }
 
-        public static Mat PreviewProcess(Mat image)
+        public static Mat PreviewProcess(this Mat image)
         {
             var processingImage = image.Clone();
             processingImage = ProccessToGrayContuour(processingImage);
@@ -74,14 +73,13 @@ namespace DocScanOpenCV.Utils
             return DrawContour(image, contour);
         }
 
-        public static async Task<Mat> ProccessToGrayContuourAsync(Mat image)
+        public static async Task<Mat> ProccessToGrayContuourAsync(this Mat image)
         {
             return await Task.Run(() =>
             {
                 lock (proccessToGrayContuourAsyncLockObject)
                 {
                     image = image.CvtColor(ColorConversionCodes.BGR2GRAY);
-                    image = image.Threshold(127, 255, ThresholdTypes.Binary);
                     image = image.MedianBlur(3);
                     image = image.Canny(75, 200);
                     image = image.Dilate(null);
@@ -90,7 +88,7 @@ namespace DocScanOpenCV.Utils
             });
         }
         private static readonly object proccessToGrayContuourAsyncLockObject = new object();
-        public static List<Point[]> FindContours_SortedContours(Mat image)
+        public static List<Point[]> FindContours_SortedContours(this Mat image)
         {
             Cv2.FindContours(image, out var foundedContour, out var hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
             var sortedContour = foundedContour.OrderByDescending(ContourArea).ToArray();
@@ -106,7 +104,7 @@ namespace DocScanOpenCV.Utils
             }
             return result;
         }
-        public static Point2f[] FindContours_BiggestContourFloat(Mat image)
+        public static Point2f[] FindContours_BiggestContourFloat(this Mat image)
         {
 
             Cv2.FindContours(image, out var foundedContours, out var hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
@@ -122,7 +120,7 @@ namespace DocScanOpenCV.Utils
 
             return temp.ToArray();
         }
-        public static Point[] FindContours_BiggestContourInt(Mat image)
+        public static Point[] FindContours_BiggestContourInt(this Mat image)
         {
             Console.WriteLine("123");
             Cv2.FindContours(image, out var foundedContours, out var hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
@@ -133,20 +131,37 @@ namespace DocScanOpenCV.Utils
             var approx = Cv2.ApproxPolyDP(contourOfDocument.AsEnumerable(), 0.015 * peri, true);
             return approx;
         }
-        public static double ContourArea(Point[] x) => Cv2.ContourArea(x, true);
-        public static Mat DrawContour(Mat image, IEnumerable<IEnumerable<Point>> contours)
+        public static double ContourArea(this Point[] x) => Cv2.ContourArea(x, true);
+        public static Mat DrawBound(this Mat image, Point[] points)
+        {
+            var rect = Cv2.MinAreaRect(points);
+            var pointsRect = rect.Points();
+            return image.DrawContour(pointsRect);
+        }
+
+        private static Mat DrawContour(this Mat image, Point2f[] pointsRect)
+        {
+            var newTable = new Point[pointsRect.Length];
+            for (int i = 0; i < pointsRect.Length; i++)
+            {
+                newTable[i] = pointsRect[i];
+            }
+            return DrawContour(image, newTable);
+        }
+
+        public static Mat DrawContour(this Mat image, IEnumerable<IEnumerable<Point>> contours)
         {
             image.DrawContours( contours, -1, Scalar.Red, 5);
             return image;
         }
-        public static Mat DrawContour(Mat image, IEnumerable<Point> countour)
+        public static Mat DrawContour(this Mat image, IEnumerable<Point> countour)
         {
             image.DrawContours(new List<IEnumerable<Point>> { countour }, -1, Scalar.Red, 5);
             return image;
         }
         public static Mat LoadImage(string filePath) => Cv2.ImRead(filePath);
-        public static void SaveImage(string filePath, Mat imageToSave) => Cv2.ImWrite(filePath, imageToSave);
-        public static Mat Transform(Mat inputImage, Point2f[] toTransform)
+        public static void SaveImage(this Mat imageToSave, string filePath) => Cv2.ImWrite(filePath, imageToSave);
+        public static Mat Transform(this Mat inputImage, Point2f[] toTransform)
             => Transform(inputImage, toTransform, new Point2f[]
                 {
                     new Point2f(inputImage.Width, 0),
@@ -154,9 +169,9 @@ namespace DocScanOpenCV.Utils
                     new Point2f(0, inputImage.Height),
                     new Point2f(0, 0),
                 }, new Size(inputImage.Width, inputImage.Height));
-        public static Mat Transform(Mat inputImage, Point2f[] toTransform, Point2f[] destination, double width, double heigth)
+        public static Mat Transform(this Mat inputImage, Point2f[] toTransform, Point2f[] destination, double width, double heigth)
             => Transform(inputImage, toTransform, destination, new Size(width, heigth));
-        public static Mat Transform(Mat inputImage, Point2f[] toTransform, Point2f[] destination, Size size)
+        public static Mat Transform(this Mat inputImage, Point2f[] toTransform, Point2f[] destination, Size size)
         {
             var m = Cv2.GetPerspectiveTransform(toTransform, destination);
             inputImage = inputImage.WarpPerspective(m, size);
@@ -165,7 +180,7 @@ namespace DocScanOpenCV.Utils
 
             return inputImage;
         }
-        public static Mat Rotate(Mat image, double angle, Point2f? center = null, double scale = 1.0)
+        public static Mat Rotate(this Mat image, double angle, Point2f? center = null, double scale = 1.0)
         {
             // grab the dimensions of the image
             var w = image.Width;
@@ -184,7 +199,7 @@ namespace DocScanOpenCV.Utils
             // return the rotated image
             return warpAffineResult;
         }
-        public static Mat Resize(Mat image, double newWidth, double newHigh, InterpolationFlags inter = InterpolationFlags.Linear)
+        public static Mat Resize(this Mat image, double newWidth, double newHigh, InterpolationFlags inter = InterpolationFlags.Linear)
         {
             // grab the dimensions of the image
             var w = image.Width;
