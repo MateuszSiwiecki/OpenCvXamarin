@@ -9,6 +9,7 @@ using DocScanOpenCV.CameraRenderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.FastRenderers;
+using DocScanOpenCV.Utils;
 
 [assembly: ExportRenderer(typeof(DocScanOpenCV.CameraRenderer.CameraPreview), typeof(CameraPreviewRenderer))]
 namespace CustomRenderer.Droid
@@ -80,7 +81,12 @@ namespace CustomRenderer.Droid
 
         public void OnScanDocumentCalled()
         {
-            element.ScannedDocument = cameraFragment.scannedImage.Clone();
+            
+            var toProcess = cameraFragment.scannedImage.Clone();
+            var foundedContours = cameraFragment.foundedContours;
+            toProcess = ImageProcessing.ProcessImage(toProcess, foundedContours);
+
+            element.ScannedDocument = toProcess;
         }
         async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

@@ -1,25 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Android;
-using Android.Content;
-using Android.Content.PM;
 using Android.Graphics;
-using Android.Hardware.Camera2;
-using Android.Hardware.Camera2.Params;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using AndroidX.Core.Content;
 using AndroidX.Fragment.App;
-using Java.Lang;
-using Java.Util.Concurrent;
-using Xamarin.Forms.Platform.Android;
 using DocScanOpenCV.CameraRenderer;
-using Android.Media;
 using DocScanOpenCV.Utils;
-using OpenCvSharp.Cuda;
 using OpenCvSharp;
 
 namespace CustomRenderer.Droid
@@ -36,7 +24,7 @@ namespace CustomRenderer.Droid
         public volatile Mat scannedImage;
         private volatile bool processingFirst = false;
         private volatile bool processingSecond = false;
-        private volatile OpenCvSharp.Point[] foundedContours;
+        public volatile OpenCvSharp.Point[] foundedContours;
         private volatile List<OpenCvSharp.Point[]> allContours;
         public CameraPreview Element { get; set; }
 
@@ -119,7 +107,7 @@ namespace CustomRenderer.Droid
                         if (foundedContours != null)
                         {
                             //image2.DrawContour(foundedContours);
-                            image2.DrawContour(foundedContours);
+                            image2 = image2.DrawContour(foundedContours);
                         }
                         binding.ImShow("normal view", image2, textureView2, binding.locker2);
                     }
