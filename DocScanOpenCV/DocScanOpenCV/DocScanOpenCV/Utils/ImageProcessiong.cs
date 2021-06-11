@@ -16,7 +16,8 @@ namespace DocScanOpenCV.Utils
             imageToProcess = imageToProcess.CvtColor(ColorConversionCodes.BGR2GRAY);
             //imageToProcess = imageToProcess.Erode(null);
             //imageToProcess = imageToProcess.Dilate(null);
-            imageToProcess = imageToProcess.AdaptiveThreshold(200, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 11, 3);
+            //imageToProcess = imageToProcess.AdaptiveThreshold(200, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 11, 3);
+            imageToProcess = imageToProcess.AdaptiveThreshold(255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 17, 11);
             //imageToProcess = imageToProcess.MedianBlur(3);
            // imageToProcess = imageToProcess.Erode(null);
             return imageToProcess;
@@ -113,11 +114,13 @@ namespace DocScanOpenCV.Utils
         public static Mat Transform(this Mat inputImage, List<Point2f> foundedBound, List<Point2f> toTransform, Size size)
         {
             var src = new Point2f[4];
+
+            var minDistance = foundedBound.Min(x => Point2f.Distance(x, toTransform[0]));
+            var firstCorner = foundedBound.FirstOrDefault(x => Point2f.Distance(x, toTransform[0]) == minDistance);
+            var startIndex = foundedBound.IndexOf(firstCorner);
             for (int i = 0; i < 4; i++)
             {
-                var minDistance = foundedBound.Min(x => Point2f.Distance(x, toTransform[i]));
-                src[i] = foundedBound.FirstOrDefault(x => Point2f.Distance(x, toTransform[i]) == minDistance);
-                foundedBound.Remove(src[i]);
+                src[i] = foundedBound[(startIndex + i) % 4];
             }
 
             var m = Cv2.GetPerspectiveTransform(src, toTransform);
