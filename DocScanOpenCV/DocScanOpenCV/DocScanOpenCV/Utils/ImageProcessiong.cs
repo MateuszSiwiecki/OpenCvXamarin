@@ -14,23 +14,8 @@ namespace DocScanOpenCV.Utils
         {
             imageToProcess = imageToProcess.Transform(foundedRect.To32Point().ToList());
             imageToProcess = imageToProcess.CvtColor(ColorConversionCodes.BGR2GRAY);
-            //imageToProcess = imageToProcess.Erode(null);
-            //imageToProcess = imageToProcess.Dilate(null);
-            //imageToProcess = imageToProcess.AdaptiveThreshold(200, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 11, 3);
             imageToProcess = imageToProcess.AdaptiveThreshold(255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 17, 11);
-            //imageToProcess = imageToProcess.MedianBlur(3);
-           // imageToProcess = imageToProcess.Erode(null);
             return imageToProcess;
-        }
-
-        public static Mat ProcessImage(this Mat image)
-        {
-            var grayImage = ProccessToGrayContuour(image.Clone());
-            var contoursOfDocument = FindContours_BiggestContourFloat(grayImage);
-            grayImage.Dispose();
-            var transformedImage = Transform(image, contoursOfDocument.ToList());
-            return transformedImage;
-            //return ProcessToPaperView(transformedImage, 255, 255);
         }
         public static Mat ProccessToGrayContuour(this Mat image)
         {
@@ -40,37 +25,39 @@ namespace DocScanOpenCV.Utils
             image = image.Dilate(null);
             return image;
         }
-
-        public static Point2f[] FindContours_BiggestContourFloat(this Mat image)
-        {
-
-            Cv2.FindContours(image, out var foundedContours, out var hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
-            var sortedContours = foundedContours.OrderByDescending(ContourArea);
-            var contourOfDocument = sortedContours.First();
-            var peri = Cv2.ArcLength(contourOfDocument, true);
-
-            var approx = Cv2.ApproxPolyDP(contourOfDocument.AsEnumerable(), 0.015 * peri, true);
-
-            var temp = new List<Point2f>();
-            var output = new List<Point2f>();
-            for (int i = 0; i < approx.Length; i++) temp.Add(approx[i]);
-
-            return temp.ToArray();
-        }
         public static Point[] FindContours_BiggestContourInt(this Mat image)
         {
             Console.WriteLine("123");
             Cv2.FindContours(image, out var foundedContours, out var hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
             var sortedContours = foundedContours.OrderByDescending(ContourArea);
             var contourOfDocument = sortedContours.First();
+
             var peri = Cv2.ArcLength(contourOfDocument, true);
 
-            var approx = Cv2.ApproxPolyDP(contourOfDocument.AsEnumerable(), 0.015 * peri, true);
+            var approx = Cv2.ApproxPolyDP(contourOfDocument.AsEnumerable(), 0.01 * peri, true);
             var hull = Cv2.ConvexHull(approx, true);
-            var boundRect = Cv2.MinAreaRect(hull);
-            return boundRect.Points().To64Point();
+
+            peri = Cv2.ArcLength(hull, true);
+            approx = Cv2.ApproxPolyDP(hull.AsEnumerable(), 0.01 * peri, true);
+
+            if (approx.Length != 4)
+            {
+                var boundRect = Cv2.MinAreaRect(approx);
+                return boundRect.Points().To64Point();
+            }
+            else
+            {
+                var dst = new Point[4];
+                for (int i = 0; i < 4; i++)
+                {
+                    dst[i] = approx[approx.Length - i - 1];
+                }
+                return dst;
+            }
         }
-        public static double ContourArea(this Point[] x) => Cv2.ContourArea(x, true); public static Mat DrawContourAvrg(this Mat image, List<Point[]> contours)
+        public static double ContourArea(this Point[] x) => Cv2.ContourArea(x, true); 
+        
+        public static Mat DrawContourAvrg(this Mat image, List<Point[]> contours)
         {
             contours = contours.Where(x => x.Length == 4).ToList();
             var average = new Point[4];
