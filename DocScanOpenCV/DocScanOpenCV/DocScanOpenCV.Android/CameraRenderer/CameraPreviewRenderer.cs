@@ -45,10 +45,22 @@ namespace CustomRenderer.Droid
             }
         }
 
-        public CameraPreviewRenderer(Context context) : base(context)
+        public CameraPreviewRenderer(Context context) : base(context) => visualElementRenderer = new VisualElementRenderer(this);
+        public void OnScanDocumentCalled()
         {
-            visualElementRenderer = new VisualElementRenderer(this);
-            
+            OpenCvSharp.Mat toProcess = null;
+            try
+            {
+                toProcess = cameraFragment.scannedImage.Clone();
+                var foundedContours = cameraFragment.foundedContours;
+                toProcess = ImageProcessing.ProcessImage(toProcess, foundedContours);
+            }
+            catch(Exception e)
+            {
+
+            }
+
+            element.ScannedDocument = toProcess;
         }
 
         void OnElementChanged(ElementChangedEventArgs<CameraPreview> e)
@@ -79,27 +91,11 @@ namespace CustomRenderer.Droid
             ElementChanged?.Invoke(this, new VisualElementChangedEventArgs(e.OldElement, e.NewElement));
         }
 
-        public void OnScanDocumentCalled()
-        {
-            
-            var toProcess = cameraFragment.scannedImage.Clone();
-            var foundedContours = cameraFragment.foundedContours;
-            toProcess = ImageProcessing.ProcessImage(toProcess, foundedContours);
-
-            element.ScannedDocument = toProcess;
-        }
-        async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            ElementPropertyChanged?.Invoke(this, e);
-
-        }
+        async void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e) => ElementPropertyChanged?.Invoke(this, e);  
 
         protected override void Dispose(bool disposing)
         {
-            if (disposed)
-            {
-                return;
-            }
+            if (disposed) return; 
 
             cameraFragment.Dispose();
             disposed = true;
@@ -186,24 +182,19 @@ namespace CustomRenderer.Droid
 
         void IVisualElementRenderer.SetElement(VisualElement element)
         {
-            if (!(element is CameraPreview camera))
-            {
-                throw new ArgumentException($"{nameof(element)} must be of type {nameof(CameraPreview)}");
-            }
+            if (!(element is CameraPreview camera)) 
+                throw new ArgumentException($"{nameof(element)} must be of type {nameof(CameraPreview)}"); 
 
-            if (visualElementTracker == null)
-            {
-                visualElementTracker = new VisualElementTracker(this);
-            }
+            if (visualElementTracker == null) 
+                visualElementTracker = new VisualElementTracker(this); 
+
             Element = camera;
         }
 
         void IVisualElementRenderer.SetLabelFor(int? id)
         {
-            if (defaultLabelFor == null)
-            {
-                defaultLabelFor = LabelFor;
-            }
+            if (defaultLabelFor == null) 
+                defaultLabelFor = LabelFor; 
             LabelFor = (int)(id ?? defaultLabelFor);
         }
         

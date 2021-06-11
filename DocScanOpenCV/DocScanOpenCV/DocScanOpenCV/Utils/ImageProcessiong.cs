@@ -12,8 +12,14 @@ namespace DocScanOpenCV.Utils
     {
         public static Mat ProcessImage(Mat imageToProcess, Point[] foundedRect)
         {
-            var transformedImage = imageToProcess.Transform(foundedRect.To32Point().ToList());
-            return transformedImage;
+            imageToProcess = imageToProcess.Transform(foundedRect.To32Point().ToList());
+            imageToProcess = imageToProcess.CvtColor(ColorConversionCodes.BGR2GRAY);
+            //imageToProcess = imageToProcess.Erode(null);
+            //imageToProcess = imageToProcess.Dilate(null);
+            imageToProcess = imageToProcess.AdaptiveThreshold(200, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 11, 3);
+            //imageToProcess = imageToProcess.MedianBlur(3);
+           // imageToProcess = imageToProcess.Erode(null);
+            return imageToProcess;
         }
 
         public static Mat ProcessImage(this Mat image)
@@ -63,7 +69,26 @@ namespace DocScanOpenCV.Utils
             var boundRect = Cv2.MinAreaRect(hull);
             return boundRect.Points().To64Point();
         }
-        public static double ContourArea(this Point[] x) => Cv2.ContourArea(x, true);
+        public static double ContourArea(this Point[] x) => Cv2.ContourArea(x, true); public static Mat DrawContourAvrg(this Mat image, List<Point[]> contours)
+        {
+            contours = contours.Where(x => x.Length == 4).ToList();
+            var average = new Point[4];
+            foreach (var contour in contours)
+            {
+                for (int i = 0; i < contour.Length; i++)
+                {
+                    average[i].X += contour[i].X;
+                    average[i].Y += contour[i].Y;
+                }
+            }
+            for (int i = 0; i < average.Length; i++)
+            {
+                average[i].X /= contours.Count;
+                average[i].Y /= contours.Count;
+            }
+            image = image.DrawContour(average);
+            return image;
+        }
 
 
         public static Mat DrawAllContours(this Mat image, IEnumerable<IEnumerable<Point>> contours)

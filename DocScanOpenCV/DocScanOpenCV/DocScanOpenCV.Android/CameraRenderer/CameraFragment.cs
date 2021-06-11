@@ -77,15 +77,6 @@ namespace CustomRenderer.Droid
                         image1 = ImageProcessing.ProccessToGrayContuour(image1);
                         var biggestContour = ImageProcessing.FindContours_BiggestContourInt(image1.Clone());
                         foundedContours = biggestContour;
-                        //if (biggestContour != null)
-                        //{
-                        //    var rect = image1.BoundingRect();
-                        //    var imageSize = rect.Height * rect.Width;
-                        //    var contouredArea = biggestContour.ContourArea();
-                        //    foundedContours = (contouredArea > 0.3 * imageSize)
-                        //    ? foundedContours
-                        //    : null;
-                        //}
 
                         image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
                         binding.ImShow("processing view", image1, textureView1, binding.locker1);
