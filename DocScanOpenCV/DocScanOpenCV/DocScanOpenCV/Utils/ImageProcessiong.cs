@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MoreLinq.Extensions.MaxByExtension;
 
 namespace DocScanOpenCV.Utils
 {
@@ -19,16 +20,48 @@ namespace DocScanOpenCV.Utils
         }
         public static Mat ProccessToGrayContuour(this Mat image)
         {
-            image = image.CvtColor(ColorConversionCodes.BGR2GRAY);
+            //image = image.CvtColor(ColorConversionCodes.BGR2GRAY);
+            image = image.Canny(50, 150);
+            //image = image.MedianBlur(5);
+            image = image.Dilate(null);
+            return image;
+
+            var red = image.ExtractChannel(0);
+            image = red.CvtColor(ColorConversionCodes.BGR2GRAY);
+            red.Dispose();
             image = image.Canny(50, 150);
             //image = image.MedianBlur(5);
             image = image.Dilate(null);
             return image;
         }
+        public async static Task<Point[]> FindContours_MultiChannel(this Mat image)
+        {
+            var tsk1 = FindContours(image.ExtractChannel(0));
+            var tsk2 = FindContours(image.ExtractChannel(1));
+            var tsk3 = FindContours(image.ExtractChannel(2));
+
+            var contours = new List<Point[]>()
+            {
+                await tsk1,
+                await tsk2,
+                await tsk3
+            };
+
+            return contours.MaxBy(ContourArea).First();
+        }
+        public async static Task<Point[]> FindContours(this Mat image)
+        {
+            return await Task.Run(() =>
+            {
+                image = image.ProccessToGrayContuour();
+                return image.FindContours_BiggestContourInt();
+            });
+        }
         public static Point[] FindContours_BiggestContourInt(this Mat image)
         {
-            Console.WriteLine("123");
             Cv2.FindContours(image, out var foundedContours, out var hierarchy, RetrievalModes.Tree, ContourApproximationModes.ApproxNone);
+            image.Release();
+            image.Dispose();
             var sortedContours = foundedContours.OrderByDescending(ContourArea);
             var contourOfDocument = sortedContours.First();
 
@@ -87,6 +120,7 @@ namespace DocScanOpenCV.Utils
         private static Mat DrawContour(this Mat image, Point2f[] pointsRect) => DrawContour(image, pointsRect.To64Point());
         public static Mat DrawContour(this Mat image, IEnumerable<Point> countour)
         {
+            if (countour.Count() == 0) return image;
             image.DrawContours(new List<IEnumerable<Point>> { countour }, -1, Scalar.Red, 5);
             return image;
         }

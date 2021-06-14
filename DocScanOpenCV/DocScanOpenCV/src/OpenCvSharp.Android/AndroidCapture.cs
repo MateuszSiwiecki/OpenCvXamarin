@@ -15,6 +15,7 @@ using Graphics = Android.Graphics;
 using OpenCvSharp;
 using OpenCvSharp.Native;
 using Android.Graphics;
+using static MoreLinq.Extensions.MinByExtension;
 
 #pragma warning disable CS0618
 
@@ -33,20 +34,24 @@ namespace OpenCvSharp.Android
         int width;
         int height;
         int cameraIndex;
+        int documentSize;
         Graphics.ImageFormatType cameraType;
         Graphics.SurfaceTexture Texture;
 
         object capturedBufferLocker = new object();
-        Mat capturedBuffer;
 
         long frameCount = 0;
         long lastFrame = -1;
 
         public override event EventHandler<FrameArgs> FrameReady;
 
-        public AndroidCapture(int index)
+        public AndroidCapture(int index, int documentSize)
         {
             cameraIndex = index;
+            this.documentSize = documentSize;
+        }
+        public AndroidCapture(int index) : this(index, 2)
+        {
         }
 
         public AndroidCapture(string filepath)
@@ -67,33 +72,30 @@ namespace OpenCvSharp.Android
 
                 if (Texture == null)
                     Texture = new Graphics.SurfaceTexture(0);
-
+                Texture.SetDefaultBufferSize(1080, 1920);
                 CameraPreviewCallback callback = new CameraPreviewCallback();
                 callback.PreviewUpdated += Callback_PreviewUpdated;
 
+                Hardware.Camera.Size foundedSize = null;
                 Hardware.Camera.Parameters parameter = Camera.GetParameters();
                 List<Hardware.Camera.Size> supportSize = parameter.SupportedPreviewSizes.OrderByDescending(x => x.Width).ToList();
 
-                
-                
-                foreach (Hardware.Camera.Size size in supportSize)
-                {
-                    CvLogger.Log(this, $"Camera Support Size: W{size.Width},H{size.Height}");
-
-
-                    if (size.Width == 1280 && size.Height == 720)
-                    {
-                        parameter.SetPreviewSize(1280, 720);
-                        CvLogger.Log(this, $"SET Camera Size: W{size.Width},H{size.Height}");
-                        break;
-                    }
-                    else if(size.Width == 960 && size.Height == 720)
-                    {
-                        parameter.SetPreviewSize(960, 720);
-                        CvLogger.Log(this, $"SET Camera Size: W{size.Width},H{size.Height}");
-                        break;
-                    }
-                }
+                var width = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
+                //var sizesThatWithIsTheSameAsDisplayWidth = parameter.SupportedPreviewSizes.Where(x => x.Width == width).OrderByDescending(x => x.Width).ToList();
+                //if (sizesThatWithIsTheSameAsDisplayWidth.Count > 0)
+                //{
+                //    if (documentSize == 2) foundedSize = sizesThatWithIsTheSameAsDisplayWidth.MinBy(x => Math.Abs(700000 - (x.Width * x.Height))).First();
+                //    else if (documentSize == 1) foundedSize = sizesThatWithIsTheSameAsDisplayWidth.MinBy(x => Math.Abs(300000 - (x.Width * x.Height))).First();
+                //    else if (documentSize == 0) foundedSize = sizesThatWithIsTheSameAsDisplayWidth.MinBy(x => Math.Abs(150000 - (x.Width * x.Height))).First();
+                //}
+                //else
+                //{
+                if (documentSize == 2) foundedSize = supportSize.MinBy(x => Math.Abs(700000 - (x.Width * x.Height))).First();
+                else if (documentSize == 1) foundedSize = supportSize.MinBy(x => Math.Abs(300000 - (x.Width * x.Height))).First();
+                else if (documentSize == 0) foundedSize = supportSize.MinBy(x => Math.Abs(150000 - (x.Width * x.Height))).First();
+                //}
+                parameter.SetPreviewSize(foundedSize.Width, foundedSize.Height);
+                CvLogger.Log(this, $"SET Camera Size: W{foundedSize.Height},H{foundedSize.Width}");
 
                 string[] supportedFocusMode = parameter.SupportedFocusModes.ToArray();
                 if (supportedFocusMode.Contains(Hardware.Camera.Parameters.FocusModeContinuousVideo))
@@ -106,7 +108,7 @@ namespace OpenCvSharp.Android
                 }
                 parameter.ColorEffect = Hardware.Camera.Parameters.EffectNone;
 
-                width = parameter.PreviewSize.Width;
+                this.width = parameter.PreviewSize.Width;
                 height = parameter.PreviewSize.Height;
                 fps = parameter.PreviewFrameRate;
                 cameraType = parameter.PreviewFormat;
@@ -207,10 +209,11 @@ namespace OpenCvSharp.Android
             CvProfiler.End("CaptureCvt.Flip" + threadindex);
 
             CvProfiler.End("CaptureCvt" + threadindex);
-            capturedBuffer = mat;
 
-            var k = Cv2.WaitKey(1);
-            var args = new FrameArgs(mat, (char)k);
+            //var k = Cv2.WaitKey(1);
+            //var args = new FrameArgs(mat, (char)k);
+            var args = new FrameArgs(mat, 'y');
+            args.MatDispose = false;
 
             if (MultiThread)
             {

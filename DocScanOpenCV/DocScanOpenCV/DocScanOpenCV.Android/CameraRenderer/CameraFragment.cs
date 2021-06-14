@@ -59,9 +59,9 @@ namespace CustomRenderer.Droid
         private void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
             var image1 = e.Mat.Clone();
-            var height = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Height;
+
             var width = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
-            image1 = image1.Resize(new Size(width * 0.7, height * 0.7));
+            image1 = image1.Resize(new Size(width, width * 4 / 3));
 
             Task.Run(() => scannedImage = image1.ToBytes());
             
@@ -69,22 +69,24 @@ namespace CustomRenderer.Droid
             if (!processingFirst)
             {
                 processingFirst = true;
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
+                    var workingImage = image1.Clone();
                     try
                     {
-                        var workingImage = image1.Clone();
-                        workingImage = ImageProcessing.ProccessToGrayContuour(workingImage);
-                        var biggestContour = ImageProcessing.FindContours_BiggestContourInt(workingImage);
+                        //workingImage = ImageProcessing.ProccessToGrayContuour(workingImage);
+                        var biggestContour = await ImageProcessing.FindContours_MultiChannel(image1);
                         foundedContours = biggestContour;
 
-                       // image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
-                       // binding.ImShow("processing view", image1, textureView1, binding.locker1);
+                        workingImage = workingImage.DrawContour(biggestContour);
+                        binding.ImShow("processing view", workingImage, textureView1, binding.locker1);
                     }
                     catch (System.Exception e)
                     {
 
                     }
+                    workingImage.Release();
+                    workingImage.Dispose();
                     processingFirst = false;
                 });
             }
@@ -93,6 +95,7 @@ namespace CustomRenderer.Droid
                 processingSecond = true;
                 Task.Run(() =>
                 {
+                    return;
                     try
                     {
                         var workingImage = image1;

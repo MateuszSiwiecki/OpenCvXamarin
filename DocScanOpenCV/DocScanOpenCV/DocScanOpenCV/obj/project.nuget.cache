@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "yr+Pj+gSL43Ws8DyOjckl1jkEyZHzx3X/IKSRMRMu70xD920rKSpm5OPVlrxNoNivyHBKuBK5UJRH73a3fFfpQ==",
+  "dgSpecHash": "NUBNMQQk0NNA068MrnYSK6ALQ5PY+W6LEajk9NLZpIg9wanEjIx/mzvEkt5FhvR7dswn6p8psAbUc5kVs9eR+g==",
   "success": true,
   "projectFilePath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCV.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\mateu\\.nuget\\packages\\morelinq\\3.3.2\\morelinq.3.3.2.nupkg.sha512",
     "C:\\Users\\mateu\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\mateu\\.nuget\\packages\\xam.plugin.media\\5.0.1\\xam.plugin.media.5.0.1.nupkg.sha512",
     "C:\\Users\\mateu\\.nuget\\packages\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",

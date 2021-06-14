@@ -67,7 +67,7 @@ namespace OpenCvSharp.Android
 
                         //MainActivity.RunOnUiThread(() =>
                         //{
-                            tagetView.SetImageBitmap(toShow);
+                        tagetView.SetImageBitmap(toShow);
                         //});
                     }
                     CvProfiler.End($"imshow {name}");
@@ -75,6 +75,8 @@ namespace OpenCvSharp.Android
             }
         }
         public void ImShow(string name, Mat m, TextureView tagetView) => ImShow(name, m, tagetView, locker3);
+        private Bitmap toShow;
+        private byte[] toShowBuffer;
         public void ImShow(string name, Mat m, TextureView tagetView, object lockObject)
         {
             if (tagetView != null)
@@ -82,26 +84,30 @@ namespace OpenCvSharp.Android
                 lock (lockObject)
                 {
                     CvProfiler.Start($"imshow {name}");
-                    var toShow = Bitmap.CreateBitmap(m.Width, m.Height, Bitmap.Config.Argb8888);
+                    if (toShow == null || (toShow.Width != m.Width && toShow.Height != m.Height))
+                        toShow = Bitmap.CreateBitmap(m.Width, m.Height, Bitmap.Config.Argb8888);
 
                     using (Mat mat = new Mat())
                     {
                         Cv2.CvtColor(m, mat, ColorConversionCodes.BGR2RGBA);
 
                         var bufLen = mat.Channel * mat.Total();
-                        var buffer = new byte[bufLen];
-                        mat.GetArray(0, 0, buffer);
+                        if (toShowBuffer == null || toShowBuffer.Length != bufLen)
+                        {
+                            toShowBuffer = new byte[bufLen];
+                        }
+                        mat.GetArray(0, 0, toShowBuffer);
 
-                        using (var raw = ByteBuffer.Wrap(buffer))
+                        using (var raw = ByteBuffer.Wrap(toShowBuffer))
                         {
                             toShow.CopyPixelsFromBuffer(raw);
                         }
 
                         //MainActivity.RunOnUiThread(() =>
                         //{
-                            var canvas = tagetView.LockCanvas();
-                            canvas.DrawBitmap(toShow, new Matrix(), new Paint());
-                            tagetView.UnlockCanvasAndPost(canvas);
+                        var canvas = tagetView.LockCanvas();
+                        canvas.DrawBitmap(toShow, new Matrix(), new Paint());
+                        tagetView.UnlockCanvasAndPost(canvas);
                         //});
                     }
                     CvProfiler.End($"imshow {name}");
@@ -144,6 +150,10 @@ namespace OpenCvSharp.Android
             }
         }
 
+        public Capture NewCapture(int index, int sizes)
+        {
+            return new AndroidCapture(index, sizes);
+        }
         public override Capture NewCapture(int index)
         {
             return new AndroidCapture(index);
