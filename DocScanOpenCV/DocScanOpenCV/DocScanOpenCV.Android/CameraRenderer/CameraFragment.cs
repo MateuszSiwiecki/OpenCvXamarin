@@ -20,7 +20,7 @@ namespace CustomRenderer.Droid
         public AutoFitTextureView textureView1;
         public AutoFitTextureView textureView2;
 
-        public volatile Mat scannedImage;
+        public volatile byte[] scannedImage;
         private volatile bool processingFirst = false;
         private volatile bool processingSecond = false;
         public volatile OpenCvSharp.Point[] foundedContours;
@@ -59,10 +59,12 @@ namespace CustomRenderer.Droid
         private void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
             var image1 = e.Mat.Clone();
-            var image2 = e.Mat.Clone();
-            if (scannedImage != null && !scannedImage.IsDisposed)
-                scannedImage.Dispose();
-            scannedImage = e.Mat.Clone();
+            var height = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Height;
+            var width = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
+            image1 = image1.Resize(new Size(width * 0.7, height * 0.7));
+
+            Task.Run(() => scannedImage = image1.ToBytes());
+            
 
             if (!processingFirst)
             {
@@ -71,8 +73,9 @@ namespace CustomRenderer.Droid
                 {
                     try
                     {
-                        image1 = ImageProcessing.ProccessToGrayContuour(image1);
-                        var biggestContour = ImageProcessing.FindContours_BiggestContourInt(image1.Clone());
+                        var workingImage = image1.Clone();
+                        workingImage = ImageProcessing.ProccessToGrayContuour(workingImage);
+                        var biggestContour = ImageProcessing.FindContours_BiggestContourInt(workingImage);
                         foundedContours = biggestContour;
 
                        // image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
@@ -92,12 +95,13 @@ namespace CustomRenderer.Droid
                 {
                     try
                     {
+                        var workingImage = image1;
                         if (foundedContours != null)
                         {
                             //image2.DrawContour(foundedContours);
-                            image2 = image2.DrawContour(foundedContours);
+                            workingImage = workingImage.DrawContour(foundedContours);
                         }
-                        binding.ImShow("normal view", image2, textureView2, binding.locker2);
+                        binding.ImShow("normal view", workingImage, textureView2, binding.locker2);
                     }
                     catch (System.Exception e)
                     {
@@ -124,7 +128,6 @@ namespace CustomRenderer.Droid
         {
             capture.Stop();
             capture.Dispose();
-            if (scannedImage != null && !scannedImage.IsDisposed) scannedImage.Dispose();
             textureView1?.Dispose();
             textureView2?.Dispose();
             base.Dispose(disposing);

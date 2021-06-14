@@ -51,7 +51,7 @@ namespace CustomRenderer.Droid
             OpenCvSharp.Mat toProcess = null;
             try
             {
-                toProcess = cameraFragment.scannedImage.Clone();
+                toProcess = OpenCvSharp.Mat.FromImageData(cameraFragment.scannedImage);
                 var foundedContours = cameraFragment.foundedContours;
                 toProcess = ImageProcessing.ProcessImage(toProcess, foundedContours);
             }
