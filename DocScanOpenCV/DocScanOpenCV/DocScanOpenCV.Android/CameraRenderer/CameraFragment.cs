@@ -17,7 +17,6 @@ namespace CustomRenderer.Droid
         OpenCvSharp.Android.NativeBinding binding;
         OpenCvSharp.Native.Capture capture;
 
-        public Android.Widget.ImageView imageView;
         public AutoFitTextureView textureView1;
         public AutoFitTextureView textureView2;
 
@@ -52,9 +51,7 @@ namespace CustomRenderer.Droid
             textureView1.SetOpaque(false);
             textureView2.SetOpaque(false);
 
-            imageView = view.FindViewById<Android.Widget.ImageView>(DocScanOpenCV.Droid.Resource.Id.cameratexture3);
-
-            binding = new OpenCvSharp.Android.NativeBinding(Context, Activity, imageView);
+            binding = new OpenCvSharp.Android.NativeBinding(Context, Activity);
             capture = binding.NewCapture(0);
             capture.FrameReady += Capture_FrameReady;
             capture.Start();
@@ -78,8 +75,8 @@ namespace CustomRenderer.Droid
                         var biggestContour = ImageProcessing.FindContours_BiggestContourInt(image1.Clone());
                         foundedContours = biggestContour;
 
-                        image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
-                        binding.ImShow("processing view", image1, textureView1, binding.locker1);
+                       // image1 = image1.CvtColor(ColorConversionCodes.GRAY2RGB);
+                       // binding.ImShow("processing view", image1, textureView1, binding.locker1);
                     }
                     catch (System.Exception e)
                     {
@@ -130,7 +127,6 @@ namespace CustomRenderer.Droid
             if (scannedImage != null && !scannedImage.IsDisposed) scannedImage.Dispose();
             textureView1?.Dispose();
             textureView2?.Dispose();
-            imageView?.Dispose();
             base.Dispose(disposing);
         }
 
