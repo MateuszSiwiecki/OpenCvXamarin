@@ -14,14 +14,40 @@ namespace DocScanOpenCV.Utils
         public static Mat ProcessImage(Mat imageToProcess, Point[] foundedRect)
         {
             imageToProcess = imageToProcess.Transform(foundedRect.To32Point().ToList());
-            imageToProcess = imageToProcess.CvtColor(ColorConversionCodes.BGR2GRAY);
-            imageToProcess = imageToProcess.AdaptiveThreshold(255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 17, 11);
+            imageToProcess = imageToProcess.Sharpness();
+            imageToProcess = imageToProcess.ChangeGamma(1);
             return imageToProcess;
+        }
+        public static Mat Sharpness(this Mat src)
+        {
+            var blured = src.GaussianBlur(new Size(0, 0), 3);
+            Cv2.AddWeighted(src, 1.5, blured, -0.5,  10, src);
+            blured.Dispose();
+            return src;
+        }
+        public static Mat ChangeGamma(this Mat src, double gamma)
+        {
+            Mat lookUpTable = new Mat(1, 256, MatType.CV_8U);
+            byte[] lookUpTableData = new byte[(int)(lookUpTable.Total() * lookUpTable.Channels())];
+
+            for (int i = 0; i < lookUpTable.Cols; i++)
+            {
+                lookUpTableData[i] = Saturate(Math.Pow(i / 255.0, gamma) * 255.0);
+            }
+            src = src.LUT(lookUpTable);
+            lookUpTable.Dispose();
+            return src;
+        }
+        private static byte Saturate(double val)
+        {
+            int iVal = (int)Math.Round(val);
+            iVal = iVal > 255 ? 255 : (iVal < 0 ? 0 : iVal);
+            return (byte)iVal;
         }
         public static Mat ProccessToGrayContuour(this Mat image)
         {
             //image = image.CvtColor(ColorConversionCodes.BGR2GRAY);
-            image = image.Canny(50, 150);
+            image = image.Canny(50, 200);
             //image = image.MedianBlur(5);
             image = image.Dilate(null);
             return image;

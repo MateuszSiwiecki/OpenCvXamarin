@@ -121,7 +121,7 @@ namespace CustomRenderer.Droid
                 {
                     Element.PropertyChanged -= OnElementPropertyChanged;
                     Element.ScanDocumentCalled -= OnScanDocumentCalled;
-                    Element.ScannedDocument.Dispose();
+                    Element.ScannedDocument?.Dispose();
 
                     if (Platform.GetRenderer(Element) == this)
                     {
