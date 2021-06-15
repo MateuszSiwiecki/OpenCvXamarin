@@ -15,25 +15,26 @@ namespace DocScanOpenCV.Utils
         {
             imageToProcess = imageToProcess.Transform(foundedRect.To32Point().ToList());
             imageToProcess = imageToProcess.Sharpness();
-            imageToProcess = imageToProcess.ChangeGamma(1);
+            imageToProcess = imageToProcess.ChangeGamma(0.8);
             return imageToProcess;
         }
         public static Mat Sharpness(this Mat src)
         {
             var blured = src.GaussianBlur(new Size(0, 0), 3);
-            Cv2.AddWeighted(src, 1.5, blured, -0.5,  10, src);
+            Cv2.AddWeighted(src, 1.5, blured, -0.5,  0, src);
             blured.Dispose();
             return src;
         }
         public static Mat ChangeGamma(this Mat src, double gamma)
         {
             Mat lookUpTable = new Mat(1, 256, MatType.CV_8U);
-            byte[] lookUpTableData = new byte[(int)(lookUpTable.Total() * lookUpTable.Channels())];
+            byte[] lookUpTableData = new byte[(int)(src.Total() * src.Channels())];
 
             for (int i = 0; i < lookUpTable.Cols; i++)
             {
                 lookUpTableData[i] = Saturate(Math.Pow(i / 255.0, gamma) * 255.0);
             }
+            lookUpTable.SetArray(0, 0, lookUpTableData);
             src = src.LUT(lookUpTable);
             lookUpTable.Dispose();
             return src;
