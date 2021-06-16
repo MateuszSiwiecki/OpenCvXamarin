@@ -29,7 +29,7 @@ namespace OpenCvSharp.Android
 
         public override bool IsOpened => Camera != null;
 
-        Hardware.Camera Camera;
+        public Hardware.Camera Camera;
         bool cameraOn = false;
         int width;
         int height;
@@ -68,11 +68,24 @@ namespace OpenCvSharp.Android
             try
             {
                 if (Camera == null)
+                {
                     Camera = Hardware.Camera.Open(cameraIndex);
+                }
+                else
+                {
+                    try
+                    {
+                        Camera.StartPreview();
+                    }
+                    catch (Exception e)
+                    {
+                        Camera = Hardware.Camera.Open(cameraIndex);
+                    }
+                }
 
                 if (Texture == null)
                     Texture = new Graphics.SurfaceTexture(0);
-                Texture.SetDefaultBufferSize(1080, 1920);
+
                 CameraPreviewCallback callback = new CameraPreviewCallback();
                 callback.PreviewUpdated += Callback_PreviewUpdated;
 
@@ -81,19 +94,11 @@ namespace OpenCvSharp.Android
                 List<Hardware.Camera.Size> supportSize = parameter.SupportedPreviewSizes.OrderByDescending(x => x.Width).ToList();
 
                 var width = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
-                //var sizesThatWithIsTheSameAsDisplayWidth = parameter.SupportedPreviewSizes.Where(x => x.Width == width).OrderByDescending(x => x.Width).ToList();
-                //if (sizesThatWithIsTheSameAsDisplayWidth.Count > 0)
-                //{
-                //    if (documentSize == 2) foundedSize = sizesThatWithIsTheSameAsDisplayWidth.MinBy(x => Math.Abs(700000 - (x.Width * x.Height))).First();
-                //    else if (documentSize == 1) foundedSize = sizesThatWithIsTheSameAsDisplayWidth.MinBy(x => Math.Abs(300000 - (x.Width * x.Height))).First();
-                //    else if (documentSize == 0) foundedSize = sizesThatWithIsTheSameAsDisplayWidth.MinBy(x => Math.Abs(150000 - (x.Width * x.Height))).First();
-                //}
-                //else
-                //{
+
                 if (documentSize == 2) foundedSize = supportSize.MinBy(x => Math.Abs(700000 - (x.Width * x.Height))).First();
                 else if (documentSize == 1) foundedSize = supportSize.MinBy(x => Math.Abs(300000 - (x.Width * x.Height))).First();
                 else if (documentSize == 0) foundedSize = supportSize.MinBy(x => Math.Abs(150000 - (x.Width * x.Height))).First();
-                //}
+
                 parameter.SetPreviewSize(foundedSize.Width, foundedSize.Height);
                 CvLogger.Log(this, $"SET Camera Size: W{foundedSize.Height},H{foundedSize.Width}");
 
@@ -140,7 +145,6 @@ namespace OpenCvSharp.Android
                 Camera.SetPreviewCallback(null);
                 Camera.SetPreviewTexture(null);
             }
-
             cameraOn = false;
         }
 
@@ -159,20 +163,13 @@ namespace OpenCvSharp.Android
                 if (e.Buffer != null && LimitedTaskScheduler.QueuedTaskCount < LimitedTaskScheduler.MaxTaskCount)
                     LimitedTaskScheduler.Factory.StartNew(() => CaptureCvtProc(e.Buffer, frameCount, LimitedTaskScheduler.QueuedTaskCount));
             }
-            else
-            {
-                CaptureCvtProc(e.Buffer, 0, 0);
-            }
+            else CaptureCvtProc(e.Buffer, 0, 0);
 
             CvProfiler.Capture("TaskCount", LimitedTaskScheduler.QueuedTaskCount);
         }
 
         private void CaptureCvtProc(byte[] Buffer, long frameIndex, int threadindex)
-        {
-            //var bitmap = BitmapFactory.DecodeByteArray(Buffer, 0, Buffer.Length);
-            //FrameReady?.Invoke(this, new FrameArgs(new Mat(Buffer)));
-            //return;
-
+        { 
             CvProfiler.Start("CaptureCvt" + threadindex);
             Mat mat = null;
 
@@ -209,9 +206,7 @@ namespace OpenCvSharp.Android
             CvProfiler.End("CaptureCvt.Flip" + threadindex);
 
             CvProfiler.End("CaptureCvt" + threadindex);
-
-            //var k = Cv2.WaitKey(1);
-            //var args = new FrameArgs(mat, (char)k);
+             
             var args = new FrameArgs(mat, 'y');
             args.MatDispose = false;
 
@@ -232,10 +227,7 @@ namespace OpenCvSharp.Android
                     FrameReady?.Invoke(this, args);
                 }
             }
-            else
-            {
-                FrameReady?.Invoke(this, args);
-            }
+            else FrameReady?.Invoke(this, args); 
 
             if (args.MatDispose)
             {

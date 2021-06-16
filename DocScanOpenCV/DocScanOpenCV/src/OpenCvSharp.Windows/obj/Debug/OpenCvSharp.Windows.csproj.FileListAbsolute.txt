@@ -1,0 +1,17 @@
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\opencv_ffmpeg320_64.dll
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\opencv_world320.dll
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\OpenCvSharpExtern.dll
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\OpenCvSharp.dll
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\Xamarin.Forms.Core.dll
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\Xamarin.Forms.Platform.dll
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\Xamarin.Forms.Xaml.dll
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\OpenCvSharp.pdb
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\Xamarin.Forms.Core.pdb
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\Xamarin.Forms.Core.xml
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\Xamarin.Forms.Xaml.pdb
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\bin\Debug\Xamarin.Forms.Xaml.xml
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\obj\Debug\OpenCvSharp.Windows.csproj.AssemblyReference.cache
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\obj\Debug\OpenCvSharp.Windows.csproj.CoreCompileInputs.cache
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\obj\Debug\OpenCvSharp.Windows.csproj.CopyComplete
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\obj\Debug\OpenCvSharp.Windows.dll
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharp.Windows\obj\Debug\OpenCvSharp.Windows.pdb

@@ -16,6 +16,7 @@ namespace CustomRenderer.Droid
     {
         OpenCvSharp.Android.NativeBinding binding;
         OpenCvSharp.Native.Capture capture;
+        private OpenCvSharp.Android.AndroidCapture ActiveCapture => (OpenCvSharp.Android.AndroidCapture)capture;
 
         public AutoFitTextureView textureView1;
         public AutoFitTextureView textureView2;
@@ -25,6 +26,8 @@ namespace CustomRenderer.Droid
         private volatile bool processingSecond = false;
         public volatile OpenCvSharp.Point[] foundedContours;
         private volatile List<OpenCvSharp.Point[]> allContours;
+        public SurfaceTexture surface;
+        private double width = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
         public CameraPreview Element { get; set; }
 
         #region Constructors
@@ -51,42 +54,43 @@ namespace CustomRenderer.Droid
             textureView1.SetOpaque(false);
             textureView2.SetOpaque(false);
 
+            textureView1.SurfaceTextureListener = this;
+
             binding = new OpenCvSharp.Android.NativeBinding(Context, Activity);
-            capture = binding.NewCapture(0);
+            capture = binding.NewCapture(0, 2);
             capture.FrameReady += Capture_FrameReady;
             capture.Start();
         }
         private void Capture_FrameReady(object sender, OpenCvSharp.Native.FrameArgs e)
         {
-            var image1 = e.Mat.Clone();
+            //return;
+            var image1 = e.Mat;
 
-            var width = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
+            var first = false;
+            var second = false;
             image1 = image1.Resize(new Size(width, width * 4 / 3));
 
             Task.Run(() => scannedImage = image1.ToBytes());
-            
+
 
             if (!processingFirst)
             {
                 processingFirst = true;
                 Task.Run(async () =>
                 {
-                    var workingImage = image1.Clone();
+                    var transparentImage = image1.Clone();
                     try
                     {
-                        //workingImage = ImageProcessing.ProccessToGrayContuour(workingImage);
-                        var biggestContour = await ImageProcessing.FindContours_MultiChannel(image1);
+                        var biggestContour = await image1.FindContours_MultiChannel();
                         foundedContours = biggestContour;
-
-                        workingImage = workingImage.DrawContour(biggestContour);
-                        binding.ImShow("processing view", workingImage, textureView1, binding.locker1);
                     }
                     catch (System.Exception e)
                     {
 
                     }
-                    workingImage.Release();
-                    workingImage.Dispose();
+                    transparentImage.Dispose();
+                    first = true;
+                    if (first && second) image1.Dispose();
                     processingFirst = false;
                 });
             }
@@ -95,21 +99,29 @@ namespace CustomRenderer.Droid
                 processingSecond = true;
                 Task.Run(() =>
                 {
-                    return;
+                    if (foundedContours == null)
+                    {
+                        processingSecond = false;
+                        return;
+                    }
+                    var workingImage = image1.Clone();
+                    var workingImage2 = image1.Clone();
                     try
                     {
-                        var workingImage = image1;
-                        if (foundedContours != null)
-                        {
-                            //image2.DrawContour(foundedContours);
-                            workingImage = workingImage.DrawContour(foundedContours);
-                        }
+                        workingImage = workingImage.DrawTransparentContour(foundedContours);
+
+                        workingImage2 = workingImage2.CvtColor(ColorConversionCodes.BGR2BGRA);
+                        Cv2.AddWeighted(workingImage2, 1, workingImage, 1, 0, workingImage);
                         binding.ImShow("normal view", workingImage, textureView2, binding.locker2);
                     }
                     catch (System.Exception e)
                     {
 
                     }
+                    workingImage.Dispose();
+                    workingImage2.Dispose();
+                    second = true;
+                    if (first && second) image1.Dispose();
                     processingSecond = false;
                 });
             }
@@ -142,6 +154,11 @@ namespace CustomRenderer.Droid
 
         async void TextureView.ISurfaceTextureListener.OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
         {
+            this.surface = surface;
+            var widthDisp = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
+            textureView1.LayoutParameters = new Android.Widget.FrameLayout.LayoutParams((int)(widthDisp), (int)(widthDisp * 4 / 3));
+            //ActiveCapture?.Camera?.SetPreviewTexture(surface);
+            //ActiveCapture?.Camera?.SetDisplayOrientation(90);
         }
 
         bool TextureView.ISurfaceTextureListener.OnSurfaceTextureDestroyed(SurfaceTexture surface)

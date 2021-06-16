@@ -88,8 +88,8 @@ namespace OpenCvSharp.Android
                         toShow = Bitmap.CreateBitmap(m.Width, m.Height, Bitmap.Config.Argb8888);
 
                     using (Mat mat = new Mat())
-                    {
-                        Cv2.CvtColor(m, mat, ColorConversionCodes.BGR2RGBA);
+                    { 
+                        Cv2.CvtColor(m, mat, ColorConversionCodes.BGRA2RGBA); 
 
                         var bufLen = mat.Channel * mat.Total();
                         if (toShowBuffer == null || toShowBuffer.Length != bufLen)

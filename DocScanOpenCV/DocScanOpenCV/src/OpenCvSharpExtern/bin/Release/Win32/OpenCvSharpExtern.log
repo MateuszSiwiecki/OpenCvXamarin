@@ -6,6 +6,14 @@
   face.cpp
   highgui.cpp
   imgcodecs.cpp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file aruco.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file cuda.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file bgsegm.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file core.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file face.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file imgcodecs.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file highgui.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file calib3d.cpp)
   imgproc.cpp
   ml.cpp
   objdetect.cpp
@@ -14,15 +22,33 @@
   photo.cpp
   shape.cpp
   std_vector.cpp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file imgproc.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file shape.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file objdetect.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file ml.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file flann.cpp)
   features2d.cpp
   stitching.cpp
   matchers.cpp
   superres.cpp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file optflow.cpp)
   tracking.cpp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file std_vector.cpp)
   video.cpp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\stitching\matchers.cpp(4,10): fatal error C1083: Cannot open include file: 'opencv2/stitching/detail/matchers.hpp': No such file or directory
   videoio.cpp
   xfeatures2d.cpp
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file photo.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file tracking.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file features2d.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file superres.cpp)
   ximgproc.cpp
   xphoto.cpp
   tracking.h
-LINK : fatal error LNK1181: cannot open input file 'opencv_world320.lib'
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file stitching.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file videoio.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file tracking.h)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file ximgproc.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file video.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file xfeatures2d.cpp)
+D:\repo\OpenCVXamarin\DocScanOpenCV\DocScanOpenCV\src\OpenCvSharpExtern\include_opencv.h(12,10): fatal error C1083: Cannot open include file: 'opencv2/opencv.hpp': No such file or directory (compiling source file xphoto.cpp)
