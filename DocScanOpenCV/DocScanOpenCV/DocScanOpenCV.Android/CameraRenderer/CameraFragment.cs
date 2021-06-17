@@ -5,6 +5,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using Android.Widget;
 using AndroidX.Fragment.App;
 using DocScanOpenCV.CameraRenderer;
 using DocScanOpenCV.Utils;
@@ -20,6 +21,7 @@ namespace CustomRenderer.Droid
 
         public AutoFitTextureView textureView1;
         public AutoFitTextureView textureView2;
+        public ImageView textureView3;
 
         public volatile byte[] scannedImage;
         private volatile bool processingFirst = false;
@@ -51,6 +53,7 @@ namespace CustomRenderer.Droid
         {
             textureView1 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture1);
             textureView2 = view.FindViewById<AutoFitTextureView>(DocScanOpenCV.Droid.Resource.Id.cameratexture2);
+            textureView3 = view.FindViewById<ImageView>(DocScanOpenCV.Droid.Resource.Id.cameratexture3);
             textureView1.SetOpaque(false);
             textureView2.SetOpaque(false);
 
@@ -111,7 +114,8 @@ namespace CustomRenderer.Droid
                         workingImage = workingImage.DrawTransparentContour(foundedContours);
 
                         workingImage2 = workingImage2.CvtColor(ColorConversionCodes.BGR2BGRA);
-                        Cv2.AddWeighted(workingImage2, 1, workingImage, 1, 0, workingImage);
+                        //Cv2.AddWeighted(workingImage2, 0.5, workingImage, 1, 0, workingImage2);
+                        //binding.ImShow("normal view", workingImage2, textureView2, binding.locker2);
                         binding.ImShow("normal view", workingImage, textureView2, binding.locker2);
                     }
                     catch (System.Exception e)
@@ -157,8 +161,8 @@ namespace CustomRenderer.Droid
             this.surface = surface;
             var widthDisp = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
             textureView1.LayoutParameters = new Android.Widget.FrameLayout.LayoutParams((int)(widthDisp), (int)(widthDisp * 4 / 3));
-            //ActiveCapture?.Camera?.SetPreviewTexture(surface);
-            //ActiveCapture?.Camera?.SetDisplayOrientation(90);
+            ActiveCapture?.Camera?.SetPreviewTexture(surface);
+            ActiveCapture?.Camera?.SetDisplayOrientation(90);
         }
 
         bool TextureView.ISurfaceTextureListener.OnSurfaceTextureDestroyed(SurfaceTexture surface)
