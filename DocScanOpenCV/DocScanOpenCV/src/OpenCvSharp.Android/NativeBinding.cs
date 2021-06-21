@@ -103,30 +103,14 @@ namespace OpenCvSharp.Android
                         {
                             toShow.CopyPixelsFromBuffer(raw);
                         }
-
-                        //MainActivity.RunOnUiThread(() =>
-                        //{
                         var canvas = tagetView.LockCanvas();
-
-                        //var path = new Path();
-                        //path.MoveTo(100, 100);
-                        //path.AddRect(new RectF(0, 0, 1000, 1000), Path.Direction.Cw);
-                        //canvas.ClipPath();
-                        //canvas.DrawPath(new Path(), new Paint
-                        //{
-                        //    StrokeWidth = 5,
-                        //    Color = Color.Red
-                        //});
-                        //canvas.DrawRect(new AndroidRect(100, 100, 1000, 1000), new Paint());
-                        //canvas.DrawColor(Color.Transparent);
                         var paint = new Paint();
                         var clearPaint = new Paint();
                         clearPaint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.Clear));
                         canvas.DrawPaint(clearPaint);
-                        paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.DstOver));
+                        paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.DstAtop));
                         canvas.DrawBitmap(toShow, new Matrix(), paint);
                         tagetView.UnlockCanvasAndPost(canvas);
-                        //});
                     }
                     CvProfiler.End($"imshow {name}");
                 }

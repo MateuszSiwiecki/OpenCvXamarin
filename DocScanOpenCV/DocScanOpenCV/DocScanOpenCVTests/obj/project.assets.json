@@ -6425,7 +6425,6 @@
   },
   "packageFolders": {
     "C:\\Users\\mateu\\.nuget\\packages\\": {},
-    "D:\\programowanie\\visual studio shared kit\\NuGetPackages": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
@@ -6438,12 +6437,10 @@
       "outputPath": "D:\\repo\\OpenCVXamarin\\DocScanOpenCV\\DocScanOpenCV\\DocScanOpenCVTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\programowanie\\visual studio shared kit\\NuGetPackages",
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\mateu\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],

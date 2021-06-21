@@ -68,9 +68,9 @@ namespace CustomRenderer.Droid
         {
             //return;
             var image1 = e.Mat;
-
             var first = false;
             var second = false;
+
             image1 = image1.Resize(new Size(width, width * 4 / 3));
 
             Task.Run(() => scannedImage = image1.ToBytes());
@@ -114,8 +114,6 @@ namespace CustomRenderer.Droid
                         workingImage = workingImage.DrawTransparentContour(foundedContours);
 
                         workingImage2 = workingImage2.CvtColor(ColorConversionCodes.BGR2BGRA);
-                        //Cv2.AddWeighted(workingImage2, 0.5, workingImage, 1, 0, workingImage2);
-                        //binding.ImShow("normal view", workingImage2, textureView2, binding.locker2);
                         binding.ImShow("normal view", workingImage, textureView2, binding.locker2);
                     }
                     catch (System.Exception e)
@@ -145,10 +143,15 @@ namespace CustomRenderer.Droid
 
         protected override void Dispose(bool disposing)
         {
+
             capture.Stop();
             capture.Dispose();
+            textureView1.SurfaceTexture.Release();
             textureView1?.Dispose();
+            textureView2.SurfaceTexture.Release();
             textureView2?.Dispose();
+            surface?.Release();
+            surface?.Dispose();
             base.Dispose(disposing);
         }
 
