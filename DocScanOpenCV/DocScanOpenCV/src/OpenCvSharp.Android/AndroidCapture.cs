@@ -91,14 +91,16 @@ namespace OpenCvSharp.Android
 
                 Hardware.Camera.Size foundedSize = null;
                 Hardware.Camera.Parameters parameter = Camera.GetParameters();
+                //List<Hardware.Camera.Size> supportSize = parameter.SupportedPreviewSizes.OrderByDescending(x => x.Height).ToList();
                 List<Hardware.Camera.Size> supportSize = parameter.SupportedPreviewSizes.OrderByDescending(x => x.Width).ToList();
+                //List<Hardware.Camera.Size> supportSize = parameter.SupportedPreviewSizes.OrderByDescending(x => x.Height).Where(x => x.Width == x.Height).ToList();
 
                 var width = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
 
-                if (documentSize == 2) foundedSize = supportSize.MinBy(x => Math.Abs(700000 - (x.Width * x.Height))).First();
-                else if (documentSize == 1) foundedSize = supportSize.MinBy(x => Math.Abs(300000 - (x.Width * x.Height))).First();
-                else if (documentSize == 0) foundedSize = supportSize.MinBy(x => Math.Abs(150000 - (x.Width * x.Height))).First();
-
+                if (documentSize == 2) foundedSize = supportSize.MinBy(x => Math.Abs(3000000 - (x.Width * x.Height))).First();
+                else if (documentSize == 1) foundedSize = supportSize.MinBy(x => Math.Abs(2000000 - (x.Width * x.Height))).First();
+                else if (documentSize == 0) foundedSize = supportSize.MinBy(x => Math.Abs(1000000 - (x.Width * x.Height))).First();
+                //return;
                 parameter.SetPreviewSize(foundedSize.Width, foundedSize.Height);
                 CvLogger.Log(this, $"SET Camera Size: W{foundedSize.Height},H{foundedSize.Width}");
 
@@ -118,7 +120,6 @@ namespace OpenCvSharp.Android
                 fps = parameter.PreviewFrameRate;
                 cameraType = parameter.PreviewFormat;
 
-                CvLogger.Log(this, string.Format("Camera is creating W{0} H{1} FPS{2}", width, height, fps));
                 Camera.SetParameters(parameter);
 
                 Camera.SetPreviewCallback(callback);
@@ -129,8 +130,6 @@ namespace OpenCvSharp.Android
             }
             catch (Exception ex)
             {
-                CvLogger.Log(this, "Camera Init Failed.\n" + ex.ToString());
-
                 Dispose();
 
                 throw new ArgumentException("Camera Exception", ex);

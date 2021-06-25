@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Dg = System.Diagnostics.Debug;
 using AndroidRect = Android.Graphics.Rect;
 using Android.App;
 using Android.Content;
@@ -19,6 +20,7 @@ namespace OpenCvSharp.Android
     public class NativeBinding : NativeBindings
     {
         public static NativeBinding K => (NativeBinding)Kernal;
+        public volatile bool SurfaceAvalible;
 
         public static void Init(Context context, Activity activity, ImageView imShowTarget = null)
         {
@@ -78,19 +80,19 @@ namespace OpenCvSharp.Android
         public void ImShow(string name, Mat m, TextureView tagetView) => ImShow(name, m, tagetView, locker3);
         private Bitmap toShow;
         private byte[] toShowBuffer;
+        public static readonly object SurfaceLocker = new object();
         public void ImShow(string name, Mat m, TextureView tagetView, object lockObject)
         {
             if (tagetView != null)
             {
                 lock (lockObject)
                 {
-                    CvProfiler.Start($"imshow {name}");
                     if (toShow == null || (toShow.Width != m.Width && toShow.Height != m.Height))
                         toShow = Bitmap.CreateBitmap(m.Width, m.Height, Bitmap.Config.Argb8888);
 
                     using (Mat mat = new Mat())
-                    { 
-                        Cv2.CvtColor(m, mat, ColorConversionCodes.BGRA2RGBA); 
+                    {
+                        Cv2.CvtColor(m, mat, ColorConversionCodes.BGRA2RGBA);
 
                         var bufLen = mat.Channel * mat.Total();
                         if (toShowBuffer == null || toShowBuffer.Length != bufLen)
@@ -103,16 +105,49 @@ namespace OpenCvSharp.Android
                         {
                             toShow.CopyPixelsFromBuffer(raw);
                         }
-                        var canvas = tagetView.LockCanvas();
-                        var paint = new Paint();
-                        var clearPaint = new Paint();
-                        clearPaint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.Clear));
-                        canvas.DrawPaint(clearPaint);
-                        paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.DstAtop));
-                        canvas.DrawBitmap(toShow, new Matrix(), paint);
-                        tagetView.UnlockCanvasAndPost(canvas);
+
+                        Dg.WriteLine("SHOW START");
+
+                        lock (SurfaceLocker)
+                        {
+                            Dg.WriteLine("LockCanvas");
+                            Dg.WriteLine($"Surface avalible {SurfaceAvalible}");
+                            if (!SurfaceAvalible)
+                            {
+                                Dg.WriteLine($"Surface not avalible, SHOW END");
+                                return;
+                            }
+                            if (toShow == null) return;
+
+
+                            var canvas = tagetView.LockCanvas();
+                            if (canvas == null) return;
+
+                            var paint = new Paint();
+                            var clearPaint = new Paint();
+                            clearPaint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.Clear));
+
+                            Dg.WriteLine("DrawPaint");
+
+                            Dg.WriteLine($"targetView {tagetView == null}");
+                            Dg.WriteLine($"tagetView.SurfaceTexture {tagetView.SurfaceTexture == null}");
+                            Dg.WriteLine($"tagetView.SurfaceTexture.IsReleased {tagetView.SurfaceTexture.IsReleased}");
+                            Dg.WriteLine($"canvas {canvas == null}");
+                            Dg.WriteLine($"toShow {toShow == null}");
+                            Dg.WriteLine($"toShow.IsRecycled {toShow.IsRecycled}");
+
+                            canvas.DrawPaint(clearPaint);
+                            paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.DstAtop));
+
+                            Dg.WriteLine("DrawBitmap");
+                            canvas.DrawBitmap(toShow, new Matrix(), paint);
+
+                            Dg.WriteLine("UnlockCanvasAndPost");
+                            tagetView.UnlockCanvasAndPost(canvas);
+
+                            Dg.WriteLine("SHOW END");
+                        }
                     }
-                    CvProfiler.End($"imshow {name}");
                 }
             }
         }

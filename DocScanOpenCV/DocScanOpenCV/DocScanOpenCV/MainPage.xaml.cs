@@ -50,7 +50,7 @@ namespace DocScanOpenCV
                   await Task.Delay(2000);
 
                   MainThread.BeginInvokeOnMainThread(() => myimg.IsVisible = false);
-              }).ConfigureAwait(false);
+              }).ConfigureAwait(false);  
             result.Dispose();
             return;
             box.IsVisible = true;

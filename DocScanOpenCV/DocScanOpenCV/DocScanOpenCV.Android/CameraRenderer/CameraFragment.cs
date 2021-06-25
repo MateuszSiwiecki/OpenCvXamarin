@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Dg = System.Diagnostics.Debug;
+using System.Linq;
 using System.Threading.Tasks;
 using Android.Graphics;
 using Android.OS;
@@ -27,10 +29,12 @@ namespace CustomRenderer.Droid
         private volatile bool processingFirst = false;
         private volatile bool processingSecond = false;
         public volatile OpenCvSharp.Point[] foundedContours;
+        public volatile OpenCvSharp.Point[] foundedContoursOryginal;
         private volatile List<OpenCvSharp.Point[]> allContours;
         public SurfaceTexture surface;
-        private double width = Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Width;
         public CameraPreview Element { get; set; }
+        public static int height = 0;
+        public static int width = 0;
 
         #region Constructors
 
@@ -71,9 +75,10 @@ namespace CustomRenderer.Droid
             var first = false;
             var second = false;
 
-            image1 = image1.Resize(new Size(width, width * 4 / 3));
+            scannedImage = image1.ToBytes();
+            var size = image1.Size();
+            image1 = image1.Resize(new Size(width, height));
 
-            Task.Run(() => scannedImage = image1.ToBytes());
 
 
             if (!processingFirst)
@@ -81,17 +86,18 @@ namespace CustomRenderer.Droid
                 processingFirst = true;
                 Task.Run(async () =>
                 {
-                    var transparentImage = image1.Clone();
                     try
                     {
                         var biggestContour = await image1.FindContours_MultiChannel();
                         foundedContours = biggestContour;
+                        foundedContoursOryginal = biggestContour
+                            .Select(x => new OpenCvSharp.Point(x.X * size.Width / width, x.Y * size.Height / height))
+                            .ToArray();
                     }
                     catch (System.Exception e)
                     {
 
                     }
-                    transparentImage.Dispose();
                     first = true;
                     if (first && second) image1.Dispose();
                     processingFirst = false;
@@ -108,12 +114,9 @@ namespace CustomRenderer.Droid
                         return;
                     }
                     var workingImage = image1.Clone();
-                    var workingImage2 = image1.Clone();
                     try
                     {
                         workingImage = workingImage.DrawTransparentContour(foundedContours);
-
-                        workingImage2 = workingImage2.CvtColor(ColorConversionCodes.BGR2BGRA);
                         binding.ImShow("normal view", workingImage, textureView2, binding.locker2);
                     }
                     catch (System.Exception e)
@@ -121,7 +124,6 @@ namespace CustomRenderer.Droid
 
                     }
                     workingImage.Dispose();
-                    workingImage2.Dispose();
                     second = true;
                     if (first && second) image1.Dispose();
                     processingSecond = false;
@@ -130,29 +132,59 @@ namespace CustomRenderer.Droid
         }
         public override void OnPause()
         {
-            capture.Stop();
+            Dg.WriteLine("OnPause START");
+            try
+            {
+                capture?.Stop();
+
+            }
+            catch (Exception e)
+            {
+
+            }
             base.OnPause();
+            Dg.WriteLine("OnPause END");
         }
 
         public override async void OnResume()
         {
+            Dg.WriteLine("On resume START");
             base.OnResume();
 
-            capture.Start();
+            try
+            {
+                capture?.Start();
+                if (surface != null)
+                {
+
+                }
+                ActiveCapture?.Camera?.SetPreviewTexture(surface);
+                ActiveCapture?.Camera?.SetDisplayOrientation(90);
+            }
+            catch (Exception e)
+            {
+
+            }
+            Dg.WriteLine("On resume END");
         }
 
         protected override void Dispose(bool disposing)
         {
+            Dg.WriteLine("Dispose START");
 
-            capture.Stop();
-            capture.Dispose();
-            textureView1.SurfaceTexture.Release();
-            textureView1?.Dispose();
-            textureView2.SurfaceTexture.Release();
-            textureView2?.Dispose();
-            surface?.Release();
-            surface?.Dispose();
+            try
+            {
+                capture?.Stop();
+                capture?.Dispose();
+                textureView1?.Dispose();
+                textureView2?.Dispose();
+            }
+            catch (Exception e)
+            {
+
+            }
             base.Dispose(disposing);
+            Dg.WriteLine("Dispose END");
         }
 
         #endregion
@@ -183,4 +215,5 @@ namespace CustomRenderer.Droid
 
         #endregion
     }
+
 }
